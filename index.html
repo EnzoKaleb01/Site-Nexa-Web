@@ -334,17 +334,43 @@ footer .brand{ justify-content:center; margin-bottom:14px; }
 .carousel-track::-webkit-scrollbar{ height:6px; }
 .carousel-track::-webkit-scrollbar-thumb{ background:var(--line); border-radius:10px; }
 .portfolio-card{
-  --pc:#2f6fed;
-  flex:0 0 300px; scroll-snap-align:start; border-radius:20px; border:1px solid var(--line);
-  background:linear-gradient(160deg, color-mix(in srgb, var(--pc) 16%, var(--panel)), var(--panel) 60%);
-  padding:26px; display:flex; flex-direction:column; transition:transform 300ms ease, border-color 300ms ease;
+  --pc:#2f6fed; --x:50%; --y:50%;
+  position:relative; flex:0 0 300px; scroll-snap-align:start; border-radius:20px;
+  display:flex; flex-direction:column; transition:transform 300ms ease;
+  text-decoration:none; color:inherit;
 }
-.portfolio-card:hover{ transform:translateY(-6px); border-color:var(--pc); }
+.portfolio-card-inner{
+  position:relative; z-index:1; border-radius:20px; border:1px solid var(--line);
+  background:linear-gradient(160deg, color-mix(in srgb, var(--pc) 16%, var(--panel)), var(--panel) 60%);
+  padding:26px; display:flex; flex-direction:column; flex:1; transition:border-color 300ms ease;
+}
+/* brilho que segue o mouse — mesma técnica do componente que você mandou,
+   adaptada de React/framer-motion pra CSS + JS puro */
+.portfolio-card::before{
+  content:''; position:absolute; inset:-1px; z-index:0; border-radius:21px; opacity:0;
+  pointer-events:none; transition:opacity 300ms ease;
+  background:radial-gradient(480px circle at var(--x) var(--y), var(--pc), transparent 60%);
+}
+.portfolio-card:hover{ transform:translateY(-6px); }
+.portfolio-card:hover::before{ opacity:0.55; }
+.portfolio-card:hover .portfolio-card-inner{ border-color:transparent; }
+.portfolio-preview{
+  position:relative; width:100%; aspect-ratio:16/10; overflow:hidden; border-radius:12px;
+  background:#0a0e1a; margin:-26px -26px 18px; border-bottom:1px solid var(--line);
+}
+.portfolio-preview iframe{
+  position:absolute; top:0; left:0; width:400%; height:400%; transform:scale(0.25); transform-origin:0 0;
+  border:none; pointer-events:none;
+}
+.portfolio-preview-badge{
+  position:absolute; bottom:8px; right:8px; z-index:2; font-family:'IBM Plex Mono',monospace; font-size:0.65rem;
+  padding:4px 10px; border-radius:100px; background:rgba(4,6,12,0.75); color:#fff; backdrop-filter:blur(4px);
+}
 .portfolio-tag{
   align-self:flex-start; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:1px; text-transform:uppercase;
   padding:5px 12px; border-radius:100px; background:color-mix(in srgb, var(--pc) 22%, transparent); color:var(--pc); margin-bottom:16px;
 }
-.portfolio-card h3{ font-size:1.15rem; margin:0 0 10px; }
+.portfolio-card h3{ font-size:1.15rem; margin:0 0 10px; color:var(--ink); }
 .portfolio-card p{ color:var(--ink-dim); font-size:0.86rem; line-height:1.55; margin:0; flex:1; }
 .portfolio-link{
   margin-top:18px; display:inline-flex; align-items:center; gap:6px; font-size:0.85rem; font-weight:700; color:var(--pc);
@@ -1022,61 +1048,71 @@ const PORTFOLIO = [
     url:'https://enzokaleb01.github.io/Carnaval/'
   },
   {
-    name:'Açaí da Naty',
-    tag:'Food service',
-    color:'#7c3fed',
-    desc:'Site de pedidos para açaiteria, com cardápio completo, carrinho e checkout direto pelo WhatsApp.',
-    url:null
+    name:'Samps Digital',
+    tag:'Marketing & Agência',
+    color:'#14b8a6',
+    desc:'Site institucional de agência de marketing com diagnóstico, planejamento e método próprio: cases com marcas como McDonald\'s e Pague Menos, e diagnóstico gratuito direto pelo WhatsApp.',
+    url:'https://enzokaleb01.github.io/Samp-Digital/'
   },
   {
-    name:'Delícias da Thii',
-    tag:'Food service',
-    color:'#2f9e6f',
-    desc:'Loja de lanches, pastéis e vitaminas com carrinho, endereço por GPS e pagamento por Pix, cartão ou dinheiro.',
-    url:null
-  },
-  {
-    name:'Boleria Doce Delícia',
+    name:'Doce Delícia',
     tag:'Confeitaria',
     color:'#d9822b',
-    desc:'Catálogo com 26 sabores de bolo, carrinho persistente e um bolo 3D animado girando na home.',
-    url:null
+    desc:'Boleria com mais de 25 sabores de bolo e docinhos artesanais: cardápio interativo com sacola de pedidos, três unidades em Fortaleza e checkout direto no WhatsApp.',
+    url:'https://enzokaleb01.github.io/Doce-Delicia/'
+  },
+  {
+    name:'Syl Freitas',
+    tag:'Consultoria de Imagem',
+    color:'#b1443f',
+    desc:'Site de consultoria de imagem com paleta de cores, galeria de looks por psicologia das cores, depoimentos de clientes e agendamento direto pelo WhatsApp.',
+    url:'https://enzokaleb01.github.io/Site-Syl-Freitas/'
   },
   {
     name:'Poppe Games',
-    tag:'Games & Colecionáveis',
+    tag:'Games & Assistência técnica',
     color:'#e0468a',
-    desc:'Loja de games com identidade rosa, status de aberto/fechado em tempo real e ilustrações estilo Funko Pop.',
-    url:null
-  },
-  {
-    name:'Q.DRINKS',
-    tag:'Eventos',
-    color:'#c9a227',
-    desc:'Site de bartender móvel de luxo, identidade preto e dourado e cardápio de coquetéis com cara de Fortaleza.',
-    url:null
-  },
-  {
-    name:'Toque de Mãe',
-    tag:'E-commerce',
-    color:'#4f8fe0',
-    desc:'Loja de touquinhas artesanais com variações de cor, sistema de favoritos e preços por atacado.',
-    url:null
+    desc:'Loja e assistência técnica de consoles em Fortaleza: catálogo de jogos e Funko Pop, avaliação no Google Maps e pedidos direto pelo WhatsApp.',
+    url:'https://enzokaleb01.github.io/Site-Poppe-Game/'
   }
 ];
 
 const carouselTrack = document.getElementById('carouselTrack');
-carouselTrack.innerHTML = PORTFOLIO.map(p=>`
-  <div class="portfolio-card" style="--pc:${p.color}">
-    <div class="portfolio-tag">${p.tag}</div>
-    <h3>${p.name}</h3>
-    <p>${p.desc}</p>
-    ${p.url
-      ? `<a class="portfolio-link" href="${p.url}" target="_blank" rel="noopener">Ver site ao vivo →</a>`
-      : `<div class="portfolio-soon">Site sob NDA do cliente</div>`
-    }
-  </div>
-`).join('');
+carouselTrack.innerHTML = PORTFOLIO.map(p=>{
+  const tag = p.url ? 'a' : 'div';
+  const linkAttrs = p.url ? `href="${p.url}" target="_blank" rel="noopener"` : '';
+  const preview = p.url
+    ? `<div class="portfolio-preview">
+         <iframe src="${p.url}" loading="lazy" tabindex="-1" title="Prévia de ${p.name}"></iframe>
+         <span class="portfolio-preview-badge">ao vivo</span>
+       </div>`
+    : '';
+  const cta = p.url
+    ? `<span class="portfolio-link">Entrar no site →</span>`
+    : `<div class="portfolio-soon">Site sob NDA do cliente</div>`;
+  return `
+    <${tag} class="portfolio-card" style="--pc:${p.color}" ${linkAttrs}>
+      <div class="portfolio-card-inner">
+        ${preview}
+        <div class="portfolio-tag">${p.tag}</div>
+        <h3>${p.name}</h3>
+        <p>${p.desc}</p>
+        ${cta}
+      </div>
+    </${tag}>
+  `;
+}).join('');
+
+// Brilho que segue o mouse em cada card — adaptado da técnica CSS que veio
+// junto do componente React que você mandou (radial-gradient em --x/--y),
+// só que aqui em JS puro, sem framer-motion.
+carouselTrack.querySelectorAll('.portfolio-card').forEach(card=>{
+  card.addEventListener('mousemove', (e)=>{
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty('--x', `${e.clientX - rect.left}px`);
+    card.style.setProperty('--y', `${e.clientY - rect.top}px`);
+  });
+});
 
 document.getElementById('carouselNext').addEventListener('click', ()=>{
   carouselTrack.scrollBy({ left: 320, behavior:'smooth' });
