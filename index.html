@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexa Web — Sites profissionais que conectam e geram resultados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{
+  --bg:#04060c;
+  --bg-elev:#090d18;
+  --panel:#0d1220;
+  --line:rgba(255,255,255,0.08);
+  --ink:#eef2fb;
+  --ink-dim:#8792ab;
+  --silver:#c7cedd;
+  --accent:#2f6fed;
+  --accent-light:#7db4ff;
+  --accent-dark:#1c4dc4;
+  --accent-soft:rgba(47,111,237,0.14);
+  --transition-theme: 700ms cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  overflow-x:hidden;
+  transition: background var(--transition-theme);
+}
+::selection{ background:var(--accent); color:#04060c; }
+h1,h2,h3,.display{ font-family:'Sora',sans-serif; }
+.mono{ font-family:'IBM Plex Mono',monospace; }
+a{ color:inherit; text-decoration:none; }
+
+#bg-canvas{
+  position:fixed; inset:0; z-index:0; width:100%; height:100%;
+  pointer-events:none;
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- NAV ---------- */
+nav{
+  position:sticky; top:0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 6vw;
+  background:rgba(4,6,12,0.7);
+  backdrop-filter: blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.brand{ display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:0.5px; font-size:1.05rem; font-family:'Sora',sans-serif; }
+.brand .n{ color:var(--silver); }
+.brand .w{ color:var(--accent); transition:color var(--transition-theme); }
+.brand-mark{ width:30px; height:30px; }
+nav .links{ display:flex; gap:28px; font-size:0.92rem; color:var(--ink-dim); }
+nav .links a:hover{ color:var(--ink); }
+.nav-cta{
+  padding:9px 18px; border-radius:100px; border:1px solid var(--accent);
+  color:var(--accent); font-size:0.88rem; font-weight:600;
+  transition: all 300ms ease, border-color var(--transition-theme), color var(--transition-theme);
+}
+.nav-cta:hover{ background:var(--accent); color:#050810; }
+.nav-actions{ display:flex; align-items:center; gap:10px; }
+@media (max-width:760px){ nav .links{ display:none; } }
+.nav-profile{
+  position:relative; width:42px; height:42px; border-radius:50%; background:var(--panel); border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--ink-dim); flex-shrink:0;
+  transition:border-color 300ms ease, color 300ms ease, background var(--transition-theme);
+}
+.nav-profile:hover{ border-color:var(--accent); color:var(--ink); }
+.nav-profile svg{ width:22px; height:22px; }
+.nav-profile .nav-profile-initial{
+  display:none; font-family:'Sora',sans-serif; font-weight:700; font-size:0.95rem; color:#fff;
+}
+.nav-profile.logged-in{ background:var(--accent); border-color:var(--accent); transition:background var(--transition-theme), border-color var(--transition-theme); }
+.nav-profile.logged-in svg{ display:none; }
+.nav-profile.logged-in .nav-profile-initial{ display:block; }
+
+
+/* ---------- HERO ---------- */
+.hero{
+  height:100svh; min-height:560px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:12vh 6vw 6vh; position:relative;
+}
+.scroll-cue{
+  position:absolute; left:50%; bottom:28px; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  background:transparent; border:none; cursor:pointer; color:var(--ink-dim);
+  transition:color 250ms ease;
+}
+.scroll-cue:hover{ color:var(--accent-light); }
+.scroll-cue span{ font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:2px; text-transform:uppercase; }
+.scroll-cue svg{ width:20px; height:20px; animation:scrollCueBounce 1.8s ease-in-out infinite; }
+@keyframes scrollCueBounce{ 0%,100%{ transform:translateY(0); opacity:0.6; } 50%{ transform:translateY(8px); opacity:1; } }
+.hero-hint{
+  position:absolute; top:18px; left:50%; transform:translateX(-50%);
+  font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:1.5px; color:var(--ink-dim);
+  opacity:0.7; text-align:center; pointer-events:none;
+}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace; font-size:0.78rem; letter-spacing:3px;
+  color:var(--accent-light); text-transform:uppercase; margin-bottom:22px;
+  transition:color var(--transition-theme);
+  display:flex; align-items:center; gap:10px;
+}
+.eyebrow::before{ content:''; width:26px; height:1px; background:var(--accent-light); transition:background var(--transition-theme); }
+
+.hero-greeting{
+  font-family:'Sora',sans-serif; font-weight:700; font-size:1.1rem; color:var(--accent-light);
+  margin-bottom:6px; min-height:1.4em; transition:color var(--transition-theme);
+}
+
+.hero h1{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+.hero p{ max-width:46ch; color:var(--ink-dim); font-size:1.08rem; line-height:1.6; margin:30px 0 36px; }
+.hero-ctas{ display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+.btn-primary{
+  padding:15px 30px; border-radius:12px; font-weight:700; font-size:0.95rem;
+  background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+  box-shadow:0 12px 30px -8px var(--accent-soft);
+  transition: transform 250ms ease, background var(--transition-theme), box-shadow var(--transition-theme);
+  color:#fff;
+}
+.btn-primary:hover{ transform:translateY(-3px); }
+.btn-ghost{
+  padding:15px 28px; border-radius:12px; font-weight:600; font-size:0.95rem;
+  border:1px solid var(--line); color:var(--ink-dim);
+  transition:all 250ms ease;
+}
+.btn-ghost:hover{ border-color:var(--accent); color:var(--ink); }
+
+.stat-row{
+  display:flex; gap:48px; margin-top:64px; flex-wrap:wrap; justify-content:center;
+}
+.stat{ text-align:center; }
+.stat b{ display:block; font-family:'Sora',sans-serif; font-size:1.6rem; color:var(--ink); }
+.stat span{ font-size:0.78rem; color:var(--ink-dim); text-transform:uppercase; letter-spacing:1px; }
+
+/* ---------- SECTION SHELL ---------- */
+section{ padding:9vh 6vw; position:relative; }
+.section-head{ max-width:640px; margin:0 auto 56px; text-align:center; }
+.section-head .eyebrow{ justify-content:center; }
+.section-head h2{ font-size:clamp(1.8rem,3.4vw,2.6rem); font-weight:700; margin:0 0 14px; }
+.section-head p{ color:var(--ink-dim); line-height:1.6; margin:0; }
+
+/* ---------- SOBRE (about) ---------- */
+.about{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; max-width:1100px; margin:0 auto; }
+.about-visual{
+  position:relative; aspect-ratio:1/1; border-radius:24px;
+  background:radial-gradient(circle at 30% 20%, var(--accent-soft), transparent 60%), var(--panel);
+  border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  perspective:900px;
+}
+.about-card{
+  width:70%; padding:30px; border-radius:18px; background:var(--bg-elev);
+  border:1px solid var(--line);
+  transform:rotateX(8deg) rotateY(-10deg);
+  transform-style:preserve-3d;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,0.6);
+  transition:transform 400ms ease, border-color var(--transition-theme);
+}
+.about-visual:hover .about-card{ transform:rotateX(2deg) rotateY(-2deg) scale(1.02); }
+.about-card .tag{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--accent-light); letter-spacing:2px; transition:color var(--transition-theme); }
+.about-card h3{ margin:10px 0 8px; font-size:1.3rem; }
+.about-card p{ color:var(--ink-dim); font-size:0.9rem; line-height:1.55; margin:0; }
+.about-copy h2{ font-size:clamp(1.7rem,3vw,2.3rem); margin:0 0 18px; font-weight:700; }
+.about-copy p{ color:var(--ink-dim); line-height:1.7; margin:0 0 16px; }
+.about-list{ list-style:none; padding:0; margin:26px 0 0; display:grid; gap:12px; }
+.about-list li{ display:flex; gap:12px; align-items:flex-start; font-size:0.94rem; color:var(--ink); }
+.about-list li::before{
+  content:'▹'; color:var(--accent-light); font-weight:700; transition:color var(--transition-theme);
+}
+@media (max-width:840px){ .about{ grid-template-columns:1fr; } .about-visual{ order:-1; } }
+
+/* ---------- PLANOS ---------- */
+.free-banner{
+  max-width:900px; margin:0 auto 50px; text-align:center; padding:14px 24px; border-radius:100px;
+  border:1px dashed var(--accent); color:var(--accent-light); font-size:0.9rem; font-weight:600;
+  transition:border-color var(--transition-theme), color var(--transition-theme);
+}
+.plans-stage{
+  perspective:1600px; max-width:1240px; margin:0 auto;
+  display:grid; grid-template-columns:repeat(4,1fr); gap:26px;
+}
+@media (max-width:1000px){ .plans-stage{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:620px){ .plans-stage{ grid-template-columns:1fr; } }
+
+.plan-card{
+  --pc: #2f6fed; --pcl:#7db4ff; --pcd:#1c4dc4;
+  position:relative; border-radius:20px; padding:30px 26px 26px;
+  background:linear-gradient(180deg, var(--bg-elev), var(--panel));
+  border:1px solid var(--line);
+  cursor:pointer; text-align:left;
+  transform-style:preserve-3d;
+  transform:translateZ(0) rotateX(0) scale(1);
+  transition:transform 550ms cubic-bezier(.2,.8,.2,1), box-shadow 550ms ease, border-color 500ms ease, opacity 500ms ease;
+}
+.plan-card:hover{ transform:translateY(-8px) rotateX(4deg) scale(1.02); border-color:var(--pc); }
+.plan-card.active{
+  transform:translateZ(60px) translateY(-14px) scale(1.06);
+  border-color:var(--pc);
+  box-shadow:0 40px 70px -20px color-mix(in srgb, var(--pc) 45%, transparent);
+  z-index:5;
+}
+.plans-stage.has-active .plan-card:not(.active){ opacity:0.55; transform:translateZ(-40px) scale(0.95); }
+.plan-badge{
+  width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+  background:color-mix(in srgb, var(--pc) 18%, transparent);
+  color:var(--pc); font-family:'Sora',sans-serif; font-weight:700; margin-bottom:18px;
+}
+.plan-card h3{ margin:0 0 6px; font-size:1.15rem; }
+.plan-card .tagline{ color:var(--ink-dim); font-size:0.84rem; line-height:1.5; min-height:44px; margin-bottom:16px; }
+.plan-price{ font-family:'IBM Plex Mono',monospace; font-size:1.7rem; font-weight:600; color:var(--pc); margin-bottom:4px; }
+.plan-price span{ font-size:0.7rem; color:var(--ink-dim); font-family:'Inter',sans-serif; font-weight:400; }
+.plan-features{ list-style:none; padding:0; margin:18px 0 0; display:grid; gap:9px; }
+.plan-features li{ font-size:0.82rem; color:var(--ink-dim); display:flex; gap:8px; align-items:flex-start; }
+.plan-features li::before{ content:'✓'; color:var(--pc); font-weight:700; flex-shrink:0; }
+.plan-select{
+  margin-top:22px; width:100%; padding:11px; border-radius:10px; border:1px solid var(--pc);
+  color:var(--pc); font-weight:700; font-size:0.85rem; background:transparent; transition:all 250ms ease;
+}
+.plan-card.active .plan-select{ background:var(--pc); color:#050810; }
+
+/* ---------- DETAIL PANEL ---------- */
+.detail-panel{
+  max-width:1100px; margin:60px auto 0; border-radius:24px; border:1px solid var(--line);
+  background:var(--panel); overflow:hidden;
+  max-height:0; opacity:0; transition:max-height 700ms cubic-bezier(.2,.8,.2,1), opacity 500ms ease, border-color var(--transition-theme);
+}
+.detail-panel.open{ max-height:900px; opacity:1; border-color:var(--accent); }
+.detail-inner{ display:grid; grid-template-columns:1fr 1fr; }
+@media (max-width:760px){ .detail-inner{ grid-template-columns:1fr; } }
+.detail-col{ padding:44px 40px; }
+.detail-col.left{ border-right:1px solid var(--line); background:linear-gradient(160deg, var(--accent-soft), transparent 60%); }
+@media (max-width:760px){ .detail-col.left{ border-right:none; border-bottom:1px solid var(--line); } }
+.detail-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:2px; color:var(--accent-light); margin-bottom:14px; text-transform:uppercase; }
+.detail-col h3{ font-size:1.5rem; margin:0 0 14px; }
+.detail-col p{ color:var(--ink-dim); line-height:1.65; font-size:0.94rem; }
+.detail-price-block{ display:flex; align-items:baseline; gap:10px; margin:18px 0 22px; }
+.detail-price-block .num{ font-family:'IBM Plex Mono',monospace; font-size:2.4rem; font-weight:600; color:var(--accent); }
+.detail-feature-grid{ list-style:none; padding:0; margin:0; display:grid; gap:11px; }
+.detail-feature-grid li{ font-size:0.9rem; display:flex; gap:10px; }
+.detail-feature-grid li::before{ content:'✓'; color:var(--accent); font-weight:700; }
+.detail-cta{ margin-top:26px; display:inline-flex; padding:14px 26px; border-radius:12px; background:var(--accent); color:#050810; font-weight:700; font-size:0.9rem; }
+
+/* ---------- FLOATING MODULES (decorative html, alongside canvas objects) ---------- */
+.float-tag{
+  position:absolute; pointer-events:none; opacity:0.5;
+  font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--accent-light);
+  border:1px solid var(--line); padding:6px 12px; border-radius:100px; backdrop-filter:blur(6px);
+  transition:color var(--transition-theme);
+}
+
+/* ---------- SCHEDULE ---------- */
+.schedule{ max-width:760px; margin:0 auto; }
+.schedule-box{
+  border-radius:24px; border:1px solid var(--line); background:var(--panel); padding:44px;
+  transition:border-color var(--transition-theme);
+}
+.schedule-box.selected{ border-color:var(--accent); }
+.selected-plan-pill{
+  display:inline-flex; align-items:center; gap:8px; padding:8px 16px; border-radius:100px;
+  background:var(--accent-soft); color:var(--accent-light); font-size:0.82rem; font-weight:600; margin-bottom:24px;
+  transition:background var(--transition-theme), color var(--transition-theme);
+}
+.form-grid{ display:grid; gap:16px; }
+.form-grid label{ font-size:0.82rem; color:var(--ink-dim); display:block; margin-bottom:7px; }
+.form-grid input, .form-grid select, .form-grid textarea{
+  width:100%; padding:13px 14px; border-radius:10px; border:1px solid var(--line);
+  background:var(--bg-elev); color:var(--ink); font-family:'Inter',sans-serif; font-size:0.92rem;
+}
+.form-grid input:focus, .form-grid select:focus, .form-grid textarea:focus{ outline:2px solid var(--accent); border-color:transparent; }
+.form-row2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:560px){ .form-row2{ grid-template-columns:1fr; } }
+.schedule-submit{
+  margin-top:24px; width:100%; padding:16px; border-radius:12px; border:none;
+  background:linear-gradient(135deg,var(--accent),var(--accent-dark)); color:#fff; font-weight:700; font-size:0.96rem;
+  cursor:pointer; transition:transform 200ms ease, background var(--transition-theme);
+}
+.schedule-submit:hover{ transform:translateY(-2px); }
+
+/* ---------- FOOTER ---------- */
+footer{ padding:50px 6vw 30px; border-top:1px solid var(--line); text-align:center; color:var(--ink-dim); font-size:0.82rem; }
+footer .brand{ justify-content:center; margin-bottom:14px; }
+
+/* ---------- AVALIAÇÕES / AUTH ---------- */
+.reviews-top{ max-width:1100px; margin:0 auto; }
+.auth-wrap{ max-width:460px; margin:0 auto; }
+.auth-card{
+  border-radius:20px; border:1px solid var(--line); background:var(--panel); padding:34px;
+  transition:border-color var(--transition-theme);
+}
+.auth-tabs{ display:flex; gap:8px; margin-bottom:22px; background:var(--bg-elev); border-radius:10px; padding:4px; }
+.auth-tab{ flex:1; text-align:center; padding:10px; border-radius:8px; font-size:0.86rem; font-weight:600; color:var(--ink-dim); cursor:pointer; transition:all 200ms ease; }
+.auth-tab.active{ background:var(--accent); color:#050810; }
+.auth-form{ display:none; grid-gap:14px; }
+.auth-form.active{ display:grid; }
+.auth-form input{
+  width:100%; padding:12px 14px; border-radius:10px; border:1px solid var(--line);
+  background:var(--bg-elev); color:var(--ink); font-family:'Inter',sans-serif; font-size:0.9rem;
+}
+.auth-form input:focus{ outline:2px solid var(--accent); border-color:transparent; }
+.auth-submit{
+  padding:13px; border-radius:10px; border:none; background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+  color:#fff; font-weight:700; font-size:0.9rem; cursor:pointer; transition:transform 200ms ease, background var(--transition-theme);
+}
+.auth-submit:hover{ transform:translateY(-2px); }
+.auth-msg{ font-size:0.82rem; min-height:18px; }
+.auth-msg.error{ color:#ff8080; }
+.auth-msg.ok{ color:var(--accent-light); }
+.auth-note{ font-size:0.76rem; color:var(--ink-dim); line-height:1.5; margin-top:16px; text-align:center; }
+
+.user-bar{
+  max-width:1100px; margin:0 auto 30px; display:flex; align-items:center; justify-content:space-between;
+  padding:14px 22px; border-radius:14px; background:var(--accent-soft); border:1px solid var(--line);
+  transition:background var(--transition-theme);
+}
+.user-bar span{ font-size:0.88rem; }
+.user-bar .logout{ font-size:0.8rem; color:var(--ink-dim); border:1px solid var(--line); padding:7px 14px; border-radius:100px; cursor:pointer; background:transparent; }
+.user-bar .logout:hover{ color:var(--ink); border-color:var(--accent); }
+
+.feedback-form{
+  max-width:640px; margin:0 auto 60px; border-radius:20px; border:1px solid var(--line); background:var(--panel);
+  padding:34px; transition:border-color var(--transition-theme);
+}
+.star-picker{ display:flex; gap:8px; margin:6px 0 20px; }
+.star{ font-size:1.9rem; cursor:pointer; color:var(--line); transition:color 150ms ease, transform 150ms ease; user-select:none; }
+.star.filled{ color:var(--accent); }
+.star:hover{ transform:scale(1.15); }
+.feedback-form textarea{
+  width:100%; padding:13px 14px; border-radius:10px; border:1px solid var(--line);
+  background:var(--bg-elev); color:var(--ink); font-family:'Inter',sans-serif; font-size:0.92rem; margin-bottom:16px;
+}
+.media-input-row{ display:flex; align-items:center; gap:14px; margin-bottom:20px; flex-wrap:wrap; }
+.media-btn{
+  padding:11px 18px; border-radius:10px; border:1px dashed var(--accent); color:var(--accent-light);
+  font-size:0.85rem; cursor:pointer; background:transparent; transition:color var(--transition-theme), border-color var(--transition-theme);
+}
+.media-preview{ font-size:0.78rem; color:var(--ink-dim); }
+.media-preview img, .media-preview video{ max-width:120px; max-height:80px; border-radius:8px; display:block; margin-top:8px; }
+.feedback-submit{
+  width:100%; padding:15px; border-radius:12px; border:none; background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+  color:#fff; font-weight:700; font-size:0.94rem; cursor:pointer; transition:transform 200ms ease, background var(--transition-theme);
+}
+.feedback-submit:hover{ transform:translateY(-2px); }
+.feedback-status{ font-size:0.82rem; margin-top:12px; min-height:18px; }
+.feedback-status.error{ color:#ff8080; }
+.feedback-status.ok{ color:var(--accent-light); }
+
+.reviews-grid{ max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+@media (max-width:900px){ .reviews-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:600px){ .reviews-grid{ grid-template-columns:1fr; } }
+.review-card{
+  border-radius:16px; border:1px solid var(--line); background:var(--panel); padding:22px;
+  transition:border-color 300ms ease, transform 300ms ease;
+}
+.review-card:hover{ transform:translateY(-4px); border-color:var(--accent); }
+.review-stars{ color:var(--accent); font-size:0.95rem; margin-bottom:10px; }
+.review-card .name{ font-weight:700; font-size:0.92rem; margin-bottom:4px; }
+.review-card .comment{ color:var(--ink-dim); font-size:0.86rem; line-height:1.55; margin:8px 0 12px; }
+.review-card img, .review-card video{ width:100%; border-radius:10px; margin-top:10px; }
+.review-empty{ text-align:center; color:var(--ink-dim); font-size:0.9rem; grid-column:1/-1; padding:30px; }
+.review-loading{ text-align:center; color:var(--ink-dim); font-size:0.88rem; grid-column:1/-1; padding:20px; }
+
+/* ---------- AUTH MODAL ---------- */
+.modal-overlay{
+  position:fixed; inset:0; z-index:200; background:rgba(2,4,10,0.72); backdrop-filter:blur(8px);
+  display:none; align-items:center; justify-content:center; padding:20px;
+}
+.modal-overlay.open{ display:flex; }
+.modal-box{
+  width:100%; max-width:440px; background:var(--panel); border:1px solid var(--line); border-radius:20px;
+  padding:36px; position:relative; transition:border-color var(--transition-theme);
+}
+.modal-close{
+  position:absolute; top:14px; right:14px; width:32px; height:32px; border-radius:50%; border:1px solid var(--line);
+  background:transparent; color:var(--ink-dim); font-size:1rem; cursor:pointer; transition:all 200ms ease;
+}
+.modal-close:hover{ color:var(--ink); border-color:var(--accent); }
+
+/* ---------- PORTFOLIO CAROUSEL ---------- */
+.carousel-wrap{ position:relative; max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:14px; }
+.carousel-track{
+  display:flex; gap:22px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
+  padding:6px 4px 26px; flex:1;
+}
+.carousel-track::-webkit-scrollbar{ height:6px; }
+.carousel-track::-webkit-scrollbar-thumb{ background:var(--line); border-radius:10px; }
+.portfolio-card{
+  --pc:#2f6fed;
+  flex:0 0 300px; scroll-snap-align:start; border-radius:20px; border:1px solid var(--line);
+  background:linear-gradient(160deg, color-mix(in srgb, var(--pc) 16%, var(--panel)), var(--panel) 60%);
+  padding:26px; display:flex; flex-direction:column; transition:transform 300ms ease, border-color 300ms ease;
+}
+.portfolio-card:hover{ transform:translateY(-6px); border-color:var(--pc); }
+.portfolio-tag{
+  align-self:flex-start; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:1px; text-transform:uppercase;
+  padding:5px 12px; border-radius:100px; background:color-mix(in srgb, var(--pc) 22%, transparent); color:var(--pc); margin-bottom:16px;
+}
+.portfolio-card h3{ font-size:1.15rem; margin:0 0 10px; }
+.portfolio-card p{ color:var(--ink-dim); font-size:0.86rem; line-height:1.55; margin:0; flex:1; }
+.portfolio-link{
+  margin-top:18px; display:inline-flex; align-items:center; gap:6px; font-size:0.85rem; font-weight:700; color:var(--pc);
+}
+.portfolio-soon{ margin-top:18px; font-size:0.8rem; color:var(--ink-dim); font-style:italic; }
+.carousel-arrow{
+  flex-shrink:0; width:42px; height:42px; border-radius:50%; border:1px solid var(--line); background:var(--panel);
+  color:var(--ink); font-size:1.3rem; cursor:pointer; transition:all 200ms ease; display:flex; align-items:center; justify-content:center;
+}
+.carousel-arrow:hover{ border-color:var(--accent); color:var(--accent-light); }
+@media (max-width:640px){ .carousel-arrow{ display:none; } }
+
+/* ---------- SIMPLE AUTH PROMPT (inside avaliações) ---------- */
+.auth-prompt{
+  max-width:480px; margin:0 auto; text-align:center; border-radius:20px; border:1px solid var(--line);
+  background:var(--panel); padding:44px 36px; transition:border-color var(--transition-theme);
+}
+.auth-prompt h3{ margin:0 0 10px; font-size:1.25rem; }
+.auth-prompt p{ color:var(--ink-dim); font-size:0.9rem; margin:0 0 22px; }
+
+.reveal{ opacity:0; transform:translateY(24px); transition:opacity 800ms ease, transform 800ms ease; }
+.reveal.in{ opacity:1; transform:translateY(0); }
+
+@media (prefers-reduced-motion: reduce){
+  *{ transition-duration:0.01ms !important; animation-duration:0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="markBlueGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" style="stop-color:var(--accent-light)"/>
+      <stop offset="100%" style="stop-color:var(--accent-dark)"/>
+    </linearGradient>
+    <linearGradient id="markSilverGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:var(--silver)"/>
+    </linearGradient>
+    <g id="nexaMarkShape">
+      <path d="M20 20 L20 45 L50 75 L50 50 Z" fill="url(#markBlueGrad)"/>
+      <path d="M50 50 L65 35 L80 50 L65 65 Z" fill="url(#markSilverGrad)"/>
+    </g>
+  </defs>
+</svg>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="wrap">
+
+<nav>
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 100 100"><use href="#nexaMarkShape"></use></svg>
+    <span class="n">NEXA</span> <span class="w">WEB</span>
+  </div>
+  <div class="links">
+    <a href="#sobre">Sobre</a>
+    <a href="#portfolio">Trabalhos</a>
+    <a href="#planos">Planos</a>
+    <a href="#avaliacoes">Avaliações</a>
+    <a href="#agendar">Agendar</a>
+  </div>
+  <div class="nav-actions">
+    <button class="nav-profile" id="navProfileBtn" type="button" title="Cadastrar / Entrar" aria-label="Cadastrar ou entrar">
+      <svg viewBox="0 0 24 24" id="navProfileIcon"><path d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5Z" fill="currentColor"/></svg>
+      <span class="nav-profile-initial" id="navProfileInitial"></span>
+    </button>
+    <a href="#agendar" class="nav-cta">Agendar site</a>
+  </div>
+</nav>
+
+<div class="modal-overlay" id="authModalOverlay">
+  <div class="modal-box">
+    <button class="modal-close" id="authModalClose" type="button" aria-label="Fechar">✕</button>
+    <div class="auth-tabs">
+      <div class="auth-tab active" data-tab="login" id="tabLogin">Entrar</div>
+      <div class="auth-tab" data-tab="register" id="tabRegister">Cadastrar grátis</div>
+    </div>
+    <form class="auth-form active" id="loginForm">
+      <input type="email" id="loginEmail" placeholder="Seu e-mail" required>
+      <input type="password" id="loginPassword" placeholder="Sua senha" required>
+      <button type="submit" class="auth-submit">Entrar</button>
+      <div class="auth-msg" id="loginMsg"></div>
+    </form>
+    <form class="auth-form" id="registerForm">
+      <input type="text" id="regName" placeholder="Seu nome" required>
+      <input type="email" id="regEmail" placeholder="Seu e-mail" required>
+      <input type="password" id="regPassword" placeholder="Crie uma senha" required minlength="4">
+      <button type="submit" class="auth-submit">Criar cadastro grátis</button>
+      <div class="auth-msg" id="regMsg"></div>
+    </form>
+    <div class="auth-note">O cadastro fica guardado num banco separado das avaliações, no servidor Python da Nexa Web.</div>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-hint">arraste os módulos flutuantes ✦ toque pra dar um impulso</div>
+  <div class="hero-greeting" id="heroGreeting">Bem-vindo</div>
+
+  <h1>Sua empresa, presente onde importa.</h1>
+  <p>Eu crio sites profissionais completos — do primeiro esboço ao WhatsApp integrado — para pequenos negócios que querem vender e ser encontrados online. Escolha um plano abaixo e agende seu site em minutos.</p>
+  <div class="hero-ctas">
+    <a href="#planos" class="btn-primary">Ver planos e preços</a>
+    <a href="#sobre" class="btn-ghost">Conhecer meu trabalho</a>
+  </div>
+  <div class="stat-row">
+    <div class="stat"><b>4</b><span>Planos sob medida</span></div>
+    <div class="stat"><b>7 dias</b><span>Teste grátis</span></div>
+    <div class="stat"><b>100%</b><span>Sites responsivos</span></div>
+  </div>
+
+  <button class="scroll-cue" id="scrollCue" type="button" aria-label="Descer para o conteúdo">
+    <span>descer</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+</section>
+
+<section id="sobre">
+  <div class="about reveal">
+    <div class="about-copy">
+      <div class="eyebrow">quem sou</div>
+      <h2>Desenvolvedor de sites para quem faz o negócio acontecer</h2>
+      <p>Sou Kaleb, desenvolvedor web em Fortaleza. Trabalho lado a lado com pequenos negócios — salões, lanchonetes, lojas, prestadores de serviço — construindo sites rápidos, bonitos e conectados ao WhatsApp, porque é ali que seus clientes realmente fecham negócio.</p>
+      <p>Cada projeto é feito sob medida: identidade visual própria, copy em português que fala a língua do seu cliente, e uma estrutura pensada para carregar rápido no celular, onde a maioria das pessoas vai te encontrar.</p>
+      <ul class="about-list">
+        <li>Sites 100% responsivos, do celular ao desktop</li>
+        <li>Pedidos e contato direto via WhatsApp</li>
+        <li>Entrega rápida, com 7 dias grátis para testar</li>
+        <li>Suporte dedicado depois da entrega</li>
+      </ul>
+    </div>
+    <div class="about-visual">
+      <div class="about-card">
+        <div class="tag">// sobre este site</div>
+        <h3>Nexa Web</h3>
+        <p>Este site é interativo: escolha um plano abaixo e observe a paleta, o conteúdo e os módulos flutuantes mudarem para refletir a proposta certa para o seu negócio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="section-head reveal">
+    <div class="eyebrow">portfólio</div>
+    <h2>Outros trabalhos que já entreguei</h2>
+    <p>Cada site é construído do zero, sob medida pro negócio do cliente. Alguns exemplos estão no ar — dá pra visitar agora.</p>
+  </div>
+  <div class="carousel-wrap reveal">
+    <button class="carousel-arrow" id="carouselPrev" type="button" aria-label="Anterior">‹</button>
+    <div class="carousel-track" id="carouselTrack"></div>
+    <button class="carousel-arrow" id="carouselNext" type="button" aria-label="Próximo">›</button>
+  </div>
+</section>
+
+<section id="planos">
+  <div class="section-head reveal">
+    <div class="eyebrow">planos de criação de sites</div>
+    <h2>Escolha o plano — o site inteiro reage à sua escolha</h2>
+    <p>Tudo incluso: criação + domínio + hospedagem + suporte básico por 1 ano. Toque em um plano para ver os detalhes e agendar.</p>
+  </div>
+
+  <div class="free-banner reveal">🎁 7 dias grátis para testar seu site antes de contratar</div>
+
+  <div class="plans-stage reveal" id="plansStage"></div>
+
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-inner">
+      <div class="detail-col left">
+        <div class="detail-eyebrow">este plano</div>
+        <h3 id="detailPlanName">—</h3>
+        <div class="detail-price-block">
+          <span class="num mono" id="detailPrice">R$ 0</span>
+          <span style="color:var(--ink-dim); font-size:0.85rem;">/ ano, tudo incluso</span>
+        </div>
+        <p id="detailTagline"></p>
+        <ul class="detail-feature-grid" id="detailFeatures"></ul>
+      </div>
+      <div class="detail-col right">
+        <div class="detail-eyebrow">sobre mim + este site</div>
+        <h3>Feito por mim, para o seu negócio</h3>
+        <p id="detailAboutPlan"></p>
+        <p>Combinamos a estrutura do plano <strong id="detailPlanNameInline">—</strong> com identidade visual própria, copy pensada pro seu público e integração direta com o WhatsApp — do jeito que eu já entrego pra outros negócios daqui de Fortaleza.</p>
+        <a href="#agendar" class="detail-cta" id="detailCta">Agendar este plano →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="avaliacoes">
+  <div class="section-head reveal">
+    <div class="eyebrow">avaliações</div>
+    <h2>O que os clientes acham do próprio site deles</h2>
+    <p>Cadastro gratuito e rápido — depois de cadastrado, você pode avaliar com estrelas, comentar e mandar uma foto ou vídeo do resultado.</p>
+  </div>
+
+  <div class="reviews-top reveal">
+    <!-- logged out -->
+    <div class="auth-prompt" id="authPrompt">
+      <h3>Cadastre-se pra avaliar</h3>
+      <p>O cadastro é grátis e leva menos de um minuto — dá pra fazer aqui ou no botão lá em cima.</p>
+      <button class="btn-primary" id="openAuthFromReviews" type="button">Cadastrar / Entrar</button>
+    </div>
+
+    <!-- logged in: user bar + feedback form -->
+    <div id="loggedInWrap" style="display:none;">
+      <div class="user-bar">
+        <span>Logado como <strong id="userBarName"></strong></span>
+        <button class="logout" id="logoutBtn">Sair</button>
+      </div>
+
+      <div class="feedback-form">
+        <label style="font-size:0.82rem; color:var(--ink-dim); display:block; margin-bottom:8px;">Sua avaliação</label>
+        <div class="star-picker" id="starPicker">
+          <span class="star" data-value="1">★</span>
+          <span class="star" data-value="2">★</span>
+          <span class="star" data-value="3">★</span>
+          <span class="star" data-value="4">★</span>
+          <span class="star" data-value="5">★</span>
+        </div>
+        <textarea id="feedbackComment" rows="3" placeholder="Conte o que achou do site..."></textarea>
+        <div class="media-input-row">
+          <label class="media-btn" for="feedbackMedia">📎 Anexar foto ou vídeo (opcional)</label>
+          <input type="file" id="feedbackMedia" accept="image/*,video/*" style="display:none;">
+          <div class="media-preview" id="mediaPreview"></div>
+        </div>
+        <button class="feedback-submit" id="feedbackSubmit">Enviar avaliação</button>
+        <div class="feedback-status" id="feedbackStatus"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reviews-grid reveal" id="reviewsGrid">
+    <div class="review-loading">Carregando avaliações...</div>
+  </div>
+</section>
+
+<section id="agendar">
+  <div class="section-head reveal">
+    <div class="eyebrow">agendar</div>
+    <h2>Vamos marcar a criação do seu site</h2>
+    <p>Preencha os dados abaixo — a mensagem já sai pronta pro WhatsApp, com o plano escolhido.</p>
+  </div>
+  <div class="schedule reveal">
+    <div class="schedule-box" id="scheduleBox">
+      <div class="selected-plan-pill" id="selectedPlanPill">Nenhum plano selecionado ainda — escolha um acima</div>
+      <div class="form-grid">
+        <div>
+          <label for="fName">Seu nome</label>
+          <input type="text" id="fName" placeholder="Como posso te chamar?">
+        </div>
+        <div class="form-row2">
+          <div>
+            <label for="fBiz">Nome do negócio</label>
+            <input type="text" id="fBiz" placeholder="Ex: Açaí da Naty">
+          </div>
+          <div>
+            <label for="fPlan">Plano</label>
+            <select id="fPlan">
+              <option value="">Selecione um plano</option>
+              <option value="start">Site Start — R$ 699,00</option>
+              <option value="business">Site Business — R$ 1.299,00</option>
+              <option value="premium">Site Premium — R$ 2.299,00</option>
+              <option value="loja">Loja Virtual — R$ 3.499,00</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row2">
+          <div>
+            <label for="fDate">Data preferida</label>
+            <input type="date" id="fDate">
+          </div>
+          <div>
+            <label for="fTime">Horário preferido</label>
+            <input type="time" id="fTime">
+          </div>
+        </div>
+        <div>
+          <label for="fMsg">Conte um pouco sobre o seu negócio</label>
+          <textarea id="fMsg" rows="3" placeholder="O que você vende, pra quem, e o que espera do site..."></textarea>
+        </div>
+      </div>
+      <button class="schedule-submit" id="scheduleSubmit">Enviar agendamento pelo WhatsApp</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="brand"><svg class="brand-mark" viewBox="0 0 100 100"><use href="#nexaMarkShape"></use></svg><span class="n">NEXA</span>&nbsp;<span class="w">WEB</span></div>
+  <div>Sites profissionais que conectam e geram resultados · Fortaleza, CE</div>
+</footer>
+
+</div>
+
+<script>
+/* ===================== PLAN DATA ===================== */
+const PLANS = [
+  {
+    id:'start', name:'Site Start', badge:'01',
+    tagline:'Ideal para quem está começando e precisa ter presença online.',
+    price:'699,00',
+    color:'#1fae5f', colorLight:'#59e08c', colorDark:'#0f7a41',
+    features:['Até 5 páginas','Layout moderno e responsivo','WhatsApp integrado','Formulário de contato','Redes sociais','SEO básico'],
+    about:'O plano perfeito pra tirar seu negócio do papel: um site enxuto, rápido e já com o WhatsApp integrado pra você começar a receber contato hoje mesmo.'
+  },
+  {
+    id:'business', name:'Site Business', badge:'02',
+    tagline:'Mais recursos para destacar sua empresa e atrair clientes.',
+    price:'1.299,00',
+    color:'#2f6fed', colorLight:'#7db4ff', colorDark:'#1c4dc4',
+    features:['Até 10 páginas','Layout moderno e responsivo','Galeria de imagens','Integração com redes sociais','WhatsApp integrado','Formulário de contato','SEO básico'],
+    about:'Pra quem já tem uma base de clientes e quer se destacar: mais páginas, galeria de fotos e uma presença que passa mais confiança.'
+  },
+  {
+    id:'premium', name:'Site Premium', badge:'03',
+    tagline:'Completo para empresas que buscam mais autoridade.',
+    price:'2.299,00',
+    color:'#8b3ff0', colorLight:'#c79bff', colorDark:'#6420c2',
+    features:['Até 20 páginas','Layout moderno e responsivo','Blog / Notícias','SEO básico (Google)','Integração com redes sociais','Formulário de contato','Mapa do Google','Suporte básico'],
+    about:'O pacote completo pra quem quer autoridade de verdade: blog pra atrair pelo Google, mapa, e uma estrutura grande o bastante pra crescer junto com você.'
+  },
+  {
+    id:'loja', name:'Loja Virtual', badge:'04',
+    tagline:'Sua loja online completa para vender todos os dias.',
+    price:'3.499,00',
+    color:'#f2861a', colorLight:'#ffb85c', colorDark:'#c4650a',
+    features:['Catálogo de produtos','Carrinho de compras','Pagamentos online','Cálculo de frete','Integração com redes sociais','Painel administrativo','Treinamento básico','Suporte básico'],
+    about:'Uma loja de verdade, funcionando 24h: catálogo, carrinho, pagamento online e um painel simples pra você atualizar tudo sozinho.'
+  }
+];
+
+const WHATSAPP_NUMBER = '5585900000000'; // TODO: troque pelo seu número real do WhatsApp
+
+/* ===================== RENDER PLAN CARDS ===================== */
+const stage = document.getElementById('plansStage');
+PLANS.forEach(p=>{
+  const card = document.createElement('button');
+  card.className = 'plan-card';
+  card.dataset.plan = p.id;
+  card.style.setProperty('--pc', p.color);
+  card.style.setProperty('--pcl', p.colorLight);
+  card.style.setProperty('--pcd', p.colorDark);
+  card.innerHTML = `
+    <div class="plan-badge">${p.badge}</div>
+    <h3>${p.name}</h3>
+    <div class="tagline">${p.tagline}</div>
+    <div class="plan-price">R$ ${p.price}<span> /ano</span></div>
+    <ul class="plan-features">${p.features.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <div class="plan-select">Ver detalhes deste plano</div>
+  `;
+  card.addEventListener('click', ()=> selectPlan(p.id));
+  stage.appendChild(card);
+});
+
+let currentPlan = null;
+
+function selectPlan(id){
+  const plan = PLANS.find(p=>p.id===id);
+  if(!plan) return;
+  const already = currentPlan === id;
+  currentPlan = already ? null : id;
+
+  // card states
+  document.querySelectorAll('.plan-card').forEach(c=>{
+    c.classList.toggle('active', c.dataset.plan === currentPlan);
+  });
+  stage.classList.toggle('has-active', !!currentPlan);
+
+  const panel = document.getElementById('detailPanel');
+  if(!currentPlan){
+    panel.classList.remove('open');
+    applyTheme(null);
+    updateSchedulePill(null);
+    return;
+  }
+
+  applyTheme(plan);
+
+  document.getElementById('detailPlanName').textContent = plan.name;
+  document.getElementById('detailPlanNameInline').textContent = plan.name;
+  document.getElementById('detailPrice').textContent = 'R$ ' + plan.price;
+  document.getElementById('detailTagline').textContent = plan.tagline;
+  document.getElementById('detailFeatures').innerHTML = plan.features.map(f=>`<li>${f}</li>`).join('');
+  document.getElementById('detailAboutPlan').textContent = plan.about;
+  document.getElementById('detailCta').textContent = `Agendar o ${plan.name} →`;
+  panel.classList.add('open');
+
+  document.getElementById('fPlan').value = plan.id;
+  updateSchedulePill(plan);
+}
+
+document.getElementById('detailCta').addEventListener('click', (e)=>{
+  // just scrolls via href, schedule pill already synced
+});
+
+function updateSchedulePill(plan){
+  const pill = document.getElementById('selectedPlanPill');
+  const box = document.getElementById('scheduleBox');
+  if(!plan){
+    pill.textContent = 'Nenhum plano selecionado ainda — escolha um acima';
+    box.classList.remove('selected');
+  }else{
+    pill.textContent = `Plano selecionado: ${plan.name} · R$ ${plan.price}/ano`;
+    box.classList.add('selected');
+  }
+}
+
+document.getElementById('fPlan').addEventListener('change', (e)=>{
+  const plan = PLANS.find(p=>p.id === e.target.value);
+  if(plan) selectPlan(plan.id);
+});
+
+/* ===================== THEME (CSS VARS) ===================== */
+function applyTheme(plan){
+  const root = document.documentElement.style;
+  const c = plan ? plan.color : '#2f6fed';
+  const cl = plan ? plan.colorLight : '#7db4ff';
+  const cd = plan ? plan.colorDark : '#1c4dc4';
+  root.setProperty('--accent', c);
+  root.setProperty('--accent-light', cl);
+  root.setProperty('--accent-dark', cd);
+  root.setProperty('--accent-soft', hexToRgba(c, 0.14));
+  if(scene) scene.setThemeColor(c);
+}
+function hexToRgba(hex, a){
+  const v = hex.replace('#','');
+  const r = parseInt(v.substring(0,2),16), g = parseInt(v.substring(2,4),16), b = parseInt(v.substring(4,6),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+/* ===================== WHATSAPP SCHEDULE SUBMIT ===================== */
+document.getElementById('scheduleSubmit').addEventListener('click', ()=>{
+  const name = document.getElementById('fName').value.trim();
+  const biz = document.getElementById('fBiz').value.trim();
+  const planId = document.getElementById('fPlan').value;
+  const date = document.getElementById('fDate').value;
+  const time = document.getElementById('fTime').value;
+  const msg = document.getElementById('fMsg').value.trim();
+  const plan = PLANS.find(p=>p.id===planId);
+
+  let text = `Olá! Quero agendar a criação do meu site pela Nexa Web.%0A`;
+  text += `Nome: ${name || '-'}%0A`;
+  text += `Negócio: ${biz || '-'}%0A`;
+  text += `Plano: ${plan ? plan.name + ' (R$ ' + plan.price + '/ano)' : 'ainda não escolhi'}%0A`;
+  if(date) text += `Data preferida: ${date}%0A`;
+  if(time) text += `Horário preferido: ${time}%0A`;
+  if(msg) text += `Sobre o negócio: ${msg}`;
+
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
+});
+
+/* ===================== REVEAL ON SCROLL ===================== */
+document.getElementById('scrollCue').addEventListener('click', ()=>{
+  const hero = document.querySelector('.hero');
+  window.scrollTo({ top: hero.offsetHeight - 40, behavior: 'smooth' });
+});
+
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{ threshold:0.15 });
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ===================== THREE.JS AMBIENT NEXUS SCENE ===================== */
+let scene, camera, renderer, group, particles, lines, mouseX=0, mouseY=0;
+
+function initScene(){
+  const canvas = document.getElementById('bg-canvas');
+  const three_scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 100);
+  camera.position.z = 22;
+
+  renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  group = new THREE.Group();
+  three_scene.add(group);
+
+  // Nexus core: icosahedron wireframe
+  const coreGeo = new THREE.IcosahedronGeometry(6, 1);
+  const coreMat = new THREE.MeshBasicMaterial({ color:0x2f6fed, wireframe:true, transparent:true, opacity:0.35 });
+  const core = new THREE.Mesh(coreGeo, coreMat);
+  group.add(core);
+
+  // Particle nodes orbiting
+  const NODE_COUNT = 90;
+  const positions = new Float32Array(NODE_COUNT*3);
+  for(let i=0;i<NODE_COUNT;i++){
+    const r = 9 + Math.random()*10;
+    const theta = Math.random()*Math.PI*2;
+    const phi = Math.acos((Math.random()*2)-1);
+    positions[i*3] = r*Math.sin(phi)*Math.cos(theta);
+    positions[i*3+1] = r*Math.sin(phi)*Math.sin(theta);
+    positions[i*3+2] = r*Math.cos(phi);
+  }
+  const particleGeo = new THREE.BufferGeometry();
+  particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const particleMat = new THREE.PointsMaterial({ color:0x7db4ff, size:0.18, transparent:true, opacity:0.85 });
+  particles = new THREE.Points(particleGeo, particleMat);
+  group.add(particles);
+
+  // Iluminação — necessária pros módulos com material "shaded" (não wireframe)
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.55);
+  three_scene.add(ambientLight);
+  const keyLight = new THREE.DirectionalLight(0xffffff, 0.9);
+  keyLight.position.set(8, 12, 10);
+  three_scene.add(keyLight);
+  const rimLight = new THREE.PointLight(0x2f6fed, 1.6, 60);
+  rimLight.position.set(-14, -6, 8);
+  three_scene.add(rimLight);
+
+  // Módulos flutuantes — organizados em dois "anéis" concêntricos (estrutura
+  // deliberada, não posições aleatórias), cada um girando como um todo,
+  // com material shaded (metalness/roughness) em vez de wireframe.
+  const floaters = [];
+  const floaterGeos = [
+    new THREE.IcosahedronGeometry(1, 1),
+    new THREE.OctahedronGeometry(1.15, 0),
+    new THREE.TorusGeometry(0.78, 0.26, 16, 32),
+    new THREE.SphereGeometry(0.72, 20, 20)
+  ];
+
+  function buildRing(count, radius, tiltDeg, baseY, sizeScale){
+    const ringGroup = new THREE.Group();
+    ringGroup.rotation.x = THREE.MathUtils.degToRad(tiltDeg);
+    for(let i=0;i<count;i++){
+      const angle = (i / count) * Math.PI * 2;
+      const isAccent = i % 3 === 0;
+      const geo = floaterGeos[i % floaterGeos.length];
+      const mat = new THREE.MeshStandardMaterial({
+        color: isAccent ? 0x2f6fed : 0xc7cedd,
+        metalness: 0.45,
+        roughness: 0.32,
+        emissive: isAccent ? 0x0c1e4a : 0x000000,
+        emissiveIntensity: isAccent ? 0.25 : 0
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.scale.setScalar(sizeScale);
+      mesh.userData.baseScale = sizeScale;
+      mesh.position.set(Math.cos(angle)*radius, baseY + Math.sin(angle*2)*1.4, Math.sin(angle)*radius);
+      mesh.userData.isAccent = isAccent;
+      mesh.userData.spin = 0.003 + Math.random()*0.004;
+      mesh.userData.bobSpeed = 0.35 + Math.random()*0.5;
+      mesh.userData.bobOffset = angle;
+      mesh.userData.baseY = mesh.position.y;
+      ringGroup.add(mesh);
+      floaters.push(mesh);
+    }
+    group.add(ringGroup);
+    return ringGroup;
+  }
+
+  const ringA = buildRing(6, 13, -6, -2, 1);
+  const ringB = buildRing(9, 19.5, 9, 1.5, 0.78);
+
+  function setThemeColor(hex){
+    const color = new THREE.Color(hex);
+    coreMat.color = color;
+    particleMat.color.copy(color).lerp(new THREE.Color(0xffffff), 0.35);
+    rimLight.color = color;
+    floaters.forEach(f=>{
+      if(f.userData.isAccent) f.material.color.copy(color);
+    });
+  }
+
+  let clock = new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+    group.rotation.y = t*0.025 + mouseX*0.15;
+    group.rotation.x = mouseY*0.1;
+    core.rotation.y = t*0.05;
+    core.rotation.x = t*0.02;
+    ringA.rotation.y = t*0.06;
+    ringB.rotation.y = -t*0.04;
+    floaters.forEach(f=>{
+      f.rotation.x += f.userData.spin;
+      f.rotation.y += f.userData.spin*1.4;
+      if(f.userData.dragging){
+        // posição já é definida pelo pointermove — não mexe aqui
+      } else if(f.userData.velocity && f.userData.velocity.length() > 0.03){
+        // acabou de soltar com um "impulso": aplica inércia com atrito até parar
+        const dt = 1/60;
+        f.position.addScaledVector(f.userData.velocity, dt);
+        f.userData.velocity.multiplyScalar(0.94);
+        f.userData.baseY = f.position.y;
+        if(f.userData.velocity.length() <= 0.03){
+          f.userData.velocity = null;
+          f.userData.bobOffset = t * f.userData.bobSpeed;
+        }
+      } else {
+        f.position.y = f.userData.baseY + Math.sin(t*f.userData.bobSpeed + f.userData.bobOffset)*1.1;
+      }
+      const pulse = f.userData.pulse || 0;
+      if(pulse > 0.001){
+        f.userData.pulse *= 0.9;
+        f.scale.setScalar((f.userData.baseScale || f.scale.x) * (1 + f.userData.pulse*0.6));
+      }
+    });
+    renderer.render(three_scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', ()=>{
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+  window.addEventListener('mousemove', (e)=>{
+    mouseX = (e.clientX/window.innerWidth - 0.5);
+    mouseY = (e.clientY/window.innerHeight - 0.5);
+  });
+
+  // Interação real com os módulos: arrastar (pega, move, solta com inércia)
+  // e toque rápido (pulso). Tudo via Pointer Events, funciona no mouse e no touch.
+  const raycaster = new THREE.Raycaster();
+  const pointer = new THREE.Vector2();
+  const dragPlane = new THREE.Plane();
+  const dragPoint = new THREE.Vector3();
+  const planeNormal = new THREE.Vector3();
+  const dragOffset = new THREE.Vector3();
+  const lastDragPos = new THREE.Vector3();
+  let dragTarget = null;
+  let pointerDownAt = null;
+  let lastDragTime = 0;
+
+  function setPointerFromEvent(e){
+    pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+    pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  }
+
+  function onPointerDown(e){
+    setPointerFromEvent(e);
+    raycaster.setFromCamera(pointer, camera);
+    const hit = raycaster.intersectObjects(floaters)[0];
+    if(!hit) return;
+    dragTarget = hit.object;
+    three_scene.attach(dragTarget); // sai do anel giratório, passa a ter posição em espaço "mundo" — evita deslocar errado enquanto arrasta
+    dragTarget.userData.dragging = true;
+    dragTarget.userData.pulse = 0;
+    dragTarget.userData.velocity = null;
+    pointerDownAt = { x: e.clientX, y: e.clientY };
+    camera.getWorldDirection(planeNormal);
+    dragPlane.setFromNormalAndCoplanarPoint(planeNormal, dragTarget.position);
+    raycaster.ray.intersectPlane(dragPlane, dragPoint);
+    dragOffset.copy(dragTarget.position).sub(dragPoint);
+    lastDragPos.copy(dragTarget.position);
+    lastDragTime = performance.now();
+    if(e.cancelable) e.preventDefault();
+  }
+
+  function onPointerMove(e){
+    if(!dragTarget) return;
+    if(e.cancelable) e.preventDefault();
+    setPointerFromEvent(e);
+    raycaster.setFromCamera(pointer, camera);
+    if(!raycaster.ray.intersectPlane(dragPlane, dragPoint)) return;
+    const newPos = dragPoint.clone().add(dragOffset);
+    const now = performance.now();
+    const dt = Math.max((now - lastDragTime) / 1000, 0.001);
+    dragTarget.userData.velocity = newPos.clone().sub(lastDragPos).divideScalar(dt);
+    dragTarget.position.copy(newPos);
+    lastDragPos.copy(newPos);
+    lastDragTime = now;
+  }
+
+  function onPointerUp(e){
+    if(!dragTarget) return;
+    const moved = pointerDownAt ? Math.hypot(e.clientX - pointerDownAt.x, e.clientY - pointerDownAt.y) : 999;
+    if(moved < 6){
+      dragTarget.userData.pulse = 1;
+      dragTarget.userData.velocity = null;
+    } else {
+      dragTarget.userData.baseY = dragTarget.position.y;
+      if(dragTarget.userData.velocity){
+        const speed = dragTarget.userData.velocity.length();
+        const maxSpeed = 16;
+        if(speed > maxSpeed) dragTarget.userData.velocity.multiplyScalar(maxSpeed / speed);
+      }
+    }
+    dragTarget.userData.dragging = false;
+    dragTarget = null;
+    pointerDownAt = null;
+  }
+
+  window.addEventListener('pointerdown', onPointerDown, { passive:false });
+  window.addEventListener('pointermove', onPointerMove, { passive:false });
+  window.addEventListener('pointerup', onPointerUp, { passive:false });
+  window.addEventListener('pointercancel', onPointerUp, { passive:false });
+
+  return { setThemeColor, floaters };
+}
+
+if(typeof THREE !== 'undefined'){
+  scene = initScene();
+} else {
+  scene = null;
+}
+
+/* ===================================================================
+   PORTFÓLIO — CARROSSEL
+=================================================================== */
+const PORTFOLIO = [
+  {
+    name:'Espaço Mayara Brasil',
+    tag:'Beleza & Estética',
+    color:'#e0559a',
+    desc:'Site de agendamento para especialista em cílios, sobrancelha e micropigmentação: tabela de serviços com preços, resultados reais de clientes e marcação direto pelo WhatsApp.',
+    url:'https://enzokaleb01.github.io/Site-Mayra-Brasil/'
+  },
+  {
+    name:'Escola de Carnaval do Ceará',
+    tag:'Projeto cultural',
+    color:'#e6b02c',
+    desc:'Site institucional para projeto social de Fortaleza: cursos gratuitos de costura, figurino e adereços, inscrições e bolsas para três comunidades.',
+    url:'https://enzokaleb01.github.io/Carnaval/'
+  },
+  {
+    name:'Açaí da Naty',
+    tag:'Food service',
+    color:'#7c3fed',
+    desc:'Site de pedidos para açaiteria, com cardápio completo, carrinho e checkout direto pelo WhatsApp.',
+    url:null
+  },
+  {
+    name:'Delícias da Thii',
+    tag:'Food service',
+    color:'#2f9e6f',
+    desc:'Loja de lanches, pastéis e vitaminas com carrinho, endereço por GPS e pagamento por Pix, cartão ou dinheiro.',
+    url:null
+  },
+  {
+    name:'Boleria Doce Delícia',
+    tag:'Confeitaria',
+    color:'#d9822b',
+    desc:'Catálogo com 26 sabores de bolo, carrinho persistente e um bolo 3D animado girando na home.',
+    url:null
+  },
+  {
+    name:'Poppe Games',
+    tag:'Games & Colecionáveis',
+    color:'#e0468a',
+    desc:'Loja de games com identidade rosa, status de aberto/fechado em tempo real e ilustrações estilo Funko Pop.',
+    url:null
+  },
+  {
+    name:'Q.DRINKS',
+    tag:'Eventos',
+    color:'#c9a227',
+    desc:'Site de bartender móvel de luxo, identidade preto e dourado e cardápio de coquetéis com cara de Fortaleza.',
+    url:null
+  },
+  {
+    name:'Toque de Mãe',
+    tag:'E-commerce',
+    color:'#4f8fe0',
+    desc:'Loja de touquinhas artesanais com variações de cor, sistema de favoritos e preços por atacado.',
+    url:null
+  }
+];
+
+const carouselTrack = document.getElementById('carouselTrack');
+carouselTrack.innerHTML = PORTFOLIO.map(p=>`
+  <div class="portfolio-card" style="--pc:${p.color}">
+    <div class="portfolio-tag">${p.tag}</div>
+    <h3>${p.name}</h3>
+    <p>${p.desc}</p>
+    ${p.url
+      ? `<a class="portfolio-link" href="${p.url}" target="_blank" rel="noopener">Ver site ao vivo →</a>`
+      : `<div class="portfolio-soon">Site sob NDA do cliente</div>`
+    }
+  </div>
+`).join('');
+
+document.getElementById('carouselNext').addEventListener('click', ()=>{
+  carouselTrack.scrollBy({ left: 320, behavior:'smooth' });
+});
+document.getElementById('carouselPrev').addEventListener('click', ()=>{
+  carouselTrack.scrollBy({ left: -320, behavior:'smooth' });
+});
+
+/* ===================================================================
+   CADASTRO + AVALIAÇÕES DE CLIENTES — backend em Python
+   -------------------------------------------------------------------
+   Dois bancos de dados SEPARADOS, cada um numa tabela SQLite própria,
+   servidos por uma API Flask (veja a pasta nexaweb-backend/):
+
+   1) users.db     -> cadastro do cliente (nome, e-mail, senha com hash)
+   2) feedback.db  -> avaliações (nota, comentário, foto/vídeo em base64)
+
+   Troque API_BASE_URL pelo endereço onde o backend estiver rodando
+   (localhost pra testar, ou a URL do servidor depois do deploy).
+=================================================================== */
+
+const API_BASE_URL = 'http://localhost:5000';
+const MAX_MEDIA_BYTES = 4 * 1024 * 1024; // ~4MB por avaliação
+
+let currentUser = null; // { id, name, email }
+let selectedRating = 0;
+let pendingMedia = null; // { dataUrl, type }
+
+const authPrompt = document.getElementById('authPrompt');
+const loggedInWrap = document.getElementById('loggedInWrap');
+const userBarName = document.getElementById('userBarName');
+const navProfileBtn = document.getElementById('navProfileBtn');
+const navProfileInitial = document.getElementById('navProfileInitial');
+const heroGreeting = document.getElementById('heroGreeting');
+const authModalOverlay = document.getElementById('authModalOverlay');
+
+/* ---- abrir/fechar modal ---- */
+function openAuthModal(){ authModalOverlay.classList.add('open'); }
+function closeAuthModal(){ authModalOverlay.classList.remove('open'); }
+navProfileBtn.addEventListener('click', ()=>{
+  if(currentUser){ doLogout(); } else { openAuthModal(); }
+});
+document.getElementById('openAuthFromReviews').addEventListener('click', openAuthModal);
+document.getElementById('authModalClose').addEventListener('click', closeAuthModal);
+authModalOverlay.addEventListener('click', (e)=>{ if(e.target === authModalOverlay) closeAuthModal(); });
+
+/* ---- tabs login/cadastro ---- */
+document.getElementById('tabLogin').addEventListener('click', ()=> switchAuthTab('login'));
+document.getElementById('tabRegister').addEventListener('click', ()=> switchAuthTab('register'));
+function switchAuthTab(tab){
+  document.getElementById('tabLogin').classList.toggle('active', tab==='login');
+  document.getElementById('tabRegister').classList.toggle('active', tab==='register');
+  document.getElementById('loginForm').classList.toggle('active', tab==='login');
+  document.getElementById('registerForm').classList.toggle('active', tab==='register');
+}
+
+async function apiCall(path, options){
+  const res = await fetch(`${API_BASE_URL}${path}`, {
+    headers:{ 'Content-Type':'application/json' },
+    ...options
+  });
+  let data = null;
+  try{ data = await res.json(); }catch(err){ /* corpo vazio */ }
+  if(!res.ok){
+    throw new Error((data && data.error) || 'Erro ao falar com o servidor.');
+  }
+  return data;
+}
+
+// Mensagem amigável quando o fetch falha por completo (backend fora do ar,
+// ou página https tentando falar com um backend http local — o navegador
+// bloqueia isso por segurança, é o motivo mais comum de "não funciona").
+function connectionErrorMessage(err){
+  if(!err.message.includes('Failed to fetch')) return err.message;
+  const pageIsHttps = window.location.protocol === 'https:';
+  const apiIsHttp = API_BASE_URL.startsWith('http://');
+  if(pageIsHttps && apiIsHttp){
+    return 'Não consegui conectar ao servidor. Esta página está em https e o servidor Python está em http://localhost — o navegador bloqueia essa combinação. Abra o site via "python -m http.server" (veja o README do backend) enquanto testa localmente.';
+  }
+  return 'Não consegui conectar ao servidor Python. Ele está rodando?';
+}
+
+/* ---- cadastro (banco de dados 1: users.db) ---- */
+document.getElementById('registerForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('regMsg');
+  msg.textContent = ''; msg.className = 'auth-msg';
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim().toLowerCase();
+  const password = document.getElementById('regPassword').value;
+  if(!name || !email || password.length < 4){
+    msg.textContent = 'Preencha nome, e-mail e uma senha com pelo menos 4 caracteres.';
+    msg.className = 'auth-msg error';
+    return;
+  }
+  msg.textContent = 'Enviando...'; msg.className = 'auth-msg';
+  try{
+    const user = await apiCall('/api/register', { method:'POST', body: JSON.stringify({ name, email, password }) });
+    msg.textContent = 'Cadastro criado! Entrando...';
+    msg.className = 'auth-msg ok';
+    loginAs(user);
+  }catch(err){
+    msg.textContent = connectionErrorMessage(err);
+    msg.className = 'auth-msg error';
+  }
+});
+
+/* ---- login ---- */
+document.getElementById('loginForm').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('loginMsg');
+  msg.textContent = ''; msg.className = 'auth-msg';
+  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+  const password = document.getElementById('loginPassword').value;
+  msg.textContent = 'Entrando...'; msg.className = 'auth-msg';
+  try{
+    const user = await apiCall('/api/login', { method:'POST', body: JSON.stringify({ email, password }) });
+    loginAs(user);
+  }catch(err){
+    msg.textContent = connectionErrorMessage(err);
+    msg.className = 'auth-msg error';
+  }
+});
+
+function loginAs(user){
+  currentUser = user;
+  authPrompt.style.display = 'none';
+  loggedInWrap.style.display = 'block';
+  userBarName.textContent = user.name;
+  navProfileBtn.classList.add('logged-in');
+  navProfileBtn.title = `${user.name} · Sair`;
+  navProfileInitial.textContent = user.name.trim().charAt(0).toUpperCase();
+  heroGreeting.textContent = `Olá, ${user.name.trim().split(' ')[0]}`;
+  closeAuthModal();
+  document.getElementById('loginForm').reset();
+  document.getElementById('registerForm').reset();
+}
+
+function doLogout(){
+  currentUser = null;
+  selectedRating = 0;
+  pendingMedia = null;
+  document.querySelectorAll('.star').forEach(s=>s.classList.remove('filled'));
+  document.getElementById('feedbackComment').value = '';
+  document.getElementById('mediaPreview').innerHTML = '';
+  document.getElementById('feedbackStatus').textContent = '';
+  authPrompt.style.display = 'block';
+  loggedInWrap.style.display = 'none';
+  navProfileBtn.classList.remove('logged-in');
+  navProfileBtn.title = 'Cadastrar / Entrar';
+  navProfileInitial.textContent = '';
+  heroGreeting.textContent = 'Bem-vindo';
+}
+document.getElementById('logoutBtn').addEventListener('click', doLogout);
+
+/* ---- estrelas ---- */
+document.querySelectorAll('.star').forEach(star=>{
+  star.addEventListener('click', ()=>{
+    selectedRating = parseInt(star.dataset.value, 10);
+    document.querySelectorAll('.star').forEach(s=>{
+      s.classList.toggle('filled', parseInt(s.dataset.value,10) <= selectedRating);
+    });
+  });
+});
+
+/* ---- upload de foto/vídeo ---- */
+document.getElementById('feedbackMedia').addEventListener('change', (e)=>{
+  const file = e.target.files[0];
+  const preview = document.getElementById('mediaPreview');
+  pendingMedia = null;
+  preview.innerHTML = '';
+  if(!file) return;
+  if(file.size > MAX_MEDIA_BYTES){
+    preview.textContent = 'Esse arquivo é muito grande (máx. ~4MB). Escolha outro.';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    pendingMedia = { dataUrl: reader.result, type: file.type.startsWith('video') ? 'video' : 'image' };
+    if(pendingMedia.type === 'image'){
+      preview.innerHTML = `<img src="${pendingMedia.dataUrl}" alt="prévia">`;
+    }else{
+      preview.innerHTML = `<video src="${pendingMedia.dataUrl}" muted></video>`;
+    }
+  };
+  reader.onerror = ()=>{ preview.textContent = 'Não consegui ler esse arquivo.'; };
+  reader.readAsDataURL(file);
+});
+
+/* ---- enviar avaliação (banco de dados 2: feedback.db) ---- */
+document.getElementById('feedbackSubmit').addEventListener('click', async ()=>{
+  const status = document.getElementById('feedbackStatus');
+  status.textContent = ''; status.className = 'feedback-status';
+  if(!currentUser){
+    status.textContent = 'Faça login pra avaliar.';
+    status.className = 'feedback-status error';
+    return;
+  }
+  const comment = document.getElementById('feedbackComment').value.trim();
+  if(selectedRating === 0){
+    status.textContent = 'Escolha uma nota de 1 a 5 estrelas.';
+    status.className = 'feedback-status error';
+    return;
+  }
+  if(!comment){
+    status.textContent = 'Escreva um comentário rápido.';
+    status.className = 'feedback-status error';
+    return;
+  }
+  status.textContent = 'Enviando...';
+  try{
+    await apiCall('/api/feedback', {
+      method:'POST',
+      body: JSON.stringify({
+        email: currentUser.email,
+        rating: selectedRating,
+        comment,
+        media_type: pendingMedia ? pendingMedia.type : null,
+        media_data: pendingMedia ? pendingMedia.dataUrl : null
+      })
+    });
+    status.textContent = 'Avaliação enviada, obrigado!';
+    status.className = 'feedback-status ok';
+    selectedRating = 0;
+    pendingMedia = null;
+    document.querySelectorAll('.star').forEach(s=>s.classList.remove('filled'));
+    document.getElementById('feedbackComment').value = '';
+    document.getElementById('mediaPreview').innerHTML = '';
+    document.getElementById('feedbackMedia').value = '';
+    loadReviews();
+  }catch(err){
+    status.textContent = connectionErrorMessage(err);
+    status.className = 'feedback-status error';
+  }
+});
+
+/* ---- carregar e exibir avaliações ---- */
+async function loadReviews(){
+  const grid = document.getElementById('reviewsGrid');
+  grid.innerHTML = '<div class="review-loading">Carregando avaliações...</div>';
+  try{
+    const records = await apiCall('/api/feedback', { method:'GET' });
+    if(!records || records.length === 0){
+      grid.innerHTML = '<div class="review-empty">Ainda não há avaliações. Seja o primeiro a avaliar! ✨</div>';
+      return;
+    }
+    grid.innerHTML = records.map(r=>{
+      const stars = '★'.repeat(r.rating) + '☆'.repeat(5 - r.rating);
+      let mediaHtml = '';
+      if(r.media_type === 'image' && r.media_data){ mediaHtml = `<img src="${r.media_data}" alt="foto do cliente">`; }
+      else if(r.media_type === 'video' && r.media_data){ mediaHtml = `<video src="${r.media_data}" controls></video>`; }
+      return `
+        <div class="review-card">
+          <div class="review-stars">${stars}</div>
+          <div class="name">${escapeHtml(r.user_name)}</div>
+          <div class="comment">${escapeHtml(r.comment)}</div>
+          ${mediaHtml}
+        </div>
+      `;
+    }).join('');
+  }catch(err){
+    grid.innerHTML = `<div class="review-empty">Não consegui carregar as avaliações. ${escapeHtml(connectionErrorMessage(err))}</div>`;
+  }
+}
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+loadReviews();
+</script>
+</body>
+</html>
