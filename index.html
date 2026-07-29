@@ -6,7 +6,7 @@
 <title>Nexa Web — Sites profissionais que conectam e geram resultados</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root{
@@ -54,7 +54,7 @@ nav{
   backdrop-filter: blur(14px);
   border-bottom:1px solid var(--line);
 }
-.brand{ display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:0.5px; font-size:1.05rem; font-family:'Sora',sans-serif; }
+.brand{ display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:0.5px; font-size:1.05rem; font-family:'Orbitron',sans-serif; }
 .brand .n{ color:var(--silver); }
 .brand .w{ color:var(--accent); transition:color var(--transition-theme); }
 .brand-mark{ width:30px; height:30px; }
@@ -68,19 +68,6 @@ nav .links a:hover{ color:var(--ink); }
 .nav-cta:hover{ background:var(--accent); color:#050810; }
 .nav-actions{ display:flex; align-items:center; gap:10px; }
 @media (max-width:760px){ nav .links{ display:none; } }
-.nav-profile{
-  position:relative; width:42px; height:42px; border-radius:50%; background:var(--panel); border:1px solid var(--line);
-  display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--ink-dim); flex-shrink:0;
-  transition:border-color 300ms ease, color 300ms ease, background var(--transition-theme);
-}
-.nav-profile:hover{ border-color:var(--accent); color:var(--ink); }
-.nav-profile svg{ width:22px; height:22px; }
-.nav-profile .nav-profile-initial{
-  display:none; font-family:'Sora',sans-serif; font-weight:700; font-size:0.95rem; color:#fff;
-}
-.nav-profile.logged-in{ background:var(--accent); border-color:var(--accent); transition:background var(--transition-theme), border-color var(--transition-theme); }
-.nav-profile.logged-in svg{ display:none; }
-.nav-profile.logged-in .nav-profile-initial{ display:block; }
 
 
 /* ---------- HERO ---------- */
@@ -112,8 +99,11 @@ nav .links a:hover{ color:var(--ink); }
 .eyebrow::before{ content:''; width:26px; height:1px; background:var(--accent-light); transition:background var(--transition-theme); }
 
 .hero-greeting{
-  font-family:'Sora',sans-serif; font-weight:700; font-size:1.1rem; color:var(--accent-light);
-  margin-bottom:6px; min-height:1.4em; transition:color var(--transition-theme);
+  font-family:'Orbitron',sans-serif; font-weight:800; font-size:clamp(1.3rem,3vw,1.9rem);
+  letter-spacing:1px; text-transform:uppercase; color:var(--ink);
+  background:linear-gradient(135deg, var(--ink) 30%, var(--accent-light) 100%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  margin-bottom:10px; min-height:1.4em; transition:background var(--transition-theme);
 }
 
 .hero h1{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
@@ -289,41 +279,8 @@ section{ padding:9vh 6vw; position:relative; }
 footer{ padding:50px 6vw 30px; border-top:1px solid var(--line); text-align:center; color:var(--ink-dim); font-size:0.82rem; }
 footer .brand{ justify-content:center; margin-bottom:14px; }
 
-/* ---------- AVALIAÇÕES / AUTH ---------- */
+/* ---------- AVALIAÇÕES ---------- */
 .reviews-top{ max-width:1100px; margin:0 auto; }
-.auth-wrap{ max-width:460px; margin:0 auto; }
-.auth-card{
-  border-radius:20px; border:1px solid var(--line); background:var(--panel); padding:34px;
-  transition:border-color var(--transition-theme);
-}
-.auth-tabs{ display:flex; gap:8px; margin-bottom:22px; background:var(--bg-elev); border-radius:10px; padding:4px; }
-.auth-tab{ flex:1; text-align:center; padding:10px; border-radius:8px; font-size:0.86rem; font-weight:600; color:var(--ink-dim); cursor:pointer; transition:all 200ms ease; }
-.auth-tab.active{ background:var(--accent); color:#050810; }
-.auth-form{ display:none; grid-gap:14px; }
-.auth-form.active{ display:grid; }
-.auth-form input{
-  width:100%; padding:12px 14px; border-radius:10px; border:1px solid var(--line);
-  background:var(--bg-elev); color:var(--ink); font-family:'Inter',sans-serif; font-size:0.9rem;
-}
-.auth-form input:focus{ outline:2px solid var(--accent); border-color:transparent; }
-.auth-submit{
-  padding:13px; border-radius:10px; border:none; background:linear-gradient(135deg,var(--accent),var(--accent-dark));
-  color:#fff; font-weight:700; font-size:0.9rem; cursor:pointer; transition:transform 200ms ease, background var(--transition-theme);
-}
-.auth-submit:hover{ transform:translateY(-2px); }
-.auth-msg{ font-size:0.82rem; min-height:18px; }
-.auth-msg.error{ color:#ff8080; }
-.auth-msg.ok{ color:var(--accent-light); }
-.auth-note{ font-size:0.76rem; color:var(--ink-dim); line-height:1.5; margin-top:16px; text-align:center; }
-
-.user-bar{
-  max-width:1100px; margin:0 auto 30px; display:flex; align-items:center; justify-content:space-between;
-  padding:14px 22px; border-radius:14px; background:var(--accent-soft); border:1px solid var(--line);
-  transition:background var(--transition-theme);
-}
-.user-bar span{ font-size:0.88rem; }
-.user-bar .logout{ font-size:0.8rem; color:var(--ink-dim); border:1px solid var(--line); padding:7px 14px; border-radius:100px; cursor:pointer; background:transparent; }
-.user-bar .logout:hover{ color:var(--ink); border-color:var(--accent); }
 
 .feedback-form{
   max-width:640px; margin:0 auto 60px; border-radius:20px; border:1px solid var(--line); background:var(--panel);
@@ -368,22 +325,6 @@ footer .brand{ justify-content:center; margin-bottom:14px; }
 .review-empty{ text-align:center; color:var(--ink-dim); font-size:0.9rem; grid-column:1/-1; padding:30px; }
 .review-loading{ text-align:center; color:var(--ink-dim); font-size:0.88rem; grid-column:1/-1; padding:20px; }
 
-/* ---------- AUTH MODAL ---------- */
-.modal-overlay{
-  position:fixed; inset:0; z-index:200; background:rgba(2,4,10,0.72); backdrop-filter:blur(8px);
-  display:none; align-items:center; justify-content:center; padding:20px;
-}
-.modal-overlay.open{ display:flex; }
-.modal-box{
-  width:100%; max-width:440px; background:var(--panel); border:1px solid var(--line); border-radius:20px;
-  padding:36px; position:relative; transition:border-color var(--transition-theme);
-}
-.modal-close{
-  position:absolute; top:14px; right:14px; width:32px; height:32px; border-radius:50%; border:1px solid var(--line);
-  background:transparent; color:var(--ink-dim); font-size:1rem; cursor:pointer; transition:all 200ms ease;
-}
-.modal-close:hover{ color:var(--ink); border-color:var(--accent); }
-
 /* ---------- PORTFOLIO CAROUSEL ---------- */
 .carousel-wrap{ position:relative; max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:14px; }
 .carousel-track{
@@ -416,13 +357,12 @@ footer .brand{ justify-content:center; margin-bottom:14px; }
 .carousel-arrow:hover{ border-color:var(--accent); color:var(--accent-light); }
 @media (max-width:640px){ .carousel-arrow{ display:none; } }
 
-/* ---------- SIMPLE AUTH PROMPT (inside avaliações) ---------- */
-.auth-prompt{
-  max-width:480px; margin:0 auto; text-align:center; border-radius:20px; border:1px solid var(--line);
-  background:var(--panel); padding:44px 36px; transition:border-color var(--transition-theme);
+.review-card-header{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+.review-delete{
+  flex-shrink:0; border:1px solid var(--line); background:transparent; color:var(--ink-dim);
+  font-size:0.72rem; padding:5px 10px; border-radius:100px; cursor:pointer; transition:all 200ms ease;
 }
-.auth-prompt h3{ margin:0 0 10px; font-size:1.25rem; }
-.auth-prompt p{ color:var(--ink-dim); font-size:0.9rem; margin:0 0 22px; }
+.review-delete:hover{ border-color:#ff8080; color:#ff8080; }
 
 .reveal{ opacity:0; transform:translateY(24px); transition:opacity 800ms ease, transform 800ms ease; }
 .reveal.in{ opacity:1; transform:translateY(0); }
@@ -468,37 +408,9 @@ footer .brand{ justify-content:center; margin-bottom:14px; }
     <a href="#agendar">Agendar</a>
   </div>
   <div class="nav-actions">
-    <button class="nav-profile" id="navProfileBtn" type="button" title="Cadastrar / Entrar" aria-label="Cadastrar ou entrar">
-      <svg viewBox="0 0 24 24" id="navProfileIcon"><path d="M12 12a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm0 2c-4.4 0-8 2.2-8 5v1h16v-1c0-2.8-3.6-5-8-5Z" fill="currentColor"/></svg>
-      <span class="nav-profile-initial" id="navProfileInitial"></span>
-    </button>
     <a href="#agendar" class="nav-cta">Agendar site</a>
   </div>
 </nav>
-
-<div class="modal-overlay" id="authModalOverlay">
-  <div class="modal-box">
-    <button class="modal-close" id="authModalClose" type="button" aria-label="Fechar">✕</button>
-    <div class="auth-tabs">
-      <div class="auth-tab active" data-tab="login" id="tabLogin">Entrar</div>
-      <div class="auth-tab" data-tab="register" id="tabRegister">Cadastrar grátis</div>
-    </div>
-    <form class="auth-form active" id="loginForm">
-      <input type="email" id="loginEmail" placeholder="Seu e-mail" required>
-      <input type="password" id="loginPassword" placeholder="Sua senha" required>
-      <button type="submit" class="auth-submit">Entrar</button>
-      <div class="auth-msg" id="loginMsg"></div>
-    </form>
-    <form class="auth-form" id="registerForm">
-      <input type="text" id="regName" placeholder="Seu nome" required>
-      <input type="email" id="regEmail" placeholder="Seu e-mail" required>
-      <input type="password" id="regPassword" placeholder="Crie uma senha" required minlength="4">
-      <button type="submit" class="auth-submit">Criar cadastro grátis</button>
-      <div class="auth-msg" id="regMsg"></div>
-    </form>
-    <div class="auth-note">O cadastro fica guardado num banco separado das avaliações, no servidor Python da Nexa Web.</div>
-  </div>
-</div>
 
 <section class="hero">
   <div class="hero-hint">arraste os módulos flutuantes ✦ toque pra dar um impulso</div>
@@ -601,38 +513,26 @@ footer .brand{ justify-content:center; margin-bottom:14px; }
   </div>
 
   <div class="reviews-top reveal">
-    <!-- logged out -->
-    <div class="auth-prompt" id="authPrompt">
-      <h3>Cadastre-se pra avaliar</h3>
-      <p>O cadastro é grátis e leva menos de um minuto — dá pra fazer aqui ou no botão lá em cima.</p>
-      <button class="btn-primary" id="openAuthFromReviews" type="button">Cadastrar / Entrar</button>
-    </div>
+    <div class="feedback-form">
+      <label style="font-size:0.82rem; color:var(--ink-dim); display:block; margin-bottom:8px;">Seu nome</label>
+      <input type="text" id="feedbackName" placeholder="Como podemos te chamar?" style="width:100%; padding:13px 14px; border-radius:10px; border:1px solid var(--line); background:var(--bg-elev); color:var(--ink); font-family:'Inter',sans-serif; font-size:0.92rem; margin-bottom:16px;">
 
-    <!-- logged in: user bar + feedback form -->
-    <div id="loggedInWrap" style="display:none;">
-      <div class="user-bar">
-        <span>Logado como <strong id="userBarName"></strong></span>
-        <button class="logout" id="logoutBtn">Sair</button>
+      <label style="font-size:0.82rem; color:var(--ink-dim); display:block; margin-bottom:8px;">Sua avaliação</label>
+      <div class="star-picker" id="starPicker">
+        <span class="star" data-value="1">★</span>
+        <span class="star" data-value="2">★</span>
+        <span class="star" data-value="3">★</span>
+        <span class="star" data-value="4">★</span>
+        <span class="star" data-value="5">★</span>
       </div>
-
-      <div class="feedback-form">
-        <label style="font-size:0.82rem; color:var(--ink-dim); display:block; margin-bottom:8px;">Sua avaliação</label>
-        <div class="star-picker" id="starPicker">
-          <span class="star" data-value="1">★</span>
-          <span class="star" data-value="2">★</span>
-          <span class="star" data-value="3">★</span>
-          <span class="star" data-value="4">★</span>
-          <span class="star" data-value="5">★</span>
-        </div>
-        <textarea id="feedbackComment" rows="3" placeholder="Conte o que achou do site..."></textarea>
-        <div class="media-input-row">
-          <label class="media-btn" for="feedbackMedia">📎 Anexar foto ou vídeo (opcional)</label>
-          <input type="file" id="feedbackMedia" accept="image/*,video/*" style="display:none;">
-          <div class="media-preview" id="mediaPreview"></div>
-        </div>
-        <button class="feedback-submit" id="feedbackSubmit">Enviar avaliação</button>
-        <div class="feedback-status" id="feedbackStatus"></div>
+      <textarea id="feedbackComment" rows="3" placeholder="Conte o que achou do site..."></textarea>
+      <div class="media-input-row">
+        <label class="media-btn" for="feedbackMedia">📎 Anexar foto ou vídeo (opcional)</label>
+        <input type="file" id="feedbackMedia" accept="image/*,video/*" style="display:none;">
+        <div class="media-preview" id="mediaPreview"></div>
       </div>
+      <button class="feedback-submit" id="feedbackSubmit">Enviar avaliação</button>
+      <div class="feedback-status" id="feedbackStatus"></div>
     </div>
   </div>
 
@@ -1186,13 +1086,16 @@ document.getElementById('carouselPrev').addEventListener('click', ()=>{
 });
 
 /* ===================================================================
-   CADASTRO + AVALIAÇÕES DE CLIENTES — backend em Python
+   AVALIAÇÕES DE CLIENTES — backend em Python (sistemaBD.py)
    -------------------------------------------------------------------
-   Dois bancos de dados SEPARADOS, cada um numa tabela SQLite própria,
-   servidos por uma API Flask (veja a pasta nexaweb-backend/):
+   Sem cadastro/login: qualquer visitante pode avaliar direto, com nome,
+   nota, comentário e foto/vídeo opcional. Aparece pra todo mundo.
 
-   1) users.db     -> cadastro do cliente (nome, e-mail, senha com hash)
-   2) feedback.db  -> avaliações (nota, comentário, foto/vídeo em base64)
+   Exclusão: cada avaliação enviada nesta aba recebe um "token" que só
+   esta aba conhece (fica só na memória do navegador, não é salvo em
+   disco). Por isso o botão "Remover" só aparece nas avaliações que
+   você mesmo enviou nesta visita — se recarregar a página, ele some,
+   já que não há conta pra "lembrar" quem enviou o quê.
 
    Troque API_BASE_URL pelo endereço onde o backend estiver rodando
    (localhost pra testar, ou a URL do servidor depois do deploy).
@@ -1201,37 +1104,9 @@ document.getElementById('carouselPrev').addEventListener('click', ()=>{
 const API_BASE_URL = 'http://localhost:5000';
 const MAX_MEDIA_BYTES = 4 * 1024 * 1024; // ~4MB por avaliação
 
-let currentUser = null; // { id, name, email }
 let selectedRating = 0;
 let pendingMedia = null; // { dataUrl, type }
-
-const authPrompt = document.getElementById('authPrompt');
-const loggedInWrap = document.getElementById('loggedInWrap');
-const userBarName = document.getElementById('userBarName');
-const navProfileBtn = document.getElementById('navProfileBtn');
-const navProfileInitial = document.getElementById('navProfileInitial');
-const heroGreeting = document.getElementById('heroGreeting');
-const authModalOverlay = document.getElementById('authModalOverlay');
-
-/* ---- abrir/fechar modal ---- */
-function openAuthModal(){ authModalOverlay.classList.add('open'); }
-function closeAuthModal(){ authModalOverlay.classList.remove('open'); }
-navProfileBtn.addEventListener('click', ()=>{
-  if(currentUser){ doLogout(); } else { openAuthModal(); }
-});
-document.getElementById('openAuthFromReviews').addEventListener('click', openAuthModal);
-document.getElementById('authModalClose').addEventListener('click', closeAuthModal);
-authModalOverlay.addEventListener('click', (e)=>{ if(e.target === authModalOverlay) closeAuthModal(); });
-
-/* ---- tabs login/cadastro ---- */
-document.getElementById('tabLogin').addEventListener('click', ()=> switchAuthTab('login'));
-document.getElementById('tabRegister').addEventListener('click', ()=> switchAuthTab('register'));
-function switchAuthTab(tab){
-  document.getElementById('tabLogin').classList.toggle('active', tab==='login');
-  document.getElementById('tabRegister').classList.toggle('active', tab==='register');
-  document.getElementById('loginForm').classList.toggle('active', tab==='login');
-  document.getElementById('registerForm').classList.toggle('active', tab==='register');
-}
+const minhasAvaliacoes = new Map(); // id -> delete_token (só desta sessão)
 
 async function apiCall(path, options){
   const res = await fetch(`${API_BASE_URL}${path}`, {
@@ -1254,83 +1129,10 @@ function connectionErrorMessage(err){
   const pageIsHttps = window.location.protocol === 'https:';
   const apiIsHttp = API_BASE_URL.startsWith('http://');
   if(pageIsHttps && apiIsHttp){
-    return 'Não consegui conectar ao servidor. Esta página está em https e o servidor Python está em http://localhost — o navegador bloqueia essa combinação. Abra o site via "python -m http.server" (veja o README do backend) enquanto testa localmente.';
+    return 'Não consegui conectar ao servidor. Esta página está em https e o servidor Python está em http://localhost — o navegador bloqueia essa combinação. Abra o site via "python iniciar_local.py" (veja o README do backend) enquanto testa localmente.';
   }
   return 'Não consegui conectar ao servidor Python. Ele está rodando?';
 }
-
-/* ---- cadastro (banco de dados 1: users.db) ---- */
-document.getElementById('registerForm').addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const msg = document.getElementById('regMsg');
-  msg.textContent = ''; msg.className = 'auth-msg';
-  const name = document.getElementById('regName').value.trim();
-  const email = document.getElementById('regEmail').value.trim().toLowerCase();
-  const password = document.getElementById('regPassword').value;
-  if(!name || !email || password.length < 4){
-    msg.textContent = 'Preencha nome, e-mail e uma senha com pelo menos 4 caracteres.';
-    msg.className = 'auth-msg error';
-    return;
-  }
-  msg.textContent = 'Enviando...'; msg.className = 'auth-msg';
-  try{
-    const user = await apiCall('/api/register', { method:'POST', body: JSON.stringify({ name, email, password }) });
-    msg.textContent = 'Cadastro criado! Entrando...';
-    msg.className = 'auth-msg ok';
-    loginAs(user);
-  }catch(err){
-    msg.textContent = connectionErrorMessage(err);
-    msg.className = 'auth-msg error';
-  }
-});
-
-/* ---- login ---- */
-document.getElementById('loginForm').addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const msg = document.getElementById('loginMsg');
-  msg.textContent = ''; msg.className = 'auth-msg';
-  const email = document.getElementById('loginEmail').value.trim().toLowerCase();
-  const password = document.getElementById('loginPassword').value;
-  msg.textContent = 'Entrando...'; msg.className = 'auth-msg';
-  try{
-    const user = await apiCall('/api/login', { method:'POST', body: JSON.stringify({ email, password }) });
-    loginAs(user);
-  }catch(err){
-    msg.textContent = connectionErrorMessage(err);
-    msg.className = 'auth-msg error';
-  }
-});
-
-function loginAs(user){
-  currentUser = user;
-  authPrompt.style.display = 'none';
-  loggedInWrap.style.display = 'block';
-  userBarName.textContent = user.name;
-  navProfileBtn.classList.add('logged-in');
-  navProfileBtn.title = `${user.name} · Sair`;
-  navProfileInitial.textContent = user.name.trim().charAt(0).toUpperCase();
-  heroGreeting.textContent = `Olá, ${user.name.trim().split(' ')[0]}`;
-  closeAuthModal();
-  document.getElementById('loginForm').reset();
-  document.getElementById('registerForm').reset();
-}
-
-function doLogout(){
-  currentUser = null;
-  selectedRating = 0;
-  pendingMedia = null;
-  document.querySelectorAll('.star').forEach(s=>s.classList.remove('filled'));
-  document.getElementById('feedbackComment').value = '';
-  document.getElementById('mediaPreview').innerHTML = '';
-  document.getElementById('feedbackStatus').textContent = '';
-  authPrompt.style.display = 'block';
-  loggedInWrap.style.display = 'none';
-  navProfileBtn.classList.remove('logged-in');
-  navProfileBtn.title = 'Cadastrar / Entrar';
-  navProfileInitial.textContent = '';
-  heroGreeting.textContent = 'Bem-vindo';
-}
-document.getElementById('logoutBtn').addEventListener('click', doLogout);
 
 /* ---- estrelas ---- */
 document.querySelectorAll('.star').forEach(star=>{
@@ -1366,16 +1168,19 @@ document.getElementById('feedbackMedia').addEventListener('change', (e)=>{
   reader.readAsDataURL(file);
 });
 
-/* ---- enviar avaliação (banco de dados 2: feedback.db) ---- */
+/* ---- enviar avaliação (aberta pra qualquer visitante) ---- */
 document.getElementById('feedbackSubmit').addEventListener('click', async ()=>{
   const status = document.getElementById('feedbackStatus');
   status.textContent = ''; status.className = 'feedback-status';
-  if(!currentUser){
-    status.textContent = 'Faça login pra avaliar.';
+
+  const name = document.getElementById('feedbackName').value.trim();
+  const comment = document.getElementById('feedbackComment').value.trim();
+
+  if(!name){
+    status.textContent = 'Escreva seu nome.';
     status.className = 'feedback-status error';
     return;
   }
-  const comment = document.getElementById('feedbackComment').value.trim();
   if(selectedRating === 0){
     status.textContent = 'Escolha uma nota de 1 a 5 estrelas.';
     status.className = 'feedback-status error';
@@ -1388,21 +1193,24 @@ document.getElementById('feedbackSubmit').addEventListener('click', async ()=>{
   }
   status.textContent = 'Enviando...';
   try{
-    await apiCall('/api/feedback', {
+    const resultado = await apiCall('/api/feedback', {
       method:'POST',
       body: JSON.stringify({
-        email: currentUser.email,
+        name,
         rating: selectedRating,
         comment,
         media_type: pendingMedia ? pendingMedia.type : null,
         media_data: pendingMedia ? pendingMedia.dataUrl : null
       })
     });
+    minhasAvaliacoes.set(resultado.id, resultado.delete_token);
+
     status.textContent = 'Avaliação enviada, obrigado!';
     status.className = 'feedback-status ok';
     selectedRating = 0;
     pendingMedia = null;
     document.querySelectorAll('.star').forEach(s=>s.classList.remove('filled'));
+    document.getElementById('feedbackName').value = '';
     document.getElementById('feedbackComment').value = '';
     document.getElementById('mediaPreview').innerHTML = '';
     document.getElementById('feedbackMedia').value = '';
@@ -1412,6 +1220,23 @@ document.getElementById('feedbackSubmit').addEventListener('click', async ()=>{
     status.className = 'feedback-status error';
   }
 });
+
+/* ---- remover uma avaliação (só a própria, desta sessão) ---- */
+async function removerAvaliacao(id){
+  const token = minhasAvaliacoes.get(id);
+  if(!token) return;
+  if(!confirm('Remover sua avaliação?')) return;
+  try{
+    await apiCall(`/api/feedback/${id}`, {
+      method:'DELETE',
+      body: JSON.stringify({ delete_token: token })
+    });
+    minhasAvaliacoes.delete(id);
+    loadReviews();
+  }catch(err){
+    alert(connectionErrorMessage(err));
+  }
+}
 
 /* ---- carregar e exibir avaliações ---- */
 async function loadReviews(){
@@ -1428,15 +1253,22 @@ async function loadReviews(){
       let mediaHtml = '';
       if(r.media_type === 'image' && r.media_data){ mediaHtml = `<img src="${r.media_data}" alt="foto do cliente">`; }
       else if(r.media_type === 'video' && r.media_data){ mediaHtml = `<video src="${r.media_data}" controls></video>`; }
+      const podeRemover = minhasAvaliacoes.has(r.id);
       return `
         <div class="review-card">
-          <div class="review-stars">${stars}</div>
+          <div class="review-card-header">
+            <div class="review-stars">${stars}</div>
+            ${podeRemover ? `<button class="review-delete" data-id="${r.id}">Remover</button>` : ''}
+          </div>
           <div class="name">${escapeHtml(r.user_name)}</div>
           <div class="comment">${escapeHtml(r.comment)}</div>
           ${mediaHtml}
         </div>
       `;
     }).join('');
+    grid.querySelectorAll('.review-delete').forEach(btn=>{
+      btn.addEventListener('click', ()=> removerAvaliacao(btn.dataset.id));
+    });
   }catch(err){
     grid.innerHTML = `<div class="review-empty">Não consegui carregar as avaliações. ${escapeHtml(connectionErrorMessage(err))}</div>`;
   }
