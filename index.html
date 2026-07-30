@@ -68,8 +68,6 @@ nav{
 .brand .n{ color:var(--silver); }
 .brand .w{ color:var(--accent); transition:color var(--transition-theme); }
 .brand-mark{ width:30px; height:30px; }
-nav .links{ display:flex; gap:28px; font-size:0.92rem; color:var(--ink-dim); }
-nav .links a:hover{ color:var(--ink); }
 .nav-cta{
   padding:9px 18px; border-radius:100px; border:1px solid var(--accent);
   color:var(--accent); font-size:0.88rem; font-weight:600;
@@ -105,7 +103,6 @@ body.light-mode .dock-theme .icon-moon{ display:block; }
   .dock-btn{ width:36px; height:36px; }
   .dock-btn svg{ width:16px; height:16px; }
 }
-@media (max-width:760px){ nav .links{ display:none; } }
 
 
 /* ---------- HERO ---------- */
@@ -480,13 +477,6 @@ footer .brand{ justify-content:center; margin-bottom:14px; }
   <div class="brand">
     <svg class="brand-mark" viewBox="0 0 100 100"><use href="#nexaMarkShape"></use></svg>
     <span class="n">NEXA</span> <span class="w">WEB</span>
-  </div>
-  <div class="links">
-    <a href="#sobre">Sobre</a>
-    <a href="#portfolio">Trabalhos</a>
-    <a href="#planos">Planos</a>
-    <a href="#avaliacoes">Avaliações</a>
-    <a href="#agendar">Agendar</a>
   </div>
   <div class="nav-actions">
     <a href="#agendar" class="nav-cta">Agendar site</a>
