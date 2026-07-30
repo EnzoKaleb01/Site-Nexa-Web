@@ -110,6 +110,43 @@ body.light-mode .dock-theme .icon-moon{ display:block; }
   height:100svh; min-height:560px; display:flex; flex-direction:column; align-items:center; justify-content:center;
   text-align:center; padding:12vh 6vw 6vh; position:relative;
 }
+/* ---------- FAB — redes sociais (WhatsApp + Instagram) ---------- */
+.fab-wrap{
+  position:fixed; right:20px; bottom:20px; z-index:190;
+  display:flex; flex-direction:column; align-items:center; gap:14px;
+}
+.fab-sub{
+  width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:var(--panel); border:1px solid var(--line); color:var(--ink); cursor:pointer; text-decoration:none;
+  opacity:0; transform:translateY(16px) scale(0.6); pointer-events:none;
+  transition:opacity 260ms ease, transform 260ms cubic-bezier(.2,.8,.2,1), background 200ms ease, border-color 200ms ease, color 200ms ease;
+  box-shadow:0 14px 28px -12px rgba(0,0,0,0.55);
+}
+.fab-sub svg{ width:24px; height:24px; }
+.fab-wrap.open .fab-sub{ opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
+.fab-wrap.open .fab-sub.instagram{ transition-delay:40ms; }
+.fab-wrap.open .fab-sub.whatsapp{ transition-delay:0ms; }
+.fab-sub.whatsapp:hover{ background:#25D366; color:#fff; border-color:#25D366; }
+.fab-sub.instagram:hover{
+  background:linear-gradient(135deg,#f58529,#dd2a7b 45%,#8134af);
+  color:#fff; border-color:transparent;
+}
+.fab-main{
+  width:62px; height:62px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:radial-gradient(circle at 34% 30%, var(--accent-light), var(--accent) 55%, var(--accent-dark));
+  border:2px solid rgba(255,255,255,0.22); color:#fff; cursor:pointer;
+  box-shadow:0 0 0 6px var(--accent-soft), 0 20px 40px -14px rgba(47,111,237,0.65);
+  transition:transform 280ms ease, box-shadow var(--transition-theme), background var(--transition-theme);
+}
+.fab-main:hover{ transform:scale(1.06); }
+.fab-main svg{ width:24px; height:24px; transition:transform 300ms cubic-bezier(.2,.8,.2,1); }
+.fab-wrap.open .fab-main svg{ transform:rotate(45deg); }
+@media (max-width:520px){
+  .fab-wrap{ right:14px; bottom:14px; gap:12px; }
+  .fab-main{ width:56px; height:56px; }
+  .fab-sub{ width:46px; height:46px; }
+}
+
 .scroll-cue{
   position:absolute; left:50%; bottom:28px; transform:translateX(-50%);
   display:flex; flex-direction:column; align-items:center; gap:8px;
@@ -221,6 +258,7 @@ section{ padding:9vh 6vw; position:relative; }
   position:relative; border-radius:20px; padding:30px 26px 26px;
   background:linear-gradient(180deg, var(--bg-elev), var(--panel));
   border:1px solid var(--line);
+  color:var(--ink); font-family:inherit;
   cursor:pointer; text-align:left;
   transform-style:preserve-3d;
   transform:translateZ(0) rotateX(0) scale(1);
@@ -741,6 +779,27 @@ footer .brand{ justify-content:center; margin-bottom:14px; }
 
 </div>
 
+<div class="fab-wrap" id="fabWrap">
+  <a class="fab-sub instagram" href="https://instagram.com/kaleb.enzo" target="_blank" rel="noopener" aria-label="Abrir Instagram">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+      <circle cx="12" cy="12" r="4.2"></circle>
+      <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"></circle>
+    </svg>
+  </a>
+  <a class="fab-sub whatsapp" id="fabWhatsapp" href="#" target="_blank" rel="noopener" aria-label="Abrir WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.81L2.05 22l5.4-1.32c1.36.72 2.92 1.14 4.58 1.14 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.78 14.02c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.13.11-1.83-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.17-4.94-4.36-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.81 2 .88 2.15.07.15.12.32.02.52-.1.2-.15.32-.29.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.29.75 1.24 1.62 2 1.11.99 2.05 1.3 2.34 1.44.29.15.46.13.63-.07.17-.2.72-.84.92-1.13.19-.29.39-.24.65-.15.27.1 1.7.8 2 .95.29.15.48.22.55.34.07.13.07.75-.17 1.43Z"></path>
+    </svg>
+  </a>
+  <button class="fab-main" id="fabMain" type="button" aria-label="Abrir redes sociais">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+  </button>
+</div>
+
 <script>
 /* ===================== PLAN DATA ===================== */
 const PLANS = [
@@ -778,7 +837,7 @@ const PLANS = [
   }
 ];
 
-const WHATSAPP_NUMBER = '5585900000000'; // TODO: troque pelo seu número real do WhatsApp
+const WHATSAPP_NUMBER = '558720073321'; // seu número, formatado pro WhatsApp (55 + DDD + número, sem o 0 inicial)
 
 /* ===================== RENDER PLAN CARDS ===================== */
 const stage = document.getElementById('plansStage');
@@ -896,6 +955,20 @@ document.getElementById('scheduleSubmit').addEventListener('click', ()=>{
   if(msg) text += `Sobre o negócio: ${msg}`;
 
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
+});
+
+/* ===================== FAB — redes sociais ===================== */
+document.getElementById('fabWhatsapp').href =
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Olá! Vim pelo site da Nexa Web.')}`;
+
+const fabWrap = document.getElementById('fabWrap');
+document.getElementById('fabMain').addEventListener('click', ()=>{
+  fabWrap.classList.toggle('open');
+});
+document.addEventListener('click', (e)=>{
+  if(fabWrap.classList.contains('open') && !fabWrap.contains(e.target)){
+    fabWrap.classList.remove('open');
+  }
 });
 
 /* ===================== REVEAL ON SCROLL ===================== */
