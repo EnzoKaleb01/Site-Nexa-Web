@@ -213,24 +213,59 @@ section{ padding:9vh 6vw; position:relative; }
 /* ---------- SOBRE (about) ---------- */
 .about{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; max-width:1100px; margin:0 auto; }
 .about-visual{
-  position:relative; aspect-ratio:1/1; border-radius:24px;
-  background:radial-gradient(circle at 30% 20%, var(--accent-soft), transparent 60%), var(--panel);
+  position:relative; aspect-ratio:1/1; border-radius:28px; overflow:hidden;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(139,63,240,0.28), transparent 45%),
+    radial-gradient(circle at 85% 85%, var(--accent-soft), transparent 50%),
+    var(--panel);
+  background-image:
+    radial-gradient(circle at 20% 15%, rgba(139,63,240,0.28), transparent 45%),
+    radial-gradient(circle at 85% 85%, var(--accent-soft), transparent 50%),
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px),
+    var(--panel);
+  background-size:auto, auto, 26px 26px, 26px 26px, auto;
   border:1px solid var(--line);
   display:flex; align-items:center; justify-content:center;
   perspective:900px;
 }
+.about-glow-orb{
+  position:absolute; border-radius:50%; filter:blur(38px); pointer-events:none; opacity:0.55;
+}
+.about-glow-orb.orb-1{ width:150px; height:150px; background:var(--accent); top:-40px; left:-40px; }
+.about-glow-orb.orb-2{ width:130px; height:130px; background:#8b3ff0; bottom:-30px; right:-30px; }
 .about-card{
-  width:70%; padding:30px; border-radius:18px; background:var(--bg-elev);
-  border:1px solid var(--line);
+  position:relative; z-index:2; width:74%; padding:2px; border-radius:20px;
+  background:linear-gradient(135deg, var(--accent-light), rgba(139,63,240,0.7), var(--accent));
   transform:rotateX(8deg) rotateY(-10deg);
   transform-style:preserve-3d;
-  box-shadow:0 30px 60px -20px rgba(0,0,0,0.6);
-  transition:transform 400ms ease, border-color var(--transition-theme);
+  filter:drop-shadow(0 30px 50px rgba(0,0,0,0.55));
+  transition:transform 250ms cubic-bezier(.2,.8,.2,1);
 }
-.about-visual:hover .about-card{ transform:rotateX(2deg) rotateY(-2deg) scale(1.02); }
+.about-card-inner{
+  border-radius:18px; padding:28px 26px; background:var(--bg-elev);
+  transition:background var(--transition-theme);
+}
+.about-badge{
+  width:38px; height:38px; border-radius:11px; margin-bottom:14px;
+  background:linear-gradient(135deg, var(--accent-light), var(--accent));
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 8px 18px -6px var(--accent-soft);
+}
+.about-badge svg{ width:20px; height:20px; }
 .about-card .tag{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--accent-light); letter-spacing:2px; transition:color var(--transition-theme); }
-.about-card h3{ margin:10px 0 8px; font-size:1.3rem; }
-.about-card p{ color:var(--ink-dim); font-size:0.9rem; line-height:1.55; margin:0; }
+.about-card h3{
+  margin:10px 0 10px; font-size:1.5rem; font-family:'Orbitron',sans-serif; font-weight:700;
+  background:linear-gradient(120deg, var(--ink), var(--accent-light));
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+.about-card p{ color:var(--ink-dim); font-size:0.9rem; line-height:1.55; margin:0 0 18px; }
+.about-chips{ display:flex; flex-wrap:wrap; gap:8px; }
+.about-chip{
+  display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:100px;
+  background:var(--accent-soft); color:var(--accent-light); font-size:0.74rem; font-weight:600;
+  border:1px solid rgba(255,255,255,0.06); transition:color var(--transition-theme), background var(--transition-theme);
+}
 .about-copy h2{ font-size:clamp(1.7rem,3vw,2.3rem); margin:0 0 18px; font-weight:700; }
 .about-copy p{ color:var(--ink-dim); line-height:1.7; margin:0 0 16px; }
 .about-list{ list-style:none; padding:0; margin:26px 0 0; display:grid; gap:12px; }
@@ -607,11 +642,23 @@ footer .brand{ justify-content:center; margin-bottom:14px; }
         <li>Suporte dedicado depois da entrega</li>
       </ul>
     </div>
-    <div class="about-visual">
-      <div class="about-card">
-        <div class="tag">// sobre este site</div>
-        <h3>Nexa Web</h3>
-        <p>Este site é interativo: escolha um plano abaixo e observe a paleta, o conteúdo e os módulos flutuantes mudarem para refletir a proposta certa para o seu negócio.</p>
+    <div class="about-visual" id="aboutVisual">
+      <div class="about-glow-orb orb-1" aria-hidden="true"></div>
+      <div class="about-glow-orb orb-2" aria-hidden="true"></div>
+      <div class="about-card" id="aboutCard">
+        <div class="about-card-inner">
+          <div class="about-badge" aria-hidden="true">
+            <svg viewBox="0 0 100 100"><use href="#nexaMarkShape"></use></svg>
+          </div>
+          <div class="tag">// sobre este site</div>
+          <h3>Nexa Web</h3>
+          <p>Este site é interativo: escolha um plano abaixo e observe a paleta, o conteúdo e os módulos flutuantes mudarem para refletir a proposta certa para o seu negócio.</p>
+          <div class="about-chips">
+            <span class="about-chip">✦ 3D interativo</span>
+            <span class="about-chip">⇄ Planos dinâmicos</span>
+            <span class="about-chip">✆ WhatsApp integrado</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1340,6 +1387,21 @@ document.getElementById('carouselNext').addEventListener('click', ()=>{
 document.getElementById('carouselPrev').addEventListener('click', ()=>{
   carouselTrack.scrollBy({ left: -320, behavior:'smooth' });
 });
+
+// Card "sobre este site" inclina suavemente seguindo o mouse
+const aboutVisual = document.getElementById('aboutVisual');
+const aboutCard = document.getElementById('aboutCard');
+if(aboutVisual && aboutCard){
+  aboutVisual.addEventListener('mousemove', (e)=>{
+    const rect = aboutVisual.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    aboutCard.style.transform = `rotateX(${(-py*14 + 4).toFixed(2)}deg) rotateY(${(px*16).toFixed(2)}deg)`;
+  });
+  aboutVisual.addEventListener('mouseleave', ()=>{
+    aboutCard.style.transform = 'rotateX(8deg) rotateY(-10deg)';
+  });
+}
 
 /* ===================================================================
    AVALIAÇÕES DE CLIENTES — backend em Python (sistemaBD.py)
