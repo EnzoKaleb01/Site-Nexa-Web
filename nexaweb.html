@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ===== SEO básico ===== -->
+<title>Nexa Web — Criação de Sites Profissionais em Fortaleza, CE</title>
+<meta name="description" content="Sua empresa ainda não tem site? A Nexa Web cria sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios em Fortaleza-CE. Planos a partir de R$ 259,90/mês, com 7 dias grátis pra testar.">
+<meta name="keywords" content="criação de sites, site profissional, desenvolvedor de sites Fortaleza, site para pequena empresa, criar site para minha empresa, loja virtual, site barato, agência de sites Ceará">
+<meta name="author" content="Nexa Web">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#04060c">
+<link rel="canonical" href="https://enzokaleb01.github.io/nexaweb/">
+<!-- ^ troque pela URL real assim que publicar o site nesse endereço definitivo -->
+
+<!-- ===== Open Graph (Facebook, WhatsApp, LinkedIn...) ===== -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Nexa Web">
+<meta property="og:title" content="Nexa Web — Criação de Sites Profissionais em Fortaleza, CE">
+<meta property="og:description" content="Sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios. Planos a partir de R$ 259,90/mês, com 7 dias grátis pra testar.">
+<meta property="og:url" content="https://enzokaleb01.github.io/nexaweb/">
+<meta property="og:image" content="https://enzokaleb01.github.io/nexaweb/og-image.png">
+<!-- ^ crie uma imagem 1200x630px (print do site ou a logo em fundo azul) e suba com esse nome na raiz do repositório -->
+
+<!-- ===== Twitter / X Card ===== -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nexa Web — Criação de Sites Profissionais em Fortaleza, CE">
+<meta name="twitter:description" content="Sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios. Planos a partir de R$ 259,90/mês.">
+<meta name="twitter:image" content="https://enzokaleb01.github.io/nexaweb/og-image.png">
+
+<!-- ===== Dados estruturados (ajuda o Google a entender o negócio) ===== -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Nexa Web",
+  "description": "Criação de sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios.",
+  "url": "https://enzokaleb01.github.io/nexaweb/",
+  "telephone": "+55-87-20073321",
+  "priceRange": "R$259,90 - R$699,90",
+  "areaServed": {
+    "@type": "City",
+    "name": "Fortaleza"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Fortaleza",
+    "addressRegion": "CE",
+    "addressCountry": "BR"
+  },
+  "sameAs": [
+    "https://instagram.com/kaleb.enzo"
+  ],
+  "makesOffer": [
+    { "@type": "Offer", "name": "Plano Start", "price": "259.90", "priceCurrency": "BRL" },
+    { "@type": "Offer", "name": "Plano Business", "price": "329.90", "priceCurrency": "BRL" },
+    { "@type": "Offer", "name": "Plano Premium", "price": "449.90", "priceCurrency": "BRL" },
+    { "@type": "Offer", "name": "Loja Virtual", "price": "699.90", "priceCurrency": "BRL" }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{
+  --bg:#04060c;
+  --bg-elev:#090d18;
+  --panel:#0d1220;
+  --line:rgba(255,255,255,0.08);
+  --ink:#eef2fb;
+  --ink-dim:#8792ab;
+  --silver:#c7cedd;
+  --accent:#2f6fed;
+  --accent-light:#7db4ff;
+  --accent-dark:#1c4dc4;
+  --accent-soft:rgba(47,111,237,0.14);
+  --transition-theme: 700ms cubic-bezier(.2,.8,.2,1);
+}
+body.light-mode{
+  --bg:#eef1f8;
+  --bg-elev:#ffffff;
+  --panel:#ffffff;
+  --line:rgba(10,14,26,0.1);
+  --ink:#0b1220;
+  --ink-dim:#525d75;
+  --silver:#3d4658;
+}
+body.light-mode #bg-canvas{ opacity:0.5; }
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  overflow-x:hidden;
+  transition: background var(--transition-theme);
+}
+::selection{ background:var(--accent); color:#04060c; }
+h1,h2,h3,.display{ font-family:'Sora',sans-serif; }
+.mono{ font-family:'IBM Plex Mono',monospace; }
+a{ color:inherit; text-decoration:none; }
+
+#bg-canvas{
+  position:fixed; inset:0; z-index:0; width:100%; height:100%;
+  pointer-events:none;
+}
+
+.wrap{ position:relative; z-index:1; }
+
+/* ---------- NAV ---------- */
+nav{
+  position:sticky; top:0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 6vw;
+  background:rgba(4,6,12,0.7);
+  backdrop-filter: blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.brand{ display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:0.5px; font-size:1.05rem; font-family:'Orbitron',sans-serif; }
+.brand .n{ color:var(--silver); }
+.brand .w{ color:var(--accent); transition:color var(--transition-theme); }
+.brand-mark{ width:30px; height:30px; }
+.nav-cta{
+  padding:9px 18px; border-radius:100px; border:1px solid var(--accent);
+  color:var(--accent); font-size:0.88rem; font-weight:600;
+  transition: all 300ms ease, border-color var(--transition-theme), color var(--transition-theme);
+}
+.nav-cta:hover{ background:var(--accent); color:#050810; }
+.nav-actions{ display:flex; align-items:center; gap:10px; }
+
+/* ---------- QUICK DOCK (atalhos + iluminação) ---------- */
+.quick-dock{
+  position:fixed; top:86px; left:50%; transform:translateX(-50%); z-index:150;
+  display:flex; align-items:center; gap:4px; padding:6px;
+  border-radius:100px; background:rgba(9,13,24,0.82); backdrop-filter:blur(16px);
+  border:1px solid var(--line); box-shadow:0 20px 40px -18px rgba(0,0,0,0.6);
+  transition:background var(--transition-theme), border-color var(--transition-theme), top 250ms ease;
+}
+body.light-mode .quick-dock{ background:rgba(11,18,32,0.85); }
+.dock-btn{
+  width:40px; height:40px; border-radius:50%; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  background:transparent; border:1px solid transparent; color:#a7b0c4; cursor:pointer;
+  transition:all 220ms ease;
+}
+.dock-btn svg{ width:18px; height:18px; }
+.dock-btn:hover{ color:#fff; background:rgba(255,255,255,0.08); }
+.dock-btn.active{ color:var(--accent-light); border-color:var(--accent-light); box-shadow:0 0 0 3px rgba(125,180,255,0.18); }
+.dock-divider{ width:1px; height:22px; background:rgba(255,255,255,0.14); margin:0 2px; flex-shrink:0; }
+.dock-theme .icon-moon{ display:none; }
+body.light-mode .dock-theme .icon-sun{ display:none; }
+body.light-mode .dock-theme .icon-moon{ display:block; }
+@media (max-width:640px){
+  .quick-dock{ top:76px; padding:5px; gap:2px; }
+  .dock-btn{ width:36px; height:36px; }
+  .dock-btn svg{ width:16px; height:16px; }
+}
+
+
+/* ---------- HERO ---------- */
+.hero{
+  height:100svh; min-height:560px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; padding:12vh 6vw 6vh; position:relative;
+}
+/* ---------- FAB — redes sociais (WhatsApp + Instagram) ---------- */
+.fab-wrap{
+  position:fixed; right:20px; bottom:20px; z-index:190;
+  display:flex; flex-direction:column; align-items:center; gap:14px;
+}
+.fab-sub{
+  width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:var(--panel); border:1px solid var(--line); color:var(--ink); cursor:pointer; text-decoration:none;
+  opacity:0; transform:translateY(16px) scale(0.6); pointer-events:none;
+  transition:opacity 260ms ease, transform 260ms cubic-bezier(.2,.8,.2,1), background 200ms ease, border-color 200ms ease, color 200ms ease;
+  box-shadow:0 14px 28px -12px rgba(0,0,0,0.55);
+}
+.fab-sub svg{ width:24px; height:24px; }
+.fab-wrap.open .fab-sub{ opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
+.fab-wrap.open .fab-sub.instagram{ transition-delay:40ms; }
+.fab-wrap.open .fab-sub.whatsapp{ transition-delay:0ms; }
+.fab-sub.whatsapp:hover{ background:#25D366; color:#fff; border-color:#25D366; }
+.fab-sub.instagram:hover{
+  background:linear-gradient(135deg,#f58529,#dd2a7b 45%,#8134af);
+  color:#fff; border-color:transparent;
+}
+.fab-main{
+  width:62px; height:62px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:radial-gradient(circle at 34% 30%, var(--accent-light), var(--accent) 55%, var(--accent-dark));
+  border:2px solid rgba(255,255,255,0.22); color:#fff; cursor:pointer;
+  box-shadow:0 0 0 6px var(--accent-soft), 0 20px 40px -14px rgba(47,111,237,0.65);
+  transition:transform 280ms ease, box-shadow var(--transition-theme), background var(--transition-theme);
+}
+.fab-main:hover{ transform:scale(1.06); }
+.fab-main svg{ width:24px; height:24px; transition:transform 300ms cubic-bezier(.2,.8,.2,1); }
+.fab-wrap.open .fab-main svg{ transform:rotate(45deg); }
+@media (max-width:520px){
+  .fab-wrap{ right:14px; bottom:14px; gap:12px; }
+  .fab-main{ width:56px; height:56px; }
+  .fab-sub{ width:46px; height:46px; }
+}
+
+.scroll-cue{
+  position:absolute; left:50%; bottom:28px; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  background:transparent; border:none; cursor:pointer; color:var(--ink-dim);
+  transition:color 250ms ease;
+}
+.scroll-cue:hover{ color:var(--accent-light); }
+.scroll-cue span{ font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:2px; text-transform:uppercase; }
+.scroll-cue svg{ width:20px; height:20px; animation:scrollCueBounce 1.8s ease-in-out infinite; }
+@keyframes scrollCueBounce{ 0%,100%{ transform:translateY(0); opacity:0.6; } 50%{ transform:translateY(8px); opacity:1; } }
+.hero-hint{
+  position:absolute; top:76px; left:50%; transform:translateX(-50%);
+  font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:1.5px; color:var(--ink-dim);
+  opacity:0.7; text-align:center; pointer-events:none;
+}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace; font-size:0.78rem; letter-spacing:3px;
+  color:var(--accent-light); text-transform:uppercase; margin-bottom:22px;
+  transition:color var(--transition-theme);
+  display:flex; align-items:center; gap:10px;
+}
+.eyebrow::before{ content:''; width:26px; height:1px; background:var(--accent-light); transition:background var(--transition-theme); }
+
+.hero-greeting{
+  font-family:'Orbitron',sans-serif; font-weight:800; font-size:clamp(1.3rem,3vw,1.9rem);
+  letter-spacing:1px; text-transform:uppercase; color:var(--ink);
+  background:linear-gradient(135deg, var(--ink) 30%, var(--accent-light) 100%);
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  margin-bottom:10px; min-height:1.4em; transition:background var(--transition-theme);
+}
+
+.hero h1{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+.hero p{ max-width:46ch; color:var(--ink-dim); font-size:1.08rem; line-height:1.6; margin:30px 0 36px; }
+.hero-ctas{ display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+.btn-primary{
+  padding:15px 30px; border-radius:12px; font-weight:700; font-size:0.95rem;
+  background:linear-gradient(135deg,var(--accent),var(--accent-dark));
+  box-shadow:0 12px 30px -8px var(--accent-soft);
+  transition: transform 250ms ease, background var(--transition-theme), box-shadow var(--transition-theme);
+  color:#fff;
+}
+.btn-primary:hover{ transform:translateY(-3px); }
+.btn-ghost{
+  padding:15px 28px; border-radius:12px; font-weight:600; font-size:0.95rem;
+  border:1px solid var(--line); color:var(--ink-dim);
+  transition:all 250ms ease;
+}
+.btn-ghost:hover{ border-color:var(--accent); color:var(--ink); }
+
+.stat-row{
+  display:flex; gap:48px; margin-top:64px; flex-wrap:wrap; justify-content:center;
+}
+.stat{ text-align:center; }
+.stat b{ display:block; font-family:'Sora',sans-serif; font-size:1.6rem; color:var(--ink); }
+.stat span{ font-size:0.78rem; color:var(--ink-dim); text-transform:uppercase; letter-spacing:1px; }
+
+/* ---------- SECTION SHELL ---------- */
+section{ padding:9vh 6vw; position:relative; }
+.section-head{ max-width:640px; margin:0 auto 56px; text-align:center; }
+.section-head .eyebrow{ justify-content:center; }
+.section-head h2{ font-size:clamp(1.8rem,3.4vw,2.6rem); font-weight:700; margin:0 0 14px; }
+.section-head p{ color:var(--ink-dim); line-height:1.6; margin:0; }
+
+/* ---------- SOBRE (about) ---------- */
+.about{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; max-width:1100px; margin:0 auto; }
+.about-visual{
+  position:relative; aspect-ratio:1/1; border-radius:28px; overflow:hidden;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(139,63,240,0.28), transparent 45%),
+    radial-gradient(circle at 85% 85%, var(--accent-soft), transparent 50%),
+    var(--panel);
+  background-image:
+    radial-gradient(circle at 20% 15%, rgba(139,63,240,0.28), transparent 45%),
+    radial-gradient(circle at 85% 85%, var(--accent-soft), transparent 50%),
+    linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px),
+    var(--panel);
+  background-size:auto, auto, 26px 26px, 26px 26px, auto;
+  border:1px solid var(--line);
+  display:flex; align-items:center; justify-content:center;
+  perspective:900px;
+}
+.about-glow-orb{
+  position:absolute; border-radius:50%; filter:blur(38px); pointer-events:none; opacity:0.55;
+}
+.about-glow-orb.orb-1{ width:150px; height:150px; background:var(--accent); top:-40px; left:-40px; }
+.about-glow-orb.orb-2{ width:130px; height:130px; background:#8b3ff0; bottom:-30px; right:-30px; }
+.about-card{
+  position:relative; z-index:2; width:74%; padding:2px; border-radius:20px;
+  background:linear-gradient(135deg, var(--accent-light), rgba(139,63,240,0.7), var(--accent));
+  transform:rotateX(8deg) rotateY(-10deg);
+  transform-style:preserve-3d;
+  filter:drop-shadow(0 30px 50px rgba(0,0,0,0.55));
+  transition:transform 250ms cubic-bezier(.2,.8,.2,1);
+}
+.about-card-inner{
+  border-radius:18px; padding:28px 26px; background:var(--bg-elev);
+  transition:background var(--transition-theme);
+}
+.about-badge{
+  width:38px; height:38px; border-radius:11px; margin-bottom:14px;
+  background:linear-gradient(135deg, var(--accent-light), var(--accent));
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 8px 18px -6px var(--accent-soft);
+}
+.about-badge svg{ width:20px; height:20px; }
+.about-card .tag{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--accent-light); letter-spacing:2px; transition:color var(--transition-theme); }
+.about-card h3{
+  margin:10px 0 10px; font-size:1.5rem; font-family:'Orbitron',sans-serif; font-weight:700;
+  background:linear-gradient(120deg, var(--ink), var(--accent-light));
+  -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+}
+.about-card p{ color:var(--ink-dim); font-size:0.9rem; line-height:1.55; margin:0 0 18px; }
+.about-chips{ display:flex; flex-wrap:wrap; gap:8px; }
+.about-chip{
+  display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:100px;
+  background:var(--accent-soft); color:var(--accent-light); font-size:0.74rem; font-weight:600;
+  border:1px solid rgba(255,255,255,0.06); transition:color var(--transition-theme), background var(--transition-theme);
+}
+.about-copy h2{ font-size:clamp(1.7rem,3vw,2.3rem); margin:0 0 18px; font-weight:700; }
+.about-copy p{ color:var(--ink-dim); line-height:1.7; margin:0 0 16px; }
+.about-list{ list-style:none; padding:0; margin:26px 0 0; display:grid; gap:12px; }
+.about-list li{ display:flex; gap:12px; align-items:flex-start; font-size:0.94rem; color:var(--ink); }
+.about-list li::before{
+  content:'▹'; color:var(--accent-light); font-weight:700; transition:color var(--transition-theme);
+}
+@media (max-width:840px){ .about{ grid-template-columns:1fr; } .about-visual{ order:-1; } }
+
+/* ---------- PLANOS ---------- */
+.free-banner{
+  max-width:900px; margin:0 auto 50px; text-align:center; padding:14px 24px; border-radius:100px;
+  border:1px dashed var(--accent); color:var(--accent-light); font-size:0.9rem; font-weight:600;
+  transition:border-color var(--transition-theme), color var(--transition-theme);
+}
+.plans-stage{
+  perspective:1600px; max-width:1240px; margin:0 auto;
+  display:grid; grid-template-columns:repeat(4,1fr); gap:26px;
+}
+@media (max-width:1000px){ .plans-stage{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:620px){ .plans-stage{ grid-template-columns:1fr; } }
+
+.plan-card{
+  --pc: #2f6fed; --pcl:#7db4ff; --pcd:#1c4dc4;
+  position:relative; border-radius:20px; padding:30px 26px 26px;
+  background:linear-gradient(180deg, var(--bg-elev), var(--panel));
+  border:1px solid var(--line);
+  color:var(--ink); font-family:inherit;
+  cursor:pointer; text-align:left;
+  transform-style:preserve-3d;
+  transform:translateZ(0) rotateX(0) scale(1);
+  transition:transform 550ms cubic-bezier(.2,.8,.2,1), box-shadow 550ms ease, border-color 500ms ease, opacity 500ms ease;
+}
+.plan-card:hover{ transform:translateY(-8px) rotateX(4deg) scale(1.02); border-color:var(--pc); }
+.plan-card.active{
+  transform:translateZ(60px) translateY(-14px) scale(1.06);
+  border-color:var(--pc);
+  box-shadow:0 40px 70px -20px color-mix(in srgb, var(--pc) 45%, transparent);
+  z-index:5;
+}
+.plans-stage.has-active .plan-card:not(.active){ opacity:0.55; transform:translateZ(-40px) scale(0.95); }
+.plan-badge{
+  width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center;
+  background:color-mix(in srgb, var(--pc) 18%, transparent);
+  color:var(--pc); font-family:'Sora',sans-serif; font-weight:700; margin-bottom:18px;
+}
+.plan-card h3{ margin:0 0 6px; font-size:1.15rem; }
+.plan-card .tagline{ color:var(--ink-dim); font-size:0.84rem; line-height:1.5; min-height:44px; margin-bottom:16px; }
+.plan-price{ font-family:'IBM Plex Mono',monospace; font-size:1.7rem; font-weight:600; color:var(--pc); margin-bottom:4px; }
+.plan-price span{ font-size:0.7rem; color:var(--ink-dim); font-family:'Inter',sans-serif; font-weight:400; }
+.plan-features{ list-style:none; padding:0; margin:18px 0 0; display:grid; gap:9px; }
+.plan-features li{ font-size:0.82rem; color:var(--ink-dim); display:flex; gap:8px; align-items:flex-start; }
+.plan-features li::before{ content:'✓'; color:var(--pc); font-weight:700; flex-shrink:0; }
+.plan-select{
+  margin-top:22px; width:100%; padding:11px; border-radius:10px; border:1px solid var(--pc);
+  color:var(--pc); font-weight:700; font-size:0.85rem; background:transparent; transition:all 250ms ease;
+}
+.plan-card.active .plan-select{ background:var(--pc); color:#050810; }
+
+/* ---------- DETAIL PANEL ---------- */
+.detail-panel{
+  max-width:1100px; margin:60px auto 0; border-radius:24px; border:1px solid var(--line);
+  background:var(--panel); overflow:hidden;
+  max-height:0; opacity:0; transition:max-height 700ms cubic-bezier(.2,.8,.2,1), opacity 500ms ease, border-color var(--transition-theme);
+}
+.detail-panel.open{ max-height:900px; opacity:1; border-color:var(--accent); }
+.detail-inner{ display:grid; grid-template-columns:1fr 1fr; }
+@media (max-width:760px){ .detail-inner{ grid-template-columns:1fr; } }
+.detail-col{ padding:44px 40px; }
+@media (max-width:480px){ .detail-col{ padding:28px 22px; } }
+.detail-col.left{ border-right:1px solid var(--line); background:linear-gradient(160deg, var(--accent-soft), transparent 60%); }
+@media (max-width:760px){ .detail-col.left{ border-right:none; border-bottom:1px solid var(--line); } }
+.detail-eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:2px; color:var(--accent-light); margin-bottom:14px; text-transform:uppercase; }
+.detail-col h3{ font-size:1.5rem; margin:0 0 14px; }
+.detail-col p{ color:var(--ink-dim); line-height:1.65; font-size:0.94rem; }
+.detail-price-block{ display:flex; align-items:baseline; gap:10px; margin:18px 0 22px; }
+.detail-price-block .num{ font-family:'IBM Plex Mono',monospace; font-size:2.4rem; font-weight:600; color:var(--accent); }
+.detail-feature-grid{ list-style:none; padding:0; margin:0; display:grid; gap:11px; }
+.detail-feature-grid li{ font-size:0.9rem; display:flex; gap:10px; }
+.detail-feature-grid li::before{ content:'✓'; color:var(--accent); font-weight:700; }
+.detail-cta{ margin-top:26px; display:inline-flex; padding:14px 26px; border-radius:12px; background:var(--accent); color:#050810; font-weight:700; font-size:0.9rem; }
+
+.addons-block{ max-width:900px; margin:48px auto 0; }
+.addons-head{
+  text-align:center; font-family:'IBM Plex Mono',monospace; font-size:0.78rem; letter-spacing:2px;
+  text-transform:uppercase; color:var(--ink-dim); margin-bottom:20px;
+}
+.addons-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
+@media (max-width:760px){ .addons-grid{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:480px){ .addons-grid{ grid-template-columns:1fr; } }
+.addon-item{
+  border:1px solid var(--line); border-radius:14px; padding:16px 18px; background:var(--panel);
+  display:flex; flex-direction:column; gap:8px; transition:border-color 300ms ease;
+}
+.addon-item:hover{ border-color:var(--accent); }
+.addon-item span{ font-size:0.86rem; color:var(--ink); font-weight:600; }
+.addon-item span small{ display:block; font-weight:400; color:var(--ink-dim); font-size:0.76rem; margin-top:3px; }
+.addon-item b{ font-family:'IBM Plex Mono',monospace; color:var(--accent-light); font-size:1.05rem; transition:color var(--transition-theme); }
+
+/* ---------- FLOATING MODULES (decorative html, alongside canvas objects) ---------- */
+.float-tag{
+  position:absolute; pointer-events:none; opacity:0.5;
+  font-family:'IBM Plex Mono',monospace; font-size:0.7rem; color:var(--accent-light);
+  border:1px solid var(--line); padding:6px 12px; border-radius:100px; backdrop-filter:blur(6px);
+  transition:color var(--transition-theme);
+}
+
+/* ---------- SCHEDULE ---------- */
+.schedule{ max-width:760px; margin:0 auto; }
+.schedule-box{
+  border-radius:24px; border:1px solid var(--line); background:var(--panel); padding:44px;
+  transition:border-color var(--transition-theme);
+}
+@media (max-width:480px){ .schedule-box{ padding:26px 20px; } }
+.schedule-box.selected{ border-color:var(--accent); }
+.selected-plan-pill{
+  display:inline-flex; align-items:center; gap:8px; padding:8px 16px; border-radius:100px;
+  background:var(--accent-soft); color:var(--accent-light); font-size:0.82rem; font-weight:600; margin-bottom:24px;
+  transition:background var(--transition-theme), color var(--transition-theme);
+}
+.form-grid{ display:grid; gap:16px; }
+.form-grid label{ font-size:0.82rem; color:var(--ink-dim); display:block; margin-bottom:7px; }
+.form-grid input, .form-grid select, .form-grid textarea{
+  width:100%; padding:13px 14px; border-radius:10px; border:1px solid var(--line);
+  background:var(--bg-elev); color:var(--ink); font-family:'Inter',sans-serif; font-size:0.92rem;
+}
+.form-grid input:focus, .form-grid select:focus, .form-grid textarea:focus{ outline:2px solid var(--accent); border-color:transparent; }
+.form-row2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:560px){ .form-row2{ grid-template-columns:1fr; } }
+.schedule-submit{
+  margin-top:24px; width:100%; padding:16px; border-radius:12px; border:none;
+  background:linear-gradient(135deg,var(--accent),var(--accent-dark)); color:#fff; font-weight:700; font-size:0.96rem;
+  cursor:pointer; transition:transform 200ms ease, background var(--transition-theme);
+}
+.schedule-submit:hover{ transform:translateY(-2px); }
+
+/* ---------- FOOTER ---------- */
+footer{ padding:50px 6vw 30px; border-top:1px solid var(--line); text-align:center; color:var(--ink-dim); font-size:0.82rem; }
+footer .brand{ justify-content:center; margin-bottom:14px; }
+
+/* ---------- PORTFOLIO CAROUSEL ---------- */
+.carousel-wrap{ position:relative; max-width:1200px; margin:0 auto; display:flex; align-items:center; gap:14px; }
+.carousel-track{
+  display:flex; gap:22px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth;
+  padding:6px 4px 26px; flex:1;
+}
+.carousel-track::-webkit-scrollbar{ height:6px; }
+.carousel-track::-webkit-scrollbar-thumb{ background:var(--line); border-radius:10px; }
+.portfolio-card{
+  --pc:#2f6fed; --x:50%; --y:50%;
+  position:relative; flex:0 0 300px; scroll-snap-align:start; border-radius:20px;
+  display:flex; flex-direction:column; transition:transform 300ms ease;
+  text-decoration:none; color:inherit;
+}
+.portfolio-card-inner{
+  position:relative; z-index:1; border-radius:20px; border:1px solid var(--line);
+  background:linear-gradient(160deg, color-mix(in srgb, var(--pc) 16%, var(--panel)), var(--panel) 60%);
+  padding:26px; display:flex; flex-direction:column; flex:1; transition:border-color 300ms ease;
+}
+/* brilho que segue o mouse — mesma técnica do componente que você mandou,
+   adaptada de React/framer-motion pra CSS + JS puro */
+.portfolio-card::before{
+  content:''; position:absolute; inset:-1px; z-index:0; border-radius:21px; opacity:0;
+  pointer-events:none; transition:opacity 300ms ease;
+  background:radial-gradient(480px circle at var(--x) var(--y), var(--pc), transparent 60%);
+}
+.portfolio-card:hover{ transform:translateY(-6px); }
+.portfolio-card:hover::before{ opacity:0.55; }
+.portfolio-card:hover .portfolio-card-inner{ border-color:transparent; }
+.portfolio-preview{
+  position:relative; width:100%; aspect-ratio:16/10; overflow:hidden; border-radius:12px;
+  background:#0a0e1a; margin:-26px -26px 18px; border-bottom:1px solid var(--line);
+}
+.portfolio-preview iframe{
+  position:absolute; top:0; left:0; width:400%; height:400%; transform:scale(0.25); transform-origin:0 0;
+  border:none; pointer-events:none;
+}
+.portfolio-preview-badge{
+  position:absolute; bottom:8px; right:8px; z-index:2; font-family:'IBM Plex Mono',monospace; font-size:0.65rem;
+  padding:4px 10px; border-radius:100px; background:rgba(4,6,12,0.75); color:#fff; backdrop-filter:blur(4px);
+}
+.portfolio-tag{
+  align-self:flex-start; font-family:'IBM Plex Mono',monospace; font-size:0.68rem; letter-spacing:1px; text-transform:uppercase;
+  padding:5px 12px; border-radius:100px; background:color-mix(in srgb, var(--pc) 22%, transparent); color:var(--pc); margin-bottom:16px;
+}
+.portfolio-card h3{ font-size:1.15rem; margin:0 0 10px; color:var(--ink); }
+.portfolio-card p{ color:var(--ink-dim); font-size:0.86rem; line-height:1.55; margin:0; flex:1; }
+.portfolio-link{
+  margin-top:18px; display:inline-flex; align-items:center; gap:6px; font-size:0.85rem; font-weight:700; color:var(--pc);
+}
+.portfolio-soon{ margin-top:18px; font-size:0.8rem; color:var(--ink-dim); font-style:italic; }
+.carousel-arrow{
+  flex-shrink:0; width:42px; height:42px; border-radius:50%; border:1px solid var(--line); background:var(--panel);
+  color:var(--ink); font-size:1.3rem; cursor:pointer; transition:all 200ms ease; display:flex; align-items:center; justify-content:center;
+}
+.carousel-arrow:hover{ border-color:var(--accent); color:var(--accent-light); }
+@media (max-width:640px){ .carousel-arrow{ display:none; } }
+
+.reveal{ opacity:0; transform:translateY(24px); transition:opacity 800ms ease, transform 800ms ease; }
+.reveal.in{ opacity:1; transform:translateY(0); }
+
+@media (prefers-reduced-motion: reduce){
+  *{ transition-duration:0.01ms !important; animation-duration:0.01ms !important; }
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="markBlueGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" style="stop-color:var(--accent-light)"/>
+      <stop offset="100%" style="stop-color:var(--accent-dark)"/>
+    </linearGradient>
+    <linearGradient id="markSilverGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="100%" style="stop-color:var(--silver)"/>
+    </linearGradient>
+    <g id="nexaMarkShape">
+      <path d="M20 20 L20 45 L50 75 L50 50 Z" fill="url(#markBlueGrad)"/>
+      <path d="M50 50 L65 35 L80 50 L65 65 Z" fill="url(#markSilverGrad)"/>
+    </g>
+  </defs>
+</svg>
+
+<canvas id="bg-canvas"></canvas>
+
+<div class="wrap">
+
+<nav>
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 100 100"><use href="#nexaMarkShape"></use></svg>
+    <span class="n">NEXA</span> <span class="w">WEB</span>
+  </div>
+  <div class="nav-actions">
+    <a href="#agendar" class="nav-cta">Agendar site</a>
+  </div>
+</nav>
+
+<div class="quick-dock" id="quickDock">
+  <button class="dock-btn active" type="button" data-target="#portfolio" title="Trabalhos" aria-label="Ir para trabalhos">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+      <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+      <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+      <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+    </svg>
+  </button>
+  <button class="dock-btn" type="button" data-target="#planos" title="Planos" aria-label="Ir para planos">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="5" y1="21" x2="5" y2="12"></line>
+      <line x1="12" y1="21" x2="12" y2="7"></line>
+      <line x1="19" y1="21" x2="19" y2="15"></line>
+    </svg>
+  </button>
+  <button class="dock-btn" type="button" data-target="#agendar" title="Agendar" aria-label="Ir para agendar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="4" width="18" height="17" rx="2"></rect>
+      <line x1="3" y1="9" x2="21" y2="9"></line>
+      <line x1="7" y1="14" x2="10" y2="14"></line>
+      <line x1="7" y1="17.5" x2="13" y2="17.5"></line>
+    </svg>
+  </button>
+  <span class="dock-divider" aria-hidden="true"></span>
+  <button class="dock-btn dock-theme" type="button" id="themeToggleBtn" title="Mudar iluminação" aria-label="Alternar modo claro/escuro">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="4.2"></circle>
+      <line x1="12" y1="1.5" x2="12" y2="4"></line>
+      <line x1="12" y1="20" x2="12" y2="22.5"></line>
+      <line x1="4.2" y1="4.2" x2="6" y2="6"></line>
+      <line x1="18" y1="18" x2="19.8" y2="19.8"></line>
+      <line x1="1.5" y1="12" x2="4" y2="12"></line>
+      <line x1="20" y1="12" x2="22.5" y2="12"></line>
+      <line x1="4.2" y1="19.8" x2="6" y2="18"></line>
+      <line x1="18" y1="6" x2="19.8" y2="4.2"></line>
+    </svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z"></path>
+    </svg>
+  </button>
+</div>
+
+<section class="hero">
+  <div class="hero-hint">arraste os módulos flutuantes ✦ toque pra dar um impulso</div>
+  <div class="hero-greeting" id="heroGreeting">Bem-vindo</div>
+
+  <h1>Criação de sites profissionais para pequenas empresas em Fortaleza — sua empresa, presente onde importa.</h1>
+  <p>Eu crio sites profissionais completos — do primeiro esboço ao WhatsApp integrado — para pequenos negócios que querem vender e ser encontrados online. Escolha um plano abaixo e agende seu site em minutos.</p>
+  <div class="hero-ctas">
+    <a href="#planos" class="btn-primary">Ver planos e preços</a>
+    <a href="#sobre" class="btn-ghost">Conhecer meu trabalho</a>
+  </div>
+  <div class="stat-row">
+    <div class="stat"><b>4</b><span>Planos sob medida</span></div>
+    <div class="stat"><b>7 dias</b><span>Teste grátis</span></div>
+    <div class="stat"><b>100%</b><span>Sites responsivos</span></div>
+  </div>
+
+  <button class="scroll-cue" id="scrollCue" type="button" aria-label="Descer para o conteúdo">
+    <span>descer</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+</section>
+
+<section id="sobre">
+  <div class="about reveal">
+    <div class="about-copy">
+      <div class="eyebrow">quem sou</div>
+      <h2>Desenvolvedor de sites para quem faz o negócio acontecer</h2>
+      <p>Sou Kaleb, desenvolvedor web em Fortaleza. Trabalho lado a lado com pequenos negócios — salões, lanchonetes, lojas, prestadores de serviço — construindo sites rápidos, bonitos e conectados ao WhatsApp, porque é ali que seus clientes realmente fecham negócio.</p>
+      <p>Cada projeto é feito sob medida: identidade visual própria, copy em português que fala a língua do seu cliente, e uma estrutura pensada para carregar rápido no celular, onde a maioria das pessoas vai te encontrar.</p>
+      <ul class="about-list">
+        <li>Sites 100% responsivos, do celular ao desktop</li>
+        <li>Pedidos e contato direto via WhatsApp</li>
+        <li>Entrega rápida, com 7 dias grátis para testar</li>
+        <li>Suporte dedicado depois da entrega</li>
+      </ul>
+    </div>
+    <div class="about-visual" id="aboutVisual">
+      <div class="about-glow-orb orb-1" aria-hidden="true"></div>
+      <div class="about-glow-orb orb-2" aria-hidden="true"></div>
+      <div class="about-card" id="aboutCard">
+        <div class="about-card-inner">
+          <div class="about-badge" aria-hidden="true">
+            <svg viewBox="0 0 100 100"><use href="#nexaMarkShape"></use></svg>
+          </div>
+          <div class="tag">// sobre este site</div>
+          <h3>Nexa Web</h3>
+          <p>Este site é interativo: escolha um plano abaixo e observe a paleta, o conteúdo e os módulos flutuantes mudarem para refletir a proposta certa para o seu negócio.</p>
+          <div class="about-chips">
+            <span class="about-chip">✦ 3D interativo</span>
+            <span class="about-chip">⇄ Planos dinâmicos</span>
+            <span class="about-chip">✆ WhatsApp integrado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="section-head reveal">
+    <div class="eyebrow">portfólio</div>
+    <h2>Outros trabalhos que já entreguei</h2>
+    <p>Cada site é construído do zero, sob medida pro negócio do cliente. Alguns exemplos estão no ar — dá pra visitar agora.</p>
+  </div>
+  <div class="carousel-wrap reveal">
+    <button class="carousel-arrow" id="carouselPrev" type="button" aria-label="Anterior">‹</button>
+    <div class="carousel-track" id="carouselTrack"></div>
+    <button class="carousel-arrow" id="carouselNext" type="button" aria-label="Próximo">›</button>
+  </div>
+</section>
+
+<section id="planos">
+  <div class="section-head reveal">
+    <div class="eyebrow">planos mensais</div>
+    <h2>Escolha o plano — o site inteiro reage à sua escolha</h2>
+    <p>Tudo incluso: criação do site + domínio + hospedagem + suporte. Toque em um plano para ver os detalhes e agendar.</p>
+  </div>
+
+  <div class="free-banner reveal">🎁 7 dias grátis para testar seu site antes de contratar</div>
+
+  <div class="plans-stage reveal" id="plansStage"></div>
+
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-inner">
+      <div class="detail-col left">
+        <div class="detail-eyebrow">este plano</div>
+        <h3 id="detailPlanName">—</h3>
+        <div class="detail-price-block">
+          <span class="num mono" id="detailPrice">R$ 0</span>
+          <span style="color:var(--ink-dim); font-size:0.85rem;">/ mês, tudo incluso</span>
+        </div>
+        <p id="detailTagline"></p>
+        <ul class="detail-feature-grid" id="detailFeatures"></ul>
+      </div>
+      <div class="detail-col right">
+        <div class="detail-eyebrow">sobre mim + este site</div>
+        <h3>Feito por mim, para o seu negócio</h3>
+        <p id="detailAboutPlan"></p>
+        <p>Combinamos a estrutura do plano <strong id="detailPlanNameInline">—</strong> com identidade visual própria, copy pensada pro seu público e integração direta com o WhatsApp — do jeito que eu já entrego pra outros negócios daqui de Fortaleza.</p>
+        <a href="#agendar" class="detail-cta" id="detailCta">Agendar este plano →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="addons-block reveal">
+    <div class="addons-head">Serviços adicionais</div>
+    <div class="addons-grid">
+      <div class="addon-item">
+        <span>QR Adesivo Digital <small>Personalizado</small></span>
+        <b>R$ 79,90</b>
+      </div>
+      <div class="addon-item">
+        <span>QR Adesivo Premium <small>Com arte personalizada</small></span>
+        <b>R$ 129,90</b>
+      </div>
+      <div class="addon-item">
+        <span>Página extra <small>Página adicional ao site</small></span>
+        <b>R$ 99,90</b>
+      </div>
+      <div class="addon-item">
+        <span>Atualização avulsa <small>Alterações pontuais no site</small></span>
+        <b>R$ 49,90</b>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="agendar">
+  <div class="section-head reveal">
+    <div class="eyebrow">agendar</div>
+    <h2>Vamos marcar a criação do seu site</h2>
+    <p>Preencha os dados abaixo — a mensagem já sai pronta pro WhatsApp, com o plano escolhido.</p>
+  </div>
+  <div class="schedule reveal">
+    <div class="schedule-box" id="scheduleBox">
+      <div class="selected-plan-pill" id="selectedPlanPill">Nenhum plano selecionado ainda — escolha um acima</div>
+      <div class="form-grid">
+        <div>
+          <label for="fName">Seu nome</label>
+          <input type="text" id="fName" placeholder="Como posso te chamar?">
+        </div>
+        <div class="form-row2">
+          <div>
+            <label for="fBiz">Nome do negócio</label>
+            <input type="text" id="fBiz" placeholder="Ex: Açaí da Naty">
+          </div>
+          <div>
+            <label for="fPlan">Plano</label>
+            <select id="fPlan">
+              <option value="">Selecione um plano</option>
+              <option value="start">Plano Start — R$ 259,90/mês</option>
+              <option value="business">Plano Business — R$ 329,90/mês</option>
+              <option value="premium">Plano Premium — R$ 449,90/mês</option>
+              <option value="loja">Loja Virtual — R$ 699,90/mês</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row2">
+          <div>
+            <label for="fDate">Data preferida</label>
+            <input type="date" id="fDate">
+          </div>
+          <div>
+            <label for="fTime">Horário preferido</label>
+            <input type="time" id="fTime">
+          </div>
+        </div>
+        <div>
+          <label for="fMsg">Conte um pouco sobre o seu negócio</label>
+          <textarea id="fMsg" rows="3" placeholder="O que você vende, pra quem, e o que espera do site..."></textarea>
+        </div>
+      </div>
+      <button class="schedule-submit" id="scheduleSubmit">Enviar agendamento pelo WhatsApp</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="brand"><svg class="brand-mark" viewBox="0 0 100 100"><use href="#nexaMarkShape"></use></svg><span class="n">NEXA</span>&nbsp;<span class="w">WEB</span></div>
+  <div>Sites profissionais que conectam e geram resultados · Fortaleza, CE</div>
+</footer>
+
+</div>
+
+<div class="fab-wrap" id="fabWrap">
+  <a class="fab-sub instagram" href="https://instagram.com/kaleb.enzo" target="_blank" rel="noopener" aria-label="Abrir Instagram">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+      <circle cx="12" cy="12" r="4.2"></circle>
+      <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"></circle>
+    </svg>
+  </a>
+  <a class="fab-sub whatsapp" id="fabWhatsapp" href="#" target="_blank" rel="noopener" aria-label="Abrir WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.81L2.05 22l5.4-1.32c1.36.72 2.92 1.14 4.58 1.14 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2Zm5.78 14.02c-.24.68-1.4 1.3-1.94 1.38-.5.08-1.13.11-1.83-.11-.42-.13-.96-.31-1.65-.6-2.9-1.25-4.79-4.17-4.94-4.36-.14-.2-1.18-1.57-1.18-3 0-1.42.75-2.12 1.02-2.41.27-.29.58-.36.78-.36.2 0 .39 0 .56.01.18.01.42-.07.65.5.24.58.81 2 .88 2.15.07.15.12.32.02.52-.1.2-.15.32-.29.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.29.75 1.24 1.62 2 1.11.99 2.05 1.3 2.34 1.44.29.15.46.13.63-.07.17-.2.72-.84.92-1.13.19-.29.39-.24.65-.15.27.1 1.7.8 2 .95.29.15.48.22.55.34.07.13.07.75-.17 1.43Z"></path>
+    </svg>
+  </a>
+  <button class="fab-main" id="fabMain" type="button" aria-label="Abrir redes sociais">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+    </svg>
+  </button>
+</div>
+
+<script>
+/* ===================== PLAN DATA ===================== */
+const PLANS = [
+  {
+    id:'start', name:'Plano Start', badge:'01',
+    tagline:'Ideal para quem está começando e precisa marcar presença online.',
+    price:'259,90',
+    color:'#1fae5f', colorLight:'#59e08c', colorDark:'#0f7a41',
+    features:['Site de até 3 páginas','Layout moderno e responsivo','WhatsApp integrado','Domínio incluso','Hospedagem inclusa','1 alteração por mês','Suporte básico'],
+    about:'O plano perfeito pra tirar seu negócio do papel: um site enxuto, rápido e já com o WhatsApp integrado pra você começar a receber contato hoje mesmo.'
+  },
+  {
+    id:'business', name:'Plano Business', badge:'02',
+    tagline:'Perfeito para negócios que querem atrair mais clientes e crescer.',
+    price:'329,90',
+    color:'#2f6fed', colorLight:'#7db4ff', colorDark:'#1c4dc4',
+    features:['Site de até 7 páginas','Layout moderno e responsivo','Redes sociais integradas','WhatsApp integrado','Domínio incluso','Hospedagem inclusa','4 alterações por mês','Relatório básico de acessos','Suporte dedicado'],
+    about:'Pra quem já tem uma base de clientes e quer se destacar: mais páginas, redes sociais integradas e relatório de acessos pra acompanhar o crescimento.'
+  },
+  {
+    id:'premium', name:'Plano Premium', badge:'03',
+    tagline:'Para empresas que buscam mais autoridade e se destacar no mercado.',
+    price:'449,90',
+    color:'#8b3ff0', colorLight:'#c79bff', colorDark:'#6420c2',
+    features:['Site de até 15 páginas','Blog integrado','SEO básico (Google)','Layout moderno e responsivo','Domínio incluso','Hospedagem inclusa','Alterações ilimitadas*','Relatório de acessos avançado','Suporte prioritário'],
+    about:'O pacote completo pra quem quer autoridade de verdade: blog pra atrair pelo Google, alterações ilimitadas e relatório avançado pra acompanhar cada visita.'
+  },
+  {
+    id:'loja', name:'Loja Virtual', badge:'04',
+    tagline:'Sua loja online completa para vender todos os dias com segurança.',
+    price:'699,90',
+    color:'#f2861a', colorLight:'#ffb85c', colorDark:'#c4650a',
+    features:['Loja online completa','Cadastro ilimitado de produtos','Carrinho de compras','Pagamentos online','Cálculo de frete','Domínio incluso','Hospedagem inclusa','Alterações ilimitadas*','Suporte prioritário'],
+    about:'Uma loja de verdade, funcionando 24h: produtos ilimitados, carrinho, pagamento online e cálculo de frete, tudo com suporte prioritário.'
+  }
+];
+
+const WHATSAPP_NUMBER = '558720073321'; // seu número, formatado pro WhatsApp (55 + DDD + número, sem o 0 inicial)
+
+/* ===================== RENDER PLAN CARDS ===================== */
+const stage = document.getElementById('plansStage');
+PLANS.forEach(p=>{
+  const card = document.createElement('button');
+  card.className = 'plan-card';
+  card.dataset.plan = p.id;
+  card.style.setProperty('--pc', p.color);
+  card.style.setProperty('--pcl', p.colorLight);
+  card.style.setProperty('--pcd', p.colorDark);
+  card.innerHTML = `
+    <div class="plan-badge">${p.badge}</div>
+    <h3>${p.name}</h3>
+    <div class="tagline">${p.tagline}</div>
+    <div class="plan-price">R$ ${p.price}<span> /mês</span></div>
+    <ul class="plan-features">${p.features.map(f=>`<li>${f}</li>`).join('')}</ul>
+    <div class="plan-select">Ver detalhes deste plano</div>
+  `;
+  card.addEventListener('click', ()=> selectPlan(p.id));
+  stage.appendChild(card);
+});
+
+let currentPlan = null;
+
+function selectPlan(id){
+  const plan = PLANS.find(p=>p.id===id);
+  if(!plan) return;
+  const already = currentPlan === id;
+  currentPlan = already ? null : id;
+
+  // card states
+  document.querySelectorAll('.plan-card').forEach(c=>{
+    c.classList.toggle('active', c.dataset.plan === currentPlan);
+  });
+  stage.classList.toggle('has-active', !!currentPlan);
+
+  const panel = document.getElementById('detailPanel');
+  if(!currentPlan){
+    panel.classList.remove('open');
+    applyTheme(null);
+    updateSchedulePill(null);
+    return;
+  }
+
+  applyTheme(plan);
+
+  document.getElementById('detailPlanName').textContent = plan.name;
+  document.getElementById('detailPlanNameInline').textContent = plan.name;
+  document.getElementById('detailPrice').textContent = 'R$ ' + plan.price;
+  document.getElementById('detailTagline').textContent = plan.tagline;
+  document.getElementById('detailFeatures').innerHTML = plan.features.map(f=>`<li>${f}</li>`).join('');
+  document.getElementById('detailAboutPlan').textContent = plan.about;
+  document.getElementById('detailCta').textContent = `Agendar o ${plan.name} →`;
+  panel.classList.add('open');
+
+  document.getElementById('fPlan').value = plan.id;
+  updateSchedulePill(plan);
+}
+
+document.getElementById('detailCta').addEventListener('click', (e)=>{
+  // just scrolls via href, schedule pill already synced
+});
+
+function updateSchedulePill(plan){
+  const pill = document.getElementById('selectedPlanPill');
+  const box = document.getElementById('scheduleBox');
+  if(!plan){
+    pill.textContent = 'Nenhum plano selecionado ainda — escolha um acima';
+    box.classList.remove('selected');
+  }else{
+    pill.textContent = `Plano selecionado: ${plan.name} · R$ ${plan.price}/mês`;
+    box.classList.add('selected');
+  }
+}
+
+document.getElementById('fPlan').addEventListener('change', (e)=>{
+  const plan = PLANS.find(p=>p.id === e.target.value);
+  if(plan) selectPlan(plan.id);
+});
+
+/* ===================== THEME (CSS VARS) ===================== */
+function applyTheme(plan){
+  const root = document.documentElement.style;
+  const c = plan ? plan.color : '#2f6fed';
+  const cl = plan ? plan.colorLight : '#7db4ff';
+  const cd = plan ? plan.colorDark : '#1c4dc4';
+  root.setProperty('--accent', c);
+  root.setProperty('--accent-light', cl);
+  root.setProperty('--accent-dark', cd);
+  root.setProperty('--accent-soft', hexToRgba(c, 0.14));
+  if(scene) scene.setThemeColor(c);
+}
+function hexToRgba(hex, a){
+  const v = hex.replace('#','');
+  const r = parseInt(v.substring(0,2),16), g = parseInt(v.substring(2,4),16), b = parseInt(v.substring(4,6),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+
+/* ===================== WHATSAPP SCHEDULE SUBMIT ===================== */
+document.getElementById('scheduleSubmit').addEventListener('click', ()=>{
+  const name = document.getElementById('fName').value.trim();
+  const biz = document.getElementById('fBiz').value.trim();
+  const planId = document.getElementById('fPlan').value;
+  const date = document.getElementById('fDate').value;
+  const time = document.getElementById('fTime').value;
+  const msg = document.getElementById('fMsg').value.trim();
+  const plan = PLANS.find(p=>p.id===planId);
+
+  let text = `Olá! Quero agendar a criação do meu site pela Nexa Web.%0A`;
+  text += `Nome: ${name || '-'}%0A`;
+  text += `Negócio: ${biz || '-'}%0A`;
+  text += `Plano: ${plan ? plan.name + ' (R$ ' + plan.price + '/mês)' : 'ainda não escolhi'}%0A`;
+  if(date) text += `Data preferida: ${date}%0A`;
+  if(time) text += `Horário preferido: ${time}%0A`;
+  if(msg) text += `Sobre o negócio: ${msg}`;
+
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
+});
+
+/* ===================== FAB — redes sociais ===================== */
+document.getElementById('fabWhatsapp').href =
+  `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Olá! Vim pelo site da Nexa Web.')}`;
+
+const fabWrap = document.getElementById('fabWrap');
+document.getElementById('fabMain').addEventListener('click', ()=>{
+  fabWrap.classList.toggle('open');
+});
+document.addEventListener('click', (e)=>{
+  if(fabWrap.classList.contains('open') && !fabWrap.contains(e.target)){
+    fabWrap.classList.remove('open');
+  }
+});
+
+/* ===================== REVEAL ON SCROLL ===================== */
+document.getElementById('scrollCue').addEventListener('click', ()=>{
+  const hero = document.querySelector('.hero');
+  window.scrollTo({ top: hero.offsetHeight - 40, behavior: 'smooth' });
+});
+
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{ threshold:0.15 });
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* ===================== QUICK DOCK — atalhos + iluminação ===================== */
+const dockButtons = document.querySelectorAll('.dock-btn[data-target]');
+dockButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const target = document.querySelector(btn.dataset.target);
+    if(target) target.scrollIntoView({ behavior:'smooth', block:'start' });
+  });
+});
+
+// Realça no dock qual seção está visível no momento, sem precisar clicar
+const dockSections = Array.from(dockButtons)
+  .map(btn=>({ btn, el: document.querySelector(btn.dataset.target) }))
+  .filter(item=>item.el);
+
+const dockObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(!entry.isIntersecting) return;
+    const match = dockSections.find(item=>item.el === entry.target);
+    if(!match) return;
+    dockButtons.forEach(b=>b.classList.remove('active'));
+    match.btn.classList.add('active');
+  });
+},{ threshold:0.35 });
+dockSections.forEach(item=>dockObserver.observe(item.el));
+
+// Iluminação do site (claro/escuro) — só nesta visita, sem salvar preferência
+document.getElementById('themeToggleBtn').addEventListener('click', ()=>{
+  document.body.classList.toggle('light-mode');
+});
+
+/* ===================== THREE.JS AMBIENT NEXUS SCENE ===================== */
+let scene, camera, renderer, group, particles, lines, mouseX=0, mouseY=0;
+
+function initScene(){
+  const canvas = document.getElementById('bg-canvas');
+  const three_scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 100);
+  camera.position.z = 22;
+
+  renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+
+  group = new THREE.Group();
+  three_scene.add(group);
+
+  // Nexus core: icosahedron wireframe
+  const coreGeo = new THREE.IcosahedronGeometry(6, 1);
+  const coreMat = new THREE.MeshBasicMaterial({ color:0x2f6fed, wireframe:true, transparent:true, opacity:0.35 });
+  const core = new THREE.Mesh(coreGeo, coreMat);
+  group.add(core);
+
+  // Particle nodes orbiting
+  const NODE_COUNT = 90;
+  const positions = new Float32Array(NODE_COUNT*3);
+  for(let i=0;i<NODE_COUNT;i++){
+    const r = 9 + Math.random()*10;
+    const theta = Math.random()*Math.PI*2;
+    const phi = Math.acos((Math.random()*2)-1);
+    positions[i*3] = r*Math.sin(phi)*Math.cos(theta);
+    positions[i*3+1] = r*Math.sin(phi)*Math.sin(theta);
+    positions[i*3+2] = r*Math.cos(phi);
+  }
+  const particleGeo = new THREE.BufferGeometry();
+  particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const particleMat = new THREE.PointsMaterial({ color:0x7db4ff, size:0.18, transparent:true, opacity:0.85 });
+  particles = new THREE.Points(particleGeo, particleMat);
+  group.add(particles);
+
+  // Iluminação — necessária pros módulos com material "shaded" (não wireframe)
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.55);
+  three_scene.add(ambientLight);
+  const keyLight = new THREE.DirectionalLight(0xffffff, 0.9);
+  keyLight.position.set(8, 12, 10);
+  three_scene.add(keyLight);
+  const rimLight = new THREE.PointLight(0x2f6fed, 1.6, 60);
+  rimLight.position.set(-14, -6, 8);
+  three_scene.add(rimLight);
+
+  // Módulos flutuantes — organizados em dois "anéis" concêntricos (estrutura
+  // deliberada, não posições aleatórias), cada um girando como um todo,
+  // com material shaded (metalness/roughness) em vez de wireframe.
+  const floaters = [];
+  const floaterGeos = [
+    new THREE.IcosahedronGeometry(1, 1),
+    new THREE.OctahedronGeometry(1.15, 0),
+    new THREE.TorusGeometry(0.78, 0.26, 16, 32),
+    new THREE.SphereGeometry(0.72, 20, 20)
+  ];
+
+  function buildRing(count, radius, tiltDeg, baseY, sizeScale){
+    const ringGroup = new THREE.Group();
+    ringGroup.rotation.x = THREE.MathUtils.degToRad(tiltDeg);
+    for(let i=0;i<count;i++){
+      const angle = (i / count) * Math.PI * 2;
+      const isAccent = i % 3 === 0;
+      const geo = floaterGeos[i % floaterGeos.length];
+      const mat = new THREE.MeshStandardMaterial({
+        color: isAccent ? 0x2f6fed : 0xc7cedd,
+        metalness: 0.45,
+        roughness: 0.32,
+        emissive: isAccent ? 0x0c1e4a : 0x000000,
+        emissiveIntensity: isAccent ? 0.25 : 0
+      });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.scale.setScalar(sizeScale);
+      mesh.userData.baseScale = sizeScale;
+      mesh.position.set(Math.cos(angle)*radius, baseY + Math.sin(angle*2)*1.4, Math.sin(angle)*radius);
+      mesh.userData.isAccent = isAccent;
+      mesh.userData.spin = 0.003 + Math.random()*0.004;
+      mesh.userData.bobSpeed = 0.35 + Math.random()*0.5;
+      mesh.userData.bobOffset = angle;
+      mesh.userData.baseY = mesh.position.y;
+      ringGroup.add(mesh);
+      floaters.push(mesh);
+    }
+    group.add(ringGroup);
+    return ringGroup;
+  }
+
+  const ringA = buildRing(6, 13, -6, -2, 1);
+  const ringB = buildRing(9, 19.5, 9, 1.5, 0.78);
+
+  function setThemeColor(hex){
+    const color = new THREE.Color(hex);
+    coreMat.color = color;
+    particleMat.color.copy(color).lerp(new THREE.Color(0xffffff), 0.35);
+    rimLight.color = color;
+    floaters.forEach(f=>{
+      if(f.userData.isAccent) f.material.color.copy(color);
+    });
+  }
+
+  let clock = new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+    group.rotation.y = t*0.025 + mouseX*0.15;
+    group.rotation.x = mouseY*0.1;
+    core.rotation.y = t*0.05;
+    core.rotation.x = t*0.02;
+    ringA.rotation.y = t*0.06;
+    ringB.rotation.y = -t*0.04;
+    floaters.forEach(f=>{
+      f.rotation.x += f.userData.spin;
+      f.rotation.y += f.userData.spin*1.4;
+      if(f.userData.dragging){
+        // posição já é definida pelo pointermove — não mexe aqui
+      } else if(f.userData.velocity && f.userData.velocity.length() > 0.03){
+        // acabou de soltar com um "impulso": aplica inércia com atrito até parar
+        const dt = 1/60;
+        f.position.addScaledVector(f.userData.velocity, dt);
+        f.userData.velocity.multiplyScalar(0.94);
+        f.userData.baseY = f.position.y;
+        if(f.userData.velocity.length() <= 0.03){
+          f.userData.velocity = null;
+          f.userData.bobOffset = t * f.userData.bobSpeed;
+        }
+      } else {
+        f.position.y = f.userData.baseY + Math.sin(t*f.userData.bobSpeed + f.userData.bobOffset)*1.1;
+      }
+      const pulse = f.userData.pulse || 0;
+      if(pulse > 0.001){
+        f.userData.pulse *= 0.9;
+        f.scale.setScalar((f.userData.baseScale || f.scale.x) * (1 + f.userData.pulse*0.6));
+      }
+    });
+    renderer.render(three_scene, camera);
+  }
+  animate();
+
+  window.addEventListener('resize', ()=>{
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+  window.addEventListener('mousemove', (e)=>{
+    mouseX = (e.clientX/window.innerWidth - 0.5);
+    mouseY = (e.clientY/window.innerHeight - 0.5);
+  });
+
+  // Interação real com os módulos: arrastar (pega, move, solta com inércia)
+  // e toque rápido (pulso). Tudo via Pointer Events, funciona no mouse e no touch.
+  const raycaster = new THREE.Raycaster();
+  const pointer = new THREE.Vector2();
+  const dragPlane = new THREE.Plane();
+  const dragPoint = new THREE.Vector3();
+  const planeNormal = new THREE.Vector3();
+  const dragOffset = new THREE.Vector3();
+  const lastDragPos = new THREE.Vector3();
+  let dragTarget = null;
+  let pointerDownAt = null;
+  let lastDragTime = 0;
+
+  function setPointerFromEvent(e){
+    pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+    pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  }
+
+  function onPointerDown(e){
+    setPointerFromEvent(e);
+    raycaster.setFromCamera(pointer, camera);
+    const hit = raycaster.intersectObjects(floaters)[0];
+    if(!hit) return;
+    dragTarget = hit.object;
+    three_scene.attach(dragTarget); // sai do anel giratório, passa a ter posição em espaço "mundo" — evita deslocar errado enquanto arrasta
+    dragTarget.userData.dragging = true;
+    dragTarget.userData.pulse = 0;
+    dragTarget.userData.velocity = null;
+    pointerDownAt = { x: e.clientX, y: e.clientY };
+    camera.getWorldDirection(planeNormal);
+    dragPlane.setFromNormalAndCoplanarPoint(planeNormal, dragTarget.position);
+    raycaster.ray.intersectPlane(dragPlane, dragPoint);
+    dragOffset.copy(dragTarget.position).sub(dragPoint);
+    lastDragPos.copy(dragTarget.position);
+    lastDragTime = performance.now();
+    if(e.cancelable) e.preventDefault();
+  }
+
+  function onPointerMove(e){
+    if(!dragTarget) return;
+    if(e.cancelable) e.preventDefault();
+    setPointerFromEvent(e);
+    raycaster.setFromCamera(pointer, camera);
+    if(!raycaster.ray.intersectPlane(dragPlane, dragPoint)) return;
+    const newPos = dragPoint.clone().add(dragOffset);
+    const now = performance.now();
+    const dt = Math.max((now - lastDragTime) / 1000, 0.001);
+    dragTarget.userData.velocity = newPos.clone().sub(lastDragPos).divideScalar(dt);
+    dragTarget.position.copy(newPos);
+    lastDragPos.copy(newPos);
+    lastDragTime = now;
+  }
+
+  function onPointerUp(e){
+    if(!dragTarget) return;
+    const moved = pointerDownAt ? Math.hypot(e.clientX - pointerDownAt.x, e.clientY - pointerDownAt.y) : 999;
+    if(moved < 6){
+      dragTarget.userData.pulse = 1;
+      dragTarget.userData.velocity = null;
+    } else {
+      dragTarget.userData.baseY = dragTarget.position.y;
+      if(dragTarget.userData.velocity){
+        const speed = dragTarget.userData.velocity.length();
+        const maxSpeed = 16;
+        if(speed > maxSpeed) dragTarget.userData.velocity.multiplyScalar(maxSpeed / speed);
+      }
+    }
+    dragTarget.userData.dragging = false;
+    dragTarget = null;
+    pointerDownAt = null;
+  }
+
+  window.addEventListener('pointerdown', onPointerDown, { passive:false });
+  window.addEventListener('pointermove', onPointerMove, { passive:false });
+  window.addEventListener('pointerup', onPointerUp, { passive:false });
+  window.addEventListener('pointercancel', onPointerUp, { passive:false });
+
+  return { setThemeColor, floaters };
+}
+
+if(typeof THREE !== 'undefined'){
+  scene = initScene();
+} else {
+  scene = null;
+}
+
+/* ===================================================================
+   PORTFÓLIO — CARROSSEL
+=================================================================== */
+const PORTFOLIO = [
+  {
+    name:'Espaço Mayara Brasil',
+    tag:'Beleza & Estética',
+    color:'#e0559a',
+    desc:'Site de agendamento para especialista em cílios, sobrancelha e micropigmentação: tabela de serviços com preços, resultados reais de clientes e marcação direto pelo WhatsApp.',
+    url:'https://enzokaleb01.github.io/Site-Mayra-Brasil/'
+  },
+  {
+    name:'Escola de Carnaval do Ceará',
+    tag:'Projeto cultural',
+    color:'#e6b02c',
+    desc:'Site institucional para projeto social de Fortaleza: cursos gratuitos de costura, figurino e adereços, inscrições e bolsas para três comunidades.',
+    url:'https://enzokaleb01.github.io/Carnaval/'
+  },
+  {
+    name:'Samps Digital',
+    tag:'Marketing & Agência',
+    color:'#14b8a6',
+    desc:'Site institucional de agência de marketing com diagnóstico, planejamento e método próprio: cases com marcas como McDonald\'s e Pague Menos, e diagnóstico gratuito direto pelo WhatsApp.',
+    url:'https://enzokaleb01.github.io/Samp-Digital/'
+  },
+  {
+    name:'Doce Delícia',
+    tag:'Confeitaria',
+    color:'#d9822b',
+    desc:'Boleria com mais de 25 sabores de bolo e docinhos artesanais: cardápio interativo com sacola de pedidos, três unidades em Fortaleza e checkout direto no WhatsApp.',
+    url:'https://enzokaleb01.github.io/Doce-Delicia/'
+  },
+  {
+    name:'Syl Freitas',
+    tag:'Consultoria de Imagem',
+    color:'#b1443f',
+    desc:'Site de consultoria de imagem com paleta de cores, galeria de looks por psicologia das cores, depoimentos de clientes e agendamento direto pelo WhatsApp.',
+    url:'https://enzokaleb01.github.io/Site-Syl-Freitas/'
+  },
+  {
+    name:'Poppe Games',
+    tag:'Games & Assistência técnica',
+    color:'#e0468a',
+    desc:'Loja e assistência técnica de consoles em Fortaleza: catálogo de jogos e Funko Pop, avaliação no Google Maps e pedidos direto pelo WhatsApp.',
+    url:'https://enzokaleb01.github.io/Site-Poppe-Game/'
+  }
+];
+
+const carouselTrack = document.getElementById('carouselTrack');
+carouselTrack.innerHTML = PORTFOLIO.map(p=>{
+  const tag = p.url ? 'a' : 'div';
+  const linkAttrs = p.url ? `href="${p.url}" target="_blank" rel="noopener"` : '';
+  const preview = p.url
+    ? `<div class="portfolio-preview">
+         <iframe src="${p.url}" loading="lazy" tabindex="-1" title="Prévia de ${p.name}"></iframe>
+         <span class="portfolio-preview-badge">ao vivo</span>
+       </div>`
+    : '';
+  const cta = p.url
+    ? `<span class="portfolio-link">Entrar no site →</span>`
+    : `<div class="portfolio-soon">Site sob NDA do cliente</div>`;
+  return `
+    <${tag} class="portfolio-card" style="--pc:${p.color}" ${linkAttrs}>
+      <div class="portfolio-card-inner">
+        ${preview}
+        <div class="portfolio-tag">${p.tag}</div>
+        <h3>${p.name}</h3>
+        <p>${p.desc}</p>
+        ${cta}
+      </div>
+    </${tag}>
+  `;
+}).join('');
+
+// Brilho que segue o mouse em cada card — adaptado da técnica CSS que veio
+// junto do componente React que você mandou (radial-gradient em --x/--y),
+// só que aqui em JS puro, sem framer-motion.
+carouselTrack.querySelectorAll('.portfolio-card').forEach(card=>{
+  card.addEventListener('mousemove', (e)=>{
+    const rect = card.getBoundingClientRect();
+    card.style.setProperty('--x', `${e.clientX - rect.left}px`);
+    card.style.setProperty('--y', `${e.clientY - rect.top}px`);
+  });
+});
+
+document.getElementById('carouselNext').addEventListener('click', ()=>{
+  carouselTrack.scrollBy({ left: 320, behavior:'smooth' });
+});
+document.getElementById('carouselPrev').addEventListener('click', ()=>{
+  carouselTrack.scrollBy({ left: -320, behavior:'smooth' });
+});
+
+// Card "sobre este site" inclina suavemente seguindo o mouse
+const aboutVisual = document.getElementById('aboutVisual');
+const aboutCard = document.getElementById('aboutCard');
+if(aboutVisual && aboutCard){
+  aboutVisual.addEventListener('mousemove', (e)=>{
+    const rect = aboutVisual.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    aboutCard.style.transform = `rotateX(${(-py*14 + 4).toFixed(2)}deg) rotateY(${(px*16).toFixed(2)}deg)`;
+  });
+  aboutVisual.addEventListener('mouseleave', ()=>{
+    aboutCard.style.transform = 'rotateX(8deg) rotateY(-10deg)';
+  });
+}
+</script>
+</body>
+</html>
