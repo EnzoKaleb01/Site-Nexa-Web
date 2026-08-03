@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- ===== SEO básico ===== -->
-<title>Nexa Web</title>
+<title>Nexa Web: Criação de Sites Profissionais para Empresas em Todo o Brasil</title>
 <meta name="description" content="Sua empresa ainda não tem site? A Nexa Web cria sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios em qualquer lugar do Brasil. Planos a partir de R$ 259,90/mês, com 7 dias grátis pra testar.">
 <meta name="keywords" content="criação de sites, site profissional, desenvolvedor de sites, site para pequena empresa, criar site para minha empresa, loja virtual, site barato, agência de sites Brasil, criação de site online">
 <meta name="author" content="Nexa Web">
@@ -193,7 +193,7 @@ body.light-mode .dock-theme .icon-moon{ display:block; }
 /* ---------- HERO ---------- */
 .hero{
   height:100svh; min-height:560px; display:flex; flex-direction:column; align-items:center; justify-content:center;
-  text-align:center; padding:12vh 6vw 6vh; position:relative;
+  text-align:center; padding:7vh 6vw 8vh; position:relative;
   overflow:hidden;
 }
 
@@ -398,6 +398,44 @@ section{ padding:9vh 6vw; position:relative; }
 .addon-item span small{ display:block; font-weight:400; color:var(--ink-dim); font-size:0.76rem; margin-top:3px; }
 .addon-item b{ font-family:'IBM Plex Mono',monospace; color:var(--accent-light); font-size:1.05rem; transition:color var(--transition-theme); }
 
+/* ---------- MELHORAR SITE ATUAL ---------- */
+.upgrade-list{
+  max-width:840px; margin:0 auto; border-radius:20px; border:1px solid var(--line);
+  background:var(--panel); overflow:hidden; transition:border-color var(--transition-theme);
+}
+.upgrade-item{
+  display:flex; align-items:center; gap:20px; padding:22px 28px;
+  border-bottom:1px solid var(--line); transition:background 200ms ease;
+}
+.upgrade-item:last-child{ border-bottom:none; }
+.upgrade-item:hover{ background:var(--bg-elev); }
+.upgrade-icon{
+  flex-shrink:0; width:44px; height:44px; border-radius:12px;
+  background:var(--accent-soft); color:var(--accent-light);
+  display:flex; align-items:center; justify-content:center;
+  transition:background var(--transition-theme), color var(--transition-theme);
+}
+.upgrade-icon svg{ width:22px; height:22px; }
+.upgrade-info{ flex:1; min-width:0; }
+.upgrade-info h3{ font-size:1.02rem; margin:0 0 4px; font-weight:700; }
+.upgrade-info p{ margin:0; font-size:0.85rem; color:var(--ink-dim); line-height:1.5; }
+.upgrade-price{
+  flex-shrink:0; font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:1.15rem;
+  color:var(--accent-light); text-align:right; transition:color var(--transition-theme);
+}
+.upgrade-from{ display:block; font-family:'Inter',sans-serif; font-weight:400; font-size:0.7rem; color:var(--ink-dim); text-transform:uppercase; letter-spacing:0.5px; }
+@media (max-width:600px){
+  .upgrade-item{ padding:18px 18px; gap:14px; }
+  .upgrade-info h3{ font-size:0.95rem; }
+  .upgrade-price{ font-size:1rem; }
+}
+
+.upgrade-benefits{
+  max-width:840px; margin:26px auto 0; display:flex; flex-wrap:wrap; justify-content:center; gap:22px;
+}
+.upgrade-benefits span{ display:flex; align-items:center; gap:7px; font-size:0.85rem; color:var(--ink-dim); }
+.upgrade-benefits svg{ width:16px; height:16px; color:var(--accent-light); flex-shrink:0; transition:color var(--transition-theme); }
+
 /* ---------- FLOATING MODULES (decorative html, alongside canvas objects) ---------- */
 .float-tag{
   position:absolute; pointer-events:none; opacity:0.5;
@@ -555,6 +593,9 @@ footer .brand{ justify-content:center; margin-bottom:14px; }
       <line x1="19" y1="21" x2="19" y2="15"></line>
     </svg>
   </button>
+  <button class="dock-btn" type="button" data-target="#melhorias" title="Melhorar site" aria-label="Ir para melhorar meu site">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"></path></svg>
+  </button>
   <button class="dock-btn" type="button" data-target="#agendar" title="Agendar" aria-label="Ir para agendar">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="4" width="18" height="17" rx="2"></rect>
@@ -705,6 +746,67 @@ footer .brand{ justify-content:center; margin-bottom:14px; }
         <b>R$ 49,90</b>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="melhorias">
+  <div class="section-head reveal">
+    <div class="eyebrow">já tem site?</div>
+    <h2>Tenho um site e quero melhorar</h2>
+    <p>Deixe seu site atual mais moderno, rápido e completo.</p>
+  </div>
+
+  <div class="upgrade-list reveal">
+    <div class="upgrade-item">
+      <div class="upgrade-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"></path></svg>
+      </div>
+      <div class="upgrade-info">
+        <h3>Pacote Essencial</h3>
+        <p>Melhorias visuais, ajustes de layout e responsividade.</p>
+      </div>
+      <div class="upgrade-price">R$ 249,90</div>
+    </div>
+
+    <div class="upgrade-item">
+      <div class="upgrade-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"></path></svg>
+      </div>
+      <div class="upgrade-info">
+        <h3>Pacote Profissional</h3>
+        <p>Inclui o Essencial, mais novas seções e integração com WhatsApp.</p>
+      </div>
+      <div class="upgrade-price">R$ 449,90</div>
+    </div>
+
+    <div class="upgrade-item">
+      <div class="upgrade-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"></path></svg>
+      </div>
+      <div class="upgrade-info">
+        <h3>Pacote Avançado</h3>
+        <p>Inclui o Profissional, mais otimização de velocidade e SEO básico.</p>
+      </div>
+      <div class="upgrade-price">R$ 699,90</div>
+    </div>
+
+    <div class="upgrade-item">
+      <div class="upgrade-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.2-9.3-9.6C1 8 2.5 4.5 6 3.6c2-.5 3.8.3 5 2 1.2-1.7 3-2.5 5-2 3.5.9 5 4.4 3.3 7.8C19 15.8 12 21 12 21Z"></path><circle cx="12" cy="10" r="2"></circle></svg>
+      </div>
+      <div class="upgrade-info">
+        <h3>Personalizado</h3>
+        <p>Soluções completas e funcionalidades sob medida para o seu negócio.</p>
+      </div>
+      <div class="upgrade-price"><span class="upgrade-from">a partir de</span>R$ 999,90</div>
+    </div>
+  </div>
+
+  <div class="upgrade-benefits reveal">
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"></polyline></svg>Design moderno</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"></polyline></svg>Site mais rápido</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"></polyline></svg>Mais conversões</span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"></polyline></svg>Melhor experiência para seu cliente</span>
   </div>
 </section>
 
