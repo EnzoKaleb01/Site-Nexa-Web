@@ -211,9 +211,11 @@ body.light-mode .dock-theme .icon-moon{ display:block; }
 }
 .fab-sub svg{ width:24px; height:24px; }
 .fab-wrap.open .fab-sub{ opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
+.fab-wrap.open .fab-sub.linkedin{ transition-delay:80ms; }
 .fab-wrap.open .fab-sub.instagram{ transition-delay:40ms; }
 .fab-wrap.open .fab-sub.whatsapp{ transition-delay:0ms; }
 .fab-sub.whatsapp:hover{ background:#25D366; color:#fff; border-color:#25D366; }
+.fab-sub.linkedin:hover{ background:#0A66C2; color:#fff; border-color:#0A66C2; }
 .fab-sub.instagram:hover{
   background:linear-gradient(135deg,#f58529,#dd2a7b 45%,#8134af);
   color:#fff; border-color:transparent;
@@ -880,6 +882,11 @@ footer .brand{ justify-content:center; margin-bottom:14px; }
 </div>
 
 <div class="fab-wrap" id="fabWrap">
+  <a class="fab-sub linkedin" href="https://www.linkedin.com/in/nexa-web-079190386" target="_blank" rel="noopener" aria-label="Abrir LinkedIn">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45Z"></path>
+    </svg>
+  </a>
   <a class="fab-sub instagram" href="https://instagram.com/kaleb.enzo" target="_blank" rel="noopener" aria-label="Abrir Instagram">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="3" width="18" height="18" rx="5"></rect>
