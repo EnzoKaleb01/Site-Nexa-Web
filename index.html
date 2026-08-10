@@ -1539,6 +1539,7 @@ function gerarTokenExclusao(){
 function feedbackErrorMessage(err){
   const msg = (err && err.message) || 'Erro ao falar com o servidor.';
   if(msg.includes('Failed to fetch')) return 'Não consegui conectar. Confira sua internet e tente de novo.';
+  if(msg.includes('Could not find the table')) return 'O banco de avaliações ainda não foi configurado. (peça pro administrador do site rodar o SQL de configuração no Supabase)';
   return msg;
 }
 
