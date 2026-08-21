@@ -416,7 +416,7 @@ section{position:relative;width:var(--shell);margin:0 auto;padding:120px 0}
   background:#000;
 }
 .portfolio-preview iframe{
-  width:1280px;max-width:none;height:760px;border:0;
+  width:1280px;max-width:none;height:820px;border:0;
   transform:scale(var(--pv,.29));transform-origin:top left;
   pointer-events:none;filter:saturate(1.05);
 }
@@ -1645,9 +1645,9 @@ setTimeout(finishLoad, 2600);
 
   function frame(now){
     requestAnimationFrame(frame);
-    const dt = Math.min((now - last) / 1000, 0.1);
+    let dt = Math.min((now - last) / 1000, 0.1);
     last = now;
-    if(REDUCED) return;
+    if(REDUCED) dt *= 0.5;
 
     // faixa: rola pra esquerda e reinicia na metade (o conteúdo é duplicado)
     if(track && track.children.length){
@@ -1660,7 +1660,7 @@ setTimeout(finishLoad, 2600);
     }
 
     // engrenagem do site em manutenção
-    gearAngle = (gearAngle + dt * 52) % 360;
+    gearAngle = (gearAngle + dt * 70) % 360;
     document.querySelectorAll('.maintenance-gear').forEach(g=>{
       g.style.transform = `rotate(${gearAngle.toFixed(1)}deg)`;
     });
@@ -1685,6 +1685,50 @@ setTimeout(finishLoad, 2600);
   window.addEventListener('load', fit);
   setTimeout(fit, 300);
   fit();
+})();
+
+/* ---------- prévias ao vivo: cada site rola sozinho dentro do card ---------- */
+(function livePreviews(){
+  const track = document.getElementById('carouselTrack');
+  if(!track) return;
+  const CICLO = 30;               // segundos pra descer e voltar ao topo
+  let t0 = performance.now(), ultimo = 0;
+
+  function visivel(el){
+    const r = el.getBoundingClientRect();
+    return r.bottom > -80 && r.top < window.innerHeight + 80 && r.right > 0 && r.left < window.innerWidth;
+  }
+
+  function passo(now){
+    requestAnimationFrame(passo);
+    if(now - ultimo < 55) return;  // ~18 quadros por segundo já basta e poupa bateria
+    ultimo = now;
+    const t = (now - t0) / 1000;
+
+    track.querySelectorAll('.portfolio-preview iframe').forEach((frame, i)=>{
+      const card = frame.closest('.portfolio-card');
+      if(!card || !visivel(card)) return;
+      try{
+        const doc = frame.contentDocument;
+        if(!doc || !doc.body) return;
+        if(!frame.dataset.pronto){
+          frame.dataset.pronto = '1';
+          const estilo = doc.createElement('style');
+          estilo.textContent = 'html{scrollbar-width:none;scroll-behavior:auto !important}html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}';
+          (doc.head || doc.documentElement).appendChild(estilo);
+        }
+        const alturaVisivel = frame.clientHeight;
+        const total = Math.max(doc.body.scrollHeight, doc.documentElement.scrollHeight);
+        const limite = total - alturaVisivel;
+        if(limite <= 20) return;
+        // vai e volta suave, cada card começa em um ponto diferente do ciclo
+        const fase = ((t / CICLO) + i * 0.07) % 1;
+        const k = 0.5 - 0.5 * Math.cos(fase * Math.PI * 2);
+        frame.contentWindow.scrollTo(0, limite * k);
+      }catch(err){ /* prévia de outro domínio: segue estática, sem quebrar nada */ }
+    });
+  }
+  requestAnimationFrame(passo);
 })();
 
 /* ---------- contadores do hero ---------- */
