@@ -6,7 +6,7 @@
 
 <!-- ===== SEO básico ===== -->
 <title>Nexa Web: Criação de Sites Profissionais para Empresas em Todo o Brasil</title>
-<meta name="description" content="Sua empresa ainda não tem site? A Nexa Web cria sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios em qualquer lugar do Brasil. Planos a partir de R$ 259,90/mês, com 7 dias grátis pra testar.">
+<meta name="description" content="Sua empresa ainda não tem site? A Nexa Web cria sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios em qualquer lugar do Brasil. Planos a partir de R$ 289,90, com 7 dias grátis pra testar.">
 <meta name="keywords" content="criação de sites, site profissional, desenvolvedor de sites, site para pequena empresa, criar site para minha empresa, loja virtual, site barato, agência de sites Brasil, criação de site online">
 <meta name="author" content="Nexa Web">
 <meta name="robots" content="index, follow">
@@ -20,7 +20,7 @@
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Nexa Web">
 <meta property="og:title" content="Nexa Web: Criação de Sites Profissionais para Empresas em Todo o Brasil">
-<meta property="og:description" content="Sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios. Planos a partir de R$ 259,90/mês, com 7 dias grátis pra testar.">
+<meta property="og:description" content="Sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios. Planos a partir de R$ 289,90, com 7 dias grátis pra testar.">
 <meta property="og:url" content="https://enzokaleb01.github.io/nexaweb/">
 <meta property="og:image" content="https://enzokaleb01.github.io/nexaweb/og-image.png">
 <!-- ^ crie uma imagem 1200x630px (print do site ou a logo em fundo azul) e suba com esse nome na raiz do repositório -->
@@ -28,7 +28,7 @@
 <!-- ===== Twitter / X Card ===== -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Nexa Web: Criação de Sites Profissionais para Empresas em Todo o Brasil">
-<meta name="twitter:description" content="Sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios. Planos a partir de R$ 259,90/mês.">
+<meta name="twitter:description" content="Sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios. Planos a partir de R$ 289,90.">
 <meta name="twitter:image" content="https://enzokaleb01.github.io/nexaweb/og-image.png">
 
 <!-- ===== Dados estruturados (ajuda o Google a entender o negócio) ===== -->
@@ -40,7 +40,7 @@
   "description": "Criação de sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios em todo o Brasil.",
   "url": "https://enzokaleb01.github.io/nexaweb/",
   "telephone": "+55-87-20073321",
-  "priceRange": "R$259,90 - R$699,90",
+  "priceRange": "R$289,90 - R$769,90",
   "areaServed": {
     "@type": "Country",
     "name": "Brasil"
@@ -343,7 +343,7 @@ body.light-mode .dock-theme .icon-moon{display:block}
   position:relative;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
   padding:16px 0;margin:0;background:rgba(255,255,255,.02);
 }
-.marquee-track{display:flex;gap:0;width:max-content;animation:slide 34s linear infinite}
+.marquee-track{display:flex;gap:0;width:max-content;will-change:transform}
 .marquee span{
   font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 112;font-weight:700;
   text-transform:uppercase;font-size:clamp(1rem,2.2vw,1.5rem);letter-spacing:.02em;
@@ -416,7 +416,8 @@ section{position:relative;width:var(--shell);margin:0 auto;padding:120px 0}
   background:#000;
 }
 .portfolio-preview iframe{
-  width:1280px;height:900px;border:0;transform:scale(.29);transform-origin:top left;
+  width:1280px;max-width:none;height:760px;border:0;
+  transform:scale(var(--pv,.29));transform-origin:top left;
   pointer-events:none;filter:saturate(1.05);
 }
 .portfolio-preview::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(5,5,10,.75))}
@@ -429,7 +430,7 @@ section{position:relative;width:var(--shell);margin:0 auto;padding:120px 0}
 .portfolio-preview-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#3ddc84;box-shadow:0 0 10px #3ddc84;animation:pulseDot 1.8s infinite}
 @keyframes pulseDot{50%{opacity:.35}}
 .portfolio-preview-maintenance{display:grid;place-items:center;gap:10px;background:var(--void-2);align-content:center}
-.maintenance-gear{width:30px;height:30px;color:var(--ink-faint);animation:spin 7s linear infinite}
+.maintenance-gear{width:34px;height:34px;color:var(--ink-faint);transform-origin:50% 50%;will-change:transform}
 .maintenance-msg{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint)}
 .portfolio-tag{
   margin:20px 24px 10px;font-family:'JetBrains Mono',monospace;font-size:.58rem;
@@ -501,18 +502,12 @@ section{position:relative;width:var(--shell);margin:0 auto;padding:120px 0}
   font-size:1.06rem;letter-spacing:-.01em;
 }
 .plan-price small{font-family:'Inter',sans-serif;font-weight:400;font-size:.72rem;color:var(--ink-faint)}
-.plan-price{margin-bottom:6px}
-.plan-cash{
-  font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.12em;
-  text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;
-}
-.plan-card.active .plan-cash{color:var(--pcl)}
+.plan-price{margin-bottom:16px}
 .detail-price{display:flex;align-items:baseline;flex-wrap:wrap;gap:8px 12px;margin:0 0 18px}
 .detail-price b{
   font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 112;font-weight:800;
   font-size:1.9rem;letter-spacing:-.02em;line-height:1;
 }
-.detail-price small{font-size:.8rem;color:var(--ink-dim);margin-left:-8px}
 .detail-cash{
   font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
   color:var(--accent-light);border:1px solid var(--accent);border-radius:var(--r-pill);padding:6px 13px;
@@ -837,12 +832,18 @@ body.ready .rise:nth-of-type(2){transition-delay:.1s}
 .d1{transition-delay:.08s}.d2{transition-delay:.2s}.d3{transition-delay:.32s}.d4{transition-delay:.44s}.d5{transition-delay:.56s}
 
 /* ---------- correções do modo claro ---------- */
-body.light-mode .btn-primary,body.light-mode .feedback-submit,body.light-mode .schedule-submit,
+body.light-mode .feedback-submit,body.light-mode .schedule-submit,
 body.light-mode .reviews-more-btn,body.light-mode .briefing-trigger,body.light-mode .briefing-btn.primary{
   background:linear-gradient(105deg,#14141f,#2b2b3d 48%,#14141f);color:#fff;
   box-shadow:0 12px 30px rgba(20,20,35,.22);
 }
-body.light-mode .btn-primary .arrow{background:#fff;color:#14141f}
+body.light-mode .btn-primary{
+  background:linear-gradient(105deg,#fff,#e7e9f2 45%,#fff);color:#0b0b12;
+  border:1px solid rgba(12,14,28,.14);box-shadow:0 12px 30px rgba(30,35,60,.14);
+}
+body.light-mode .btn-primary .arrow{background:#0b0b12;color:#fff}
+.btn-primary .arrow svg{stroke:#fff}
+body.light-mode .btn-primary .arrow svg{stroke:#fff}
 body.light-mode .fab-main{background:linear-gradient(140deg,#1a1a26,#33334a);color:#fff}
 body.light-mode .hero-hint{color:#3a3d4d;text-shadow:0 1px 10px rgba(255,255,255,.9)}
 body.light-mode .briefing-modal{background:#f7f8fb}
@@ -907,8 +908,7 @@ body.light-mode .free-banner,body.light-mode .detail-inner{background-color:rgba
   .plan-icon-glow{width:38px;height:38px;border-radius:11px;margin-bottom:14px}
   .plan-icon-glow svg{width:17px;height:17px}
   .plan-name-big{font-size:1.02rem;margin-bottom:9px}
-  .plan-price{font-size:.88rem;margin-bottom:4px}
-  .plan-cash{font-size:.48rem;letter-spacing:.08em;margin-bottom:10px}
+  .plan-price{font-size:.9rem;margin-bottom:12px}
   .plan-price small{font-size:.62rem}
   .plan-page-pill{font-size:.62rem;padding:5px 10px;margin-bottom:12px}
   .plan-tap-hint{font-size:.5rem;letter-spacing:.12em}
@@ -1073,7 +1073,7 @@ body.light-mode .free-banner,body.light-mode .detail-inner{background-color:rgba
 
 <section id="planos">
   <div class="section-head reveal">
-    <div class="eyebrow">planos mensais</div>
+    <div class="eyebrow">planos e preços</div>
     <h2>Escolha o plano e veja o site reagir</h2>
     <p>Tudo incluso: criação do site, domínio, hospedagem e suporte. Toque em um plano para abrir os detalhes — o cromo do fundo muda junto.</p>
   </div>
@@ -1239,10 +1239,10 @@ body.light-mode .free-banner,body.light-mode .detail-inner{background-color:rgba
             <label for="fPlan">Plano</label>
             <select id="fPlan">
               <option value="">Selecione um plano</option>
-              <option value="start">Plano Start — R$ 259,90/mês ou R$ 289,90 à vista</option>
-              <option value="business">Plano Business — R$ 329,90/mês ou R$ 369,90 à vista</option>
-              <option value="premium">Plano Premium — R$ 449,90/mês ou R$ 499,90 à vista</option>
-              <option value="loja">Loja Virtual — R$ 699,90/mês ou R$ 769,90 à vista</option>
+              <option value="start">Plano Start — R$ 289,90</option>
+              <option value="business">Plano Business — R$ 369,90</option>
+              <option value="premium">Plano Premium — R$ 499,90</option>
+              <option value="loja">Loja Virtual — R$ 769,90</option>
             </select>
           </div>
         </div>
@@ -1638,6 +1638,55 @@ setTimeout(finishLoad, 2600);
   track.innerHTML = chunk + chunk;
 })();
 
+/* ---------- faixa deslizante e engrenagem (movimento em rAF) ---------- */
+(function livingMotion(){
+  const track = document.getElementById('marqueeTrack');
+  let offset = 0, last = performance.now(), gearAngle = 0;
+
+  function frame(now){
+    requestAnimationFrame(frame);
+    const dt = Math.min((now - last) / 1000, 0.1);
+    last = now;
+    if(REDUCED) return;
+
+    // faixa: rola pra esquerda e reinicia na metade (o conteúdo é duplicado)
+    if(track && track.children.length){
+      const half = track.scrollWidth / 2;
+      if(half > 0){
+        offset -= dt * 62;
+        if(-offset >= half) offset += half;
+        track.style.transform = `translate3d(${offset.toFixed(2)}px,0,0)`;
+      }
+    }
+
+    // engrenagem do site em manutenção
+    gearAngle = (gearAngle + dt * 52) % 360;
+    document.querySelectorAll('.maintenance-gear').forEach(g=>{
+      g.style.transform = `rotate(${gearAngle.toFixed(1)}deg)`;
+    });
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* ---------- prévias do portfólio: encaixar o site inteiro no card ---------- */
+(function fitPreviews(){
+  const track = document.getElementById('carouselTrack');
+  if(!track) return;
+  function fit(){
+    track.querySelectorAll('.portfolio-preview').forEach(box=>{
+      const frame = box.querySelector('iframe');
+      if(!frame) return;
+      const w = box.clientWidth;
+      if(w > 0) frame.style.setProperty('--pv', (w / 1280).toFixed(4));
+    });
+  }
+  new MutationObserver(fit).observe(track, { childList:true });
+  window.addEventListener('resize', fit);
+  window.addEventListener('load', fit);
+  setTimeout(fit, 300);
+  fit();
+})();
+
 /* ---------- contadores do hero ---------- */
 (function counters(){
   const els = document.querySelectorAll('[data-count]');
@@ -1735,7 +1784,7 @@ const PLANS = [
   {
     id:'start', name:'Plano Start', badge:'01', pageLabel:'Até 3 páginas',
     tagline:'Ideal para quem está começando e precisa marcar presença online.',
-    price:'259,90', cash:'289,90',
+    price:'289,90',
     color:'#1fae5f', colorLight:'#59e08c', colorDark:'#0f7a41',
     features:['Site de até 3 páginas','Layout moderno e responsivo','WhatsApp integrado','Domínio incluso','Hospedagem inclusa','1 alteração por mês','Suporte básico'],
     about:'O plano perfeito pra tirar seu negócio do papel: um site enxuto, rápido e já com o WhatsApp integrado pra você começar a receber contato hoje mesmo.'
@@ -1743,7 +1792,7 @@ const PLANS = [
   {
     id:'business', name:'Plano Business', badge:'02', pageLabel:'Até 7 páginas',
     tagline:'Perfeito para negócios que querem atrair mais clientes e crescer.',
-    price:'329,90', cash:'369,90',
+    price:'369,90',
     color:'#2f6fed', colorLight:'#7db4ff', colorDark:'#1c4dc4',
     features:['Site de até 7 páginas','Layout moderno e responsivo','Redes sociais integradas','WhatsApp integrado','Domínio incluso','Hospedagem inclusa','4 alterações por mês','Relatório básico de acessos','Suporte dedicado'],
     about:'Pra quem já tem uma base de clientes e quer se destacar: mais páginas, redes sociais integradas e relatório de acessos pra acompanhar o crescimento.'
@@ -1751,7 +1800,7 @@ const PLANS = [
   {
     id:'premium', name:'Plano Premium', badge:'03', pageLabel:'Até 15 páginas',
     tagline:'Para empresas que buscam mais autoridade e se destacar no mercado.',
-    price:'449,90', cash:'499,90',
+    price:'499,90',
     color:'#8b3ff0', colorLight:'#c79bff', colorDark:'#6420c2',
     features:['Site de até 15 páginas','Blog integrado','SEO básico (Google)','Layout moderno e responsivo','Domínio incluso','Hospedagem inclusa','Alterações ilimitadas*','Relatório de acessos avançado','Suporte prioritário'],
     about:'O pacote completo pra quem quer autoridade de verdade: blog pra atrair pelo Google, alterações ilimitadas e relatório avançado pra acompanhar cada visita.'
@@ -1759,7 +1808,7 @@ const PLANS = [
   {
     id:'loja', name:'Loja Virtual', badge:'04', pageLabel:'Loja completa',
     tagline:'Sua loja online completa para vender todos os dias com segurança.',
-    price:'699,90', cash:'769,90',
+    price:'769,90',
     color:'#f2861a', colorLight:'#ffb85c', colorDark:'#c4650a',
     features:['Loja online completa','Cadastro ilimitado de produtos','Carrinho de compras','Pagamentos online','Cálculo de frete','Domínio incluso','Hospedagem inclusa','Alterações ilimitadas*','Suporte prioritário'],
     about:'Uma loja de verdade, funcionando 24h: produtos ilimitados, carrinho, pagamento online e cálculo de frete, tudo com suporte prioritário.'
@@ -1781,8 +1830,7 @@ PLANS.forEach(p=>{
     <div class="plan-icon-glow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${PLAN_ICONS[p.id]}</svg></div>
     <div class="plan-eyebrow-label">Plano</div>
     <h3 class="plan-name-big">${p.name.replace('Plano ','')}</h3>
-    <div class="plan-price">R$ ${p.price} <small>/mês</small></div>
-    <div class="plan-cash">ou R$ ${p.cash} à vista</div>
+    <div class="plan-price">R$ ${p.price} <small>à vista</small></div>
     <div class="plan-page-pill">${p.pageLabel}</div>
     <div class="plan-tap-hint">Ver detalhes</div>
   `;
@@ -1818,7 +1866,7 @@ function selectPlan(id){
   document.getElementById('detailPlanName').textContent = plan.name.replace('Plano ','');
   document.getElementById('detailPagePill').textContent = plan.pageLabel;
   document.getElementById('detailPrice').innerHTML =
-    `<b>R$ ${plan.price}</b><small>/mês</small><span class="detail-cash">ou R$ ${plan.cash} à vista</span>`;
+    `<b>R$ ${plan.price}</b><span class="detail-cash">à vista</span>`;
   document.getElementById('detailTagline').textContent = plan.tagline;
   document.getElementById('detailFeatures').innerHTML = plan.features.map(f=>`<li><span class="detail-check-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"></polyline></svg></span>${f}</li>`).join('');
   document.getElementById('detailCtaText').textContent = 'Agendar este plano';
@@ -1839,7 +1887,7 @@ function updateSchedulePill(plan){
     pill.textContent = 'Nenhum plano selecionado ainda, escolha um acima';
     box.classList.remove('selected');
   }else{
-    pill.textContent = `Plano selecionado: ${plan.name} · R$ ${plan.price}/mês ou R$ ${plan.cash} à vista`;
+    pill.textContent = `Plano selecionado: ${plan.name} · R$ ${plan.price} à vista`;
     box.classList.add('selected');
   }
 }
@@ -1889,7 +1937,7 @@ document.getElementById('scheduleSubmit').addEventListener('click', ()=>{
   let text = `Olá! Quero marcar uma conversa rápida pra alinharmos meu site pela Nexa Web.%0A`;
   text += `Nome: ${name || '-'}%0A`;
   text += `Negócio: ${biz || '-'}%0A`;
-  text += `Plano: ${plan ? plan.name + ' (R$ ' + plan.price + '/mês ou R$ ' + plan.cash + ' à vista)' : 'ainda não escolhi'}%0A`;
+  text += `Plano: ${plan ? plan.name + ' (R$ ' + plan.price + ' à vista)' : 'ainda não escolhi'}%0A`;
   text += `Tipo de projeto: ${tipoProjetoEscolhido || 'ainda não escolhi'}%0A`;
   if(date) text += `Data preferida pra conversa: ${date}%0A`;
   if(time) text += `Horário preferido: ${time}%0A`;
