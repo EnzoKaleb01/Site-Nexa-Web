@@ -3,6 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ===== Política de segurança do conteúdo (CSP) =====
+     Define de onde o navegador pode carregar cada coisa.
+     Qualquer script, estilo ou conexão fora desta lista é bloqueado. -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  base-uri 'self';
+  object-src 'none';
+  script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src 'self' https://fonts.gstatic.com data:;
+  img-src 'self' data: blob: https:;
+  connect-src 'self';
+  worker-src 'self';
+  manifest-src 'self';
+  form-action 'none';
+  upgrade-insecure-requests
+">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
 <title>Página não encontrada · Nexa Web</title>
 <meta name="description" content="Essa página não existe mais no site da Nexa Web. Volte ao início e veja os planos, o portfólio e agende seu site.">
 <meta name="robots" content="noindex, follow">
@@ -167,6 +187,11 @@ body.ready .rise{opacity:1;transform:none}
 
 <script>
 const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* mantém o cache do site em dia mesmo quando a pessoa cai aqui */
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js').catch(()=>{}); });
+}
 
 /* ---------- diz se o problema é a internet da pessoa ou o site ---------- */
 (function estadoDaConexao(){
