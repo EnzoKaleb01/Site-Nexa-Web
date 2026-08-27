@@ -4,9 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<!-- ===== Política de segurança do conteúdo (CSP) =====
+     Define de onde o navegador pode carregar cada coisa.
+     Qualquer script, estilo ou conexão fora desta lista é bloqueado. -->
+<meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  base-uri 'self';
+  object-src 'none';
+  script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+  font-src 'self' https://fonts.gstatic.com data:;
+  img-src 'self' data: blob: https:;
+  media-src 'self' data: blob: https://gjjkpqpqoovlfnrmnpol.supabase.co;
+  connect-src 'self' https://gjjkpqpqoovlfnrmnpol.supabase.co wss://gjjkpqpqoovlfnrmnpol.supabase.co https://ntfy.sh;
+  frame-src 'self' https://enzokaleb01.github.io;
+  worker-src 'self';
+  manifest-src 'self';
+  form-action 'none';
+  upgrade-insecure-requests
+">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
+
 <!-- ===== SEO básico ===== -->
 <title>Nexa Web: Criação de Sites Profissionais para Empresas em Todo o Brasil</title>
-<meta name="description" content="Sua empresa ainda não tem site? A Nexa Web cria sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios em qualquer lugar do Brasil. Planos a partir de R$ 289,90, com 7 dias grátis pra testar.">
+<meta name="description" content="Sua empresa ainda não tem site? A Nexa Web cria sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios em qualquer lugar do Brasil. Com 7 dias grátis pra testar.">
 <meta name="keywords" content="criação de sites, site profissional, desenvolvedor de sites, site para pequena empresa, criar site para minha empresa, loja virtual, site barato, agência de sites Brasil, criação de site online">
 <meta name="author" content="Nexa Web">
 <meta name="robots" content="index, follow">
@@ -20,7 +42,7 @@
 <meta property="og:locale" content="pt_BR">
 <meta property="og:site_name" content="Nexa Web">
 <meta property="og:title" content="Nexa Web: Criação de Sites Profissionais para Empresas em Todo o Brasil">
-<meta property="og:description" content="Sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios. Planos a partir de R$ 289,90, com 7 dias grátis pra testar.">
+<meta property="og:description" content="Sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios. Com 7 dias grátis pra testar.">
 <meta property="og:url" content="https://enzokaleb01.github.io/nexaweb/">
 <meta property="og:image" content="https://enzokaleb01.github.io/nexaweb/og-image.png">
 <!-- ^ crie uma imagem 1200x630px (print do site ou a logo em fundo azul) e suba com esse nome na raiz do repositório -->
@@ -28,7 +50,7 @@
 <!-- ===== Twitter / X Card ===== -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Nexa Web: Criação de Sites Profissionais para Empresas em Todo o Brasil">
-<meta name="twitter:description" content="Sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios. Planos a partir de R$ 289,90.">
+<meta name="twitter:description" content="Sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios.">
 <meta name="twitter:image" content="https://enzokaleb01.github.io/nexaweb/og-image.png">
 
 <!-- ===== Dados estruturados (ajuda o Google a entender o negócio) ===== -->
@@ -40,7 +62,6 @@
   "description": "Criação de sites profissionais, rápidos e com WhatsApp integrado para pequenos negócios em todo o Brasil.",
   "url": "https://enzokaleb01.github.io/nexaweb/",
   "telephone": "+55-87-20073321",
-  "priceRange": "R$289,90 - R$769,90",
   "areaServed": {
     "@type": "Country",
     "name": "Brasil"
@@ -720,7 +741,36 @@ body.light-mode .briefing-field input,body.light-mode .briefing-field textarea{b
 }
 .briefing-trigger{width:100%}
 
-/* ---------- modal (briefing / avaliações) ---------- */
+/* ---------- detalhes do plano em janela centralizada ---------- */
+.plan-overlay{
+  position:fixed;inset:0;z-index:100;display:none;
+  background:rgba(3,3,8,.84);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  padding:18px;overflow-y:auto;
+}
+.plan-overlay.open{display:flex;align-items:center;justify-content:center;animation:fadeIn .35s var(--ease)}
+.plan-modal{
+  position:relative;width:min(720px,100%);margin:auto;max-height:92svh;overflow-y:auto;
+  border-radius:var(--r-lg);box-shadow:0 40px 90px rgba(0,0,0,.7);
+  animation:modalUp .5s var(--ease);scrollbar-width:none;
+}
+.plan-modal::-webkit-scrollbar{display:none}
+.plan-modal .detail-inner{
+  border-radius:var(--r-lg);padding:36px;
+  background:linear-gradient(150deg,var(--accent-soft),transparent 62%),var(--void-2);
+  backdrop-filter:none;
+}
+.plan-close{position:absolute;top:16px;right:16px;z-index:3;background:rgba(8,8,14,.7)}
+body.light-mode .plan-overlay{background:rgba(225,227,235,.82)}
+body.light-mode .plan-modal .detail-inner{background:linear-gradient(150deg,var(--accent-soft),transparent 62%),#f7f8fb}
+
+/* ---------- agendar: um botão só ---------- */
+.schedule-single{max-width:660px}
+.schedule-single .schedule-box{display:flex;flex-direction:column;align-items:flex-start;gap:22px;padding:34px}
+.schedule-single .selected-plan-pill{margin-bottom:0}
+.schedule-go{align-self:stretch;justify-content:center;font-size:.92rem;padding:19px 30px}
+.schedule-note{margin:0;font-size:.82rem;color:var(--ink-faint)}
+
+/* ---------- modal (avaliações) ---------- */
 .briefing-overlay{
   position:fixed;inset:0;z-index:100;display:none;
   background:rgba(3,3,8,.82);backdrop-filter:blur(10px);
@@ -895,7 +945,12 @@ body.light-mode .free-banner,body.light-mode .detail-inner{background-color:rgba
     .scroll-cue{left:0;right:auto;bottom:146px;transform:none;width:74px;height:74px}
     .section-head{margin-bottom:38px}
   .detail-inner{padding:24px}
-  .feedback-form,.schedule-box,.briefing-trigger-wrap,  .upgrade-item{grid-template-columns:auto 1fr;gap:16px;padding:20px}
+  .plan-modal .detail-inner{padding:24px 20px 26px}
+  .plan-close{top:10px;right:10px;width:34px;height:34px}
+  .plan-overlay{padding:12px}
+  .schedule-single .schedule-box{padding:24px}
+  .feedback-form,.schedule-box{padding:22px}
+  .upgrade-item{grid-template-columns:auto 1fr;gap:16px;padding:20px}
   .upgrade-price{grid-column:2;text-align:left}
   .fab-wrap{bottom:90px;right:16px}
   footer{padding-bottom:130px}
@@ -1073,7 +1128,7 @@ body.light-mode .free-banner,body.light-mode .detail-inner{background-color:rgba
 
 <section id="planos">
   <div class="section-head reveal">
-    <div class="eyebrow">planos e preços</div>
+    <div class="eyebrow">nossos planos</div>
     <h2>Escolha o plano e veja o site reagir</h2>
     <p>Tudo incluso: criação do site, domínio, hospedagem e suporte. Toque em um plano para abrir os detalhes — o cromo do fundo muda junto.</p>
   </div>
@@ -1085,30 +1140,34 @@ body.light-mode .free-banner,body.light-mode .detail-inner{background-color:rgba
 
   <div class="plans-stage stagger reveal" id="plansStage"></div>
 
-  <div class="detail-panel" id="detailPanel">
-    <div class="detail-inner">
-      <div class="detail-icon-glow" id="detailIcon"></div>
-      <div class="detail-eyebrow">Plano selecionado</div>
-      <h3 class="detail-plan-name-big" id="detailPlanName">-</h3>
-      <div class="detail-page-pill" id="detailPagePill">-</div>
-      <div class="detail-price" id="detailPrice"></div>
-      <p id="detailTagline"></p>
-      <div class="detail-divider"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"></polyline></svg></div>
-      <ul class="detail-feature-grid" id="detailFeatures"></ul>
-      <a href="#agendar" class="detail-cta" id="detailCta">
-        <span id="detailCtaText">Agendar este plano</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-      </a>
+  <div class="plan-overlay" id="planOverlay" role="dialog" aria-modal="true" aria-labelledby="detailPlanName">
+    <div class="plan-modal">
+      <button class="briefing-close plan-close" id="planClose" type="button" aria-label="Fechar detalhes do plano">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+      <div class="detail-inner">
+        <div class="detail-icon-glow" id="detailIcon"></div>
+        <div class="detail-eyebrow">Plano selecionado</div>
+        <h3 class="detail-plan-name-big" id="detailPlanName">-</h3>
+        <div class="detail-page-pill" id="detailPagePill">-</div>
+        <p id="detailTagline"></p>
+        <div class="detail-divider"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"></polyline></svg></div>
+        <ul class="detail-feature-grid" id="detailFeatures"></ul>
+        <a href="https://enzokaleb01.github.io/agendamento-nexa/" class="detail-cta" id="detailCta" target="_blank" rel="noopener">
+          <span id="detailCtaText">Agendar este plano</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </div>
     </div>
   </div>
 
   <div class="addons-block reveal">
     <div class="addons-head">Serviços adicionais</div>
     <div class="addons-grid stagger reveal">
-      <div class="addon-item"><span>QR Adesivo Digital<small>Personalizado</small></span><b>R$ 79,90</b></div>
-      <div class="addon-item"><span>QR Adesivo Premium<small>Com arte personalizada</small></span><b>R$ 129,90</b></div>
-      <div class="addon-item"><span>Página extra<small>Página adicional ao site</small></span><b>R$ 99,90</b></div>
-      <div class="addon-item"><span>Atualização avulsa<small>Alterações pontuais no site</small></span><b>R$ 49,90</b></div>
+      <div class="addon-item"><span>QR Adesivo Digital<small>Personalizado</small></span></div>
+      <div class="addon-item"><span>QR Adesivo Premium<small>Com arte personalizada</small></span></div>
+      <div class="addon-item"><span>Página extra<small>Página adicional ao site</small></span></div>
+      <div class="addon-item"><span>Atualização avulsa<small>Alterações pontuais no site</small></span></div>
     </div>
   </div>
 </section>
@@ -1216,93 +1275,19 @@ body.light-mode .free-banner,body.light-mode .detail-inner{background-color:rgba
   <div class="section-head reveal">
     <div class="eyebrow">agendar</div>
     <h2>Vamos alinhar o seu site</h2>
-    <p>Duas formas de começar: marcar uma conversa rápida, ou já responder o briefing completo contando tudo que você quer.</p>
+    <p>Escolha o dia e o horário que funcionam pra você e me conte o que precisa. Levo poucos minutos pra confirmar.</p>
   </div>
-  <div class="schedule reveal">
+  <div class="schedule-single reveal">
     <div class="schedule-box" id="scheduleBox">
-      <div class="schedule-box-head">
-        <h3>Marcar uma conversa</h3>
-        <p>Uma chamada ou conversa no WhatsApp pra alinharmos os detalhes.</p>
-      </div>
       <div class="selected-plan-pill" id="selectedPlanPill">Nenhum plano selecionado ainda, escolha um acima</div>
-      <div class="form-grid">
-        <div>
-          <label for="fName">Seu nome</label>
-          <input type="text" id="fName" placeholder="Como posso te chamar?">
-        </div>
-        <div class="form-row2">
-          <div>
-            <label for="fBiz">Nome do negócio</label>
-            <input type="text" id="fBiz" placeholder="Ex: Salão da Bia">
-          </div>
-          <div>
-            <label for="fPlan">Plano</label>
-            <select id="fPlan">
-              <option value="">Selecione um plano</option>
-              <option value="start">Plano Start — R$ 289,90</option>
-              <option value="business">Plano Business — R$ 369,90</option>
-              <option value="premium">Plano Premium — R$ 499,90</option>
-              <option value="loja">Loja Virtual — R$ 769,90</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <label>Tipo de projeto</label>
-          <div class="choice-group" id="fTipoProjeto">
-            <button type="button" class="choice-btn" data-value="Landing Page">Landing Page</button>
-            <button type="button" class="choice-btn" data-value="Site completo">Site completo</button>
-          </div>
-        </div>
-        <div class="form-row2">
-          <div>
-            <label for="fDate">Data preferida</label>
-            <input type="date" id="fDate">
-          </div>
-          <div>
-            <label for="fTime">Horário preferido</label>
-            <input type="time" id="fTime">
-          </div>
-        </div>
-        <div>
-          <label for="fMsg">Conte um pouco sobre o negócio</label>
-          <textarea id="fMsg" rows="3" placeholder="O que você vende, pra quem, e o que espera do site..."></textarea>
-        </div>
-      </div>
-      <button class="schedule-submit" id="scheduleSubmit">Marcar conversa pelo WhatsApp</button>
-    </div>
-
-    <div class="schedule-divider"><span>ou</span></div>
-
-    <div class="briefing-trigger-wrap">
-      <h3>Já sabe o que quer?</h3>
-      <p>Responda o briefing completo agora, sem conversa antes: identidade visual, funcionalidades, conteúdo e prazo.</p>
-      <button class="briefing-trigger" id="briefingTrigger" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
-        Responder briefing completo
-      </button>
+      <a class="btn-primary schedule-go" id="scheduleGo" href="https://enzokaleb01.github.io/agendamento-nexa/" target="_blank" rel="noopener">
+        Agendar meu site
+        <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
+      </a>
+      <p class="schedule-note">Você é levado para a agenda da Nexa Web, onde escolhe data e horário.</p>
     </div>
   </div>
 </section>
-
-<div class="briefing-overlay" id="briefingOverlay">
-  <div class="briefing-modal">
-    <div class="briefing-top">
-      <div class="briefing-top-text">
-        <span class="briefing-step-label" id="briefingStepLabel">Etapa 1 de 8</span>
-        <h3 id="briefingStepTitle">Sobre sua empresa</h3>
-      </div>
-      <button class="briefing-close" id="briefingClose" type="button" aria-label="Fechar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-      </button>
-    </div>
-    <div class="briefing-progress-track"><div class="briefing-progress-fill" id="briefingProgressFill"></div></div>
-    <div class="briefing-body" id="briefingBody"></div>
-    <div class="briefing-nav">
-      <button class="briefing-btn ghost" id="briefingBack" type="button">Voltar</button>
-      <button class="briefing-btn primary" id="briefingNext" type="button">Próximo</button>
-    </div>
-  </div>
-</div>
 
 <footer>
   <div class="brand"><svg class="brand-mark" viewBox="0 0 100 100"><use href="#nexaMarkShape"></use></svg><span class="n">Nexa</span>&nbsp;<span class="w">Web</span></div>
@@ -1621,6 +1606,13 @@ if(!scene){
 }
 
 /* ---------- carregamento ---------- */
+/* ---------- guarda o site no aparelho e avisa quando falta internet ---------- */
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('sw.js').catch(()=>{ /* segue sem cache */ });
+  });
+}
+
 function finishLoad(){
   document.body.classList.add('ready');
   const pl = document.getElementById('preloader');
@@ -1787,7 +1779,7 @@ setTimeout(finishLoad, 2600);
 
 /* ---------- modais: trava fundo e esconde atalhos ---------- */
 (function modalWatch(){
-  const overlays = ['briefingOverlay','reviewsOverlay'].map(id=>document.getElementById(id)).filter(Boolean);
+  const overlays = ['planOverlay','reviewsOverlay'].map(id=>document.getElementById(id)).filter(Boolean);
   const sync = ()=> document.body.classList.toggle('modal-open', overlays.some(o=>o.classList.contains('open')));
   overlays.forEach(o=> new MutationObserver(sync).observe(o, { attributes:true, attributeFilter:['class'] }));
 })();
@@ -1828,7 +1820,6 @@ const PLANS = [
   {
     id:'start', name:'Plano Start', badge:'01', pageLabel:'Até 3 páginas',
     tagline:'Ideal para quem está começando e precisa marcar presença online.',
-    price:'289,90',
     color:'#1fae5f', colorLight:'#59e08c', colorDark:'#0f7a41',
     features:['Site de até 3 páginas','Layout moderno e responsivo','WhatsApp integrado','Domínio incluso','Hospedagem inclusa','1 alteração por mês','Suporte básico'],
     about:'O plano perfeito pra tirar seu negócio do papel: um site enxuto, rápido e já com o WhatsApp integrado pra você começar a receber contato hoje mesmo.'
@@ -1836,7 +1827,6 @@ const PLANS = [
   {
     id:'business', name:'Plano Business', badge:'02', pageLabel:'Até 7 páginas',
     tagline:'Perfeito para negócios que querem atrair mais clientes e crescer.',
-    price:'369,90',
     color:'#2f6fed', colorLight:'#7db4ff', colorDark:'#1c4dc4',
     features:['Site de até 7 páginas','Layout moderno e responsivo','Redes sociais integradas','WhatsApp integrado','Domínio incluso','Hospedagem inclusa','4 alterações por mês','Relatório básico de acessos','Suporte dedicado'],
     about:'Pra quem já tem uma base de clientes e quer se destacar: mais páginas, redes sociais integradas e relatório de acessos pra acompanhar o crescimento.'
@@ -1844,7 +1834,6 @@ const PLANS = [
   {
     id:'premium', name:'Plano Premium', badge:'03', pageLabel:'Até 15 páginas',
     tagline:'Para empresas que buscam mais autoridade e se destacar no mercado.',
-    price:'499,90',
     color:'#8b3ff0', colorLight:'#c79bff', colorDark:'#6420c2',
     features:['Site de até 15 páginas','Blog integrado','SEO básico (Google)','Layout moderno e responsivo','Domínio incluso','Hospedagem inclusa','Alterações ilimitadas*','Relatório de acessos avançado','Suporte prioritário'],
     about:'O pacote completo pra quem quer autoridade de verdade: blog pra atrair pelo Google, alterações ilimitadas e relatório avançado pra acompanhar cada visita.'
@@ -1852,7 +1841,6 @@ const PLANS = [
   {
     id:'loja', name:'Loja Virtual', badge:'04', pageLabel:'Loja completa',
     tagline:'Sua loja online completa para vender todos os dias com segurança.',
-    price:'769,90',
     color:'#f2861a', colorLight:'#ffb85c', colorDark:'#c4650a',
     features:['Loja online completa','Cadastro ilimitado de produtos','Carrinho de compras','Pagamentos online','Cálculo de frete','Domínio incluso','Hospedagem inclusa','Alterações ilimitadas*','Suporte prioritário'],
     about:'Uma loja de verdade, funcionando 24h: produtos ilimitados, carrinho, pagamento online e cálculo de frete, tudo com suporte prioritário.'
@@ -1874,7 +1862,6 @@ PLANS.forEach(p=>{
     <div class="plan-icon-glow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${PLAN_ICONS[p.id]}</svg></div>
     <div class="plan-eyebrow-label">Plano</div>
     <h3 class="plan-name-big">${p.name.replace('Plano ','')}</h3>
-    <div class="plan-price">R$ ${p.price} <small>à vista</small></div>
     <div class="plan-page-pill">${p.pageLabel}</div>
     <div class="plan-tap-hint">Ver detalhes</div>
   `;
@@ -1896,9 +1883,8 @@ function selectPlan(id){
   });
   stage.classList.toggle('has-active', !!currentPlan);
 
-  const panel = document.getElementById('detailPanel');
   if(!currentPlan){
-    panel.classList.remove('open');
+    fecharPlano();
     applyTheme(null);
     updateSchedulePill(null);
     return;
@@ -1909,37 +1895,55 @@ function selectPlan(id){
   document.getElementById('detailIcon').innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${PLAN_ICONS[plan.id]}</svg>`;
   document.getElementById('detailPlanName').textContent = plan.name.replace('Plano ','');
   document.getElementById('detailPagePill').textContent = plan.pageLabel;
-  document.getElementById('detailPrice').innerHTML =
-    `<b>R$ ${plan.price}</b><span class="detail-cash">à vista</span>`;
   document.getElementById('detailTagline').textContent = plan.tagline;
   document.getElementById('detailFeatures').innerHTML = plan.features.map(f=>`<li><span class="detail-check-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"></polyline></svg></span>${f}</li>`).join('');
   document.getElementById('detailCtaText').textContent = 'Agendar este plano';
-  panel.classList.add('open');
-
-  document.getElementById('fPlan').value = plan.id;
+  abrirPlano();
   updateSchedulePill(plan);
 }
 
-document.getElementById('detailCta').addEventListener('click', (e)=>{
-  // just scrolls via href, schedule pill already synced
+/* ---- detalhes do plano em janela centralizada, sem precisar rolar ---- */
+const planOverlay = document.getElementById('planOverlay');
+function abrirPlano(){
+  planOverlay.classList.add('open');
+  document.body.classList.add('modal-open');
+  setTimeout(()=> document.getElementById('planClose').focus(), 60);
+}
+function fecharPlano(){
+  planOverlay.classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+document.getElementById('planClose').addEventListener('click', ()=>{
+  if(currentPlan) selectPlan(currentPlan);   // desmarca o card e fecha
+  else fecharPlano();
 });
+planOverlay.addEventListener('click', (e)=>{
+  if(e.target === planOverlay && currentPlan) selectPlan(currentPlan);
+});
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape' && planOverlay.classList.contains('open') && currentPlan) selectPlan(currentPlan);
+});
+document.getElementById('detailCta').addEventListener('click', ()=> fecharPlano());
+
+const AGENDA_URL = 'https://enzokaleb01.github.io/agendamento-nexa/';
 
 function updateSchedulePill(plan){
   const pill = document.getElementById('selectedPlanPill');
   const box = document.getElementById('scheduleBox');
+  const go = document.getElementById('scheduleGo');
+  const cta = document.getElementById('detailCta');
+  const link = plan ? AGENDA_URL + '?plano=' + encodeURIComponent(plan.name) : AGENDA_URL;
+  if(go) go.href = link;
+  if(cta) cta.href = link;
+  if(!pill || !box) return;
   if(!plan){
     pill.textContent = 'Nenhum plano selecionado ainda, escolha um acima';
     box.classList.remove('selected');
   }else{
-    pill.textContent = `Plano selecionado: ${plan.name} · R$ ${plan.price} à vista`;
+    pill.textContent = `Plano selecionado: ${plan.name}`;
     box.classList.add('selected');
   }
 }
-
-document.getElementById('fPlan').addEventListener('change', (e)=>{
-  const plan = PLANS.find(p=>p.id === e.target.value);
-  if(plan) selectPlan(plan.id);
-});
 
 /* ===================== THEME (CSS VARS) ===================== */
 function applyTheme(plan){
@@ -1958,302 +1962,6 @@ function hexToRgba(hex, a){
   const r = parseInt(v.substring(0,2),16), g = parseInt(v.substring(2,4),16), b = parseInt(v.substring(4,6),16);
   return `rgba(${r},${g},${b},${a})`;
 }
-
-/* ===================== WHATSAPP SCHEDULE SUBMIT ===================== */
-let tipoProjetoEscolhido = '';
-document.querySelectorAll('#fTipoProjeto .choice-btn').forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    document.querySelectorAll('#fTipoProjeto .choice-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    tipoProjetoEscolhido = btn.dataset.value;
-  });
-});
-
-document.getElementById('scheduleSubmit').addEventListener('click', ()=>{
-  const name = document.getElementById('fName').value.trim();
-  const biz = document.getElementById('fBiz').value.trim();
-  const planId = document.getElementById('fPlan').value;
-  const date = document.getElementById('fDate').value;
-  const time = document.getElementById('fTime').value;
-  const msg = document.getElementById('fMsg').value.trim();
-  const plan = PLANS.find(p=>p.id===planId);
-
-  let text = `Olá! Quero marcar uma conversa rápida pra alinharmos meu site pela Nexa Web.%0A`;
-  text += `Nome: ${name || '-'}%0A`;
-  text += `Negócio: ${biz || '-'}%0A`;
-  text += `Plano: ${plan ? plan.name + ' (R$ ' + plan.price + ' à vista)' : 'ainda não escolhi'}%0A`;
-  text += `Tipo de projeto: ${tipoProjetoEscolhido || 'ainda não escolhi'}%0A`;
-  if(date) text += `Data preferida pra conversa: ${date}%0A`;
-  if(time) text += `Horário preferido: ${time}%0A`;
-  if(msg) text += `Sobre o negócio: ${msg}`;
-
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
-});
-
-/* ===================== BRIEFING COMPLETO — questionário em etapas ===================== */
-const BRIEFING_ICONS = {
-  empresa: '<path d="M3 21h18"></path><path d="M5 21V7l7-4 7 4v14"></path><path d="M9 21v-6h6v6"></path>',
-  identidade: '<circle cx="12" cy="12" r="9"></circle><path d="M12 3a9 9 0 0 0 0 18c1.5 0 2-1 1-2s0-2 1-2h3a2 2 0 0 0 2-2 9 9 0 0 0-7-12Z"></path><circle cx="8" cy="10" r="1" fill="currentColor" stroke="none"></circle><circle cx="12" cy="8" r="1" fill="currentColor" stroke="none"></circle><circle cx="16" cy="10" r="1" fill="currentColor" stroke="none"></circle>',
-  visual: '<rect x="2" y="4" width="20" height="13" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line>',
-  funcionalidades: '<line x1="4" y1="6" x2="20" y2="6"></line><circle cx="9" cy="6" r="2" fill="currentColor" stroke="none"></circle><line x1="4" y1="12" x2="20" y2="12"></line><circle cx="15" cy="12" r="2" fill="currentColor" stroke="none"></circle><line x1="4" y1="18" x2="20" y2="18"></line><circle cx="11" cy="18" r="2" fill="currentColor" stroke="none"></circle>',
-  conteudo: '<rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="9" r="1.8"></circle><path d="m21 15-5-5-9 9"></path>',
-  publico: '<circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="4.5"></circle><circle cx="12" cy="12" r="0.6" fill="currentColor" stroke="none"></circle>',
-  publicacao: '<circle cx="12" cy="12" r="9"></circle><line x1="3" y1="12" x2="21" y2="12"></line><path d="M12 3a13 13 0 0 1 0 18 13 13 0 0 1 0-18Z"></path>',
-  revisao: '<circle cx="12" cy="12" r="9"></circle><path d="m8.5 12.5 2.5 2.5 4.5-5"></path>'
-};
-
-const BRIEFING_STEPS = [
-  {
-    title:'Sobre sua empresa', icon:BRIEFING_ICONS.empresa,
-    fields:[
-      { id:'nome_empresa', label:'Qual é o nome da empresa ou marca?', type:'text', placeholder:'Nome da sua empresa' },
-      { id:'tipo_projeto', label:'Você precisa de uma Landing Page ou de um site completo?', type:'choice', options:['Landing Page','Site completo'] },
-      { id:'oferece', label:'O que sua empresa oferece? Conte um pouco sobre o negócio e os principais serviços ou produtos.', type:'textarea' },
-      { id:'objetivo_site', label:'Qual é o principal objetivo do site?', type:'text', placeholder:'Ex: apresentar a empresa, conseguir clientes, vender produtos, receber agendamentos' }
-    ]
-  },
-  {
-    title:'Logo e identidade visual', icon:BRIEFING_ICONS.identidade,
-    fields:[
-      { id:'tem_logo', label:'Você já possui uma logo da empresa ou marca?', type:'yesno' },
-      { id:'versoes_logo', label:'Possui outras versões da logo? (clara, escura, ícone ou só o nome)', type:'yesno' },
-      { id:'cores_oficiais', label:'Já possui cores oficiais da marca?', type:'yesno' },
-      { id:'cores_quais', label:'Se sim, quais são as cores?', type:'text', optional:true, placeholder:'Ex: azul e branco' },
-      { id:'fonte_marca', label:'Você possui uma fonte ou tipografia que usa na identidade da marca?', type:'yesno' },
-      { id:'materiais_ref', label:'Possui manual de identidade, cartão de visita ou artes de Instagram que sirvam de referência?', type:'yesno' },
-      { id:'criar_do_zero', label:'Caso ainda não tenha identidade visual definida, gostaria que o visual do site fosse criado do zero?', type:'yesno' }
-    ]
-  },
-  {
-    title:'Visual do site', icon:BRIEFING_ICONS.visual,
-    fields:[
-      { id:'estilo_site', label:'Você prefere um site com qual estilo?', type:'chips', options:['Moderno','Elegante','Minimalista','Sofisticado','Tecnológico','Criativo','Chamativo'] },
-      { id:'site_referencia', label:'Tem algum site que você gosta ou gostaria de usar como referência? Pode colar o link.', type:'text', optional:true, placeholder:'https://...' },
-      { id:'paginas', label:'Quais páginas você gostaria que o site tivesse?', type:'chips', options:['Início','Sobre','Serviços','Produtos','Depoimentos','Contato','Outra'] }
-    ]
-  },
-  {
-    title:'Funcionalidades', icon:BRIEFING_ICONS.funcionalidades,
-    fields:[
-      { id:'botao_whatsapp', label:'Você gostaria de ter um botão direto pro WhatsApp?', type:'yesno' },
-      { id:'funcionalidades', label:'O site precisa de alguma dessas funcionalidades?', type:'chips', options:['Formulário de contato','Agendamento online','Catálogo de produtos','Área de serviços','Integração com Instagram','Google Maps','Outras'] }
-    ]
-  },
-  {
-    title:'Conteúdo', icon:BRIEFING_ICONS.conteudo,
-    fields:[
-      { id:'tem_conteudo', label:'Você já possui fotos, vídeos e textos pra colocar no site?', type:'yesno' },
-      { id:'ajuda_conteudo', label:'Caso não tenha os textos ou imagens prontos, gostaria de ajuda pra organizar ou criar esse conteúdo?', type:'yesno' }
-    ]
-  },
-  {
-    title:'Público e conversão', icon:BRIEFING_ICONS.publico,
-    fields:[
-      { id:'publico_principal', label:'Quem é o principal público ou cliente da sua empresa?', type:'textarea' },
-      { id:'acao_visitante', label:'O que você gostaria que o visitante fizesse ao entrar no site?', type:'chips', options:['Chamar no WhatsApp','Solicitar orçamento','Comprar','Agendar','Conhecer os serviços'] }
-    ]
-  },
-  {
-    title:'Publicação', icon:BRIEFING_ICONS.publicacao,
-    fields:[
-      { id:'dominio_hospedagem', label:'Você já possui domínio e hospedagem pro site?', type:'yesno' },
-      { id:'prazo', label:'Existe alguma data ou prazo em que você precisa que o site esteja pronto?', type:'text', optional:true, placeholder:'Ex: sem pressa, em 30 dias, até dezembro' }
-    ]
-  }
-];
-const BRIEFING_TOTAL_STEPS = BRIEFING_STEPS.length + 1; // + revisão final
-
-const briefingAnswers = {};
-let briefingStepIndex = 0;
-
-const briefingOverlay = document.getElementById('briefingOverlay');
-const briefingBody = document.getElementById('briefingBody');
-const briefingStepLabel = document.getElementById('briefingStepLabel');
-const briefingStepTitle = document.getElementById('briefingStepTitle');
-const briefingProgressFill = document.getElementById('briefingProgressFill');
-const briefingBack = document.getElementById('briefingBack');
-const briefingNext = document.getElementById('briefingNext');
-
-function openBriefing(){
-  briefingStepIndex = 0;
-  briefingOverlay.classList.add('open');
-  renderBriefingStep();
-}
-function closeBriefing(){
-  briefingOverlay.classList.remove('open');
-}
-document.getElementById('briefingTrigger').addEventListener('click', openBriefing);
-document.getElementById('briefingClose').addEventListener('click', closeBriefing);
-briefingOverlay.addEventListener('click', (e)=>{ if(e.target === briefingOverlay) closeBriefing(); });
-
-function fieldRowHtml(f){
-  const optionalTag = f.optional ? ' <span class="briefing-optional-tag">(opcional)</span>' : '';
-  const saved = briefingAnswers[f.id];
-  if(f.type === 'text'){
-    return `<div class="briefing-field" data-field="${f.id}">
-      <label>${f.label}${optionalTag}</label>
-      <input type="text" id="bf_${f.id}" placeholder="${f.placeholder||''}" value="${saved ? saved.replace(/"/g,'&quot;') : ''}">
-      <div class="field-error">Preencha esse campo pra continuar.</div>
-    </div>`;
-  }
-  if(f.type === 'textarea'){
-    return `<div class="briefing-field" data-field="${f.id}">
-      <label>${f.label}${optionalTag}</label>
-      <textarea id="bf_${f.id}" rows="3">${saved || ''}</textarea>
-      <div class="field-error">Preencha esse campo pra continuar.</div>
-    </div>`;
-  }
-  if(f.type === 'yesno'){
-    return `<div class="briefing-field" data-field="${f.id}">
-      <label>${f.label}${optionalTag}</label>
-      <div class="yesno-group" id="bf_${f.id}">
-        <button type="button" class="yesno-btn ${saved==='Sim'?'active':''}" data-value="Sim">Sim</button>
-        <button type="button" class="yesno-btn ${saved==='Não'?'active':''}" data-value="Não">Não</button>
-      </div>
-      <div class="field-error">Escolha uma opção pra continuar.</div>
-    </div>`;
-  }
-  if(f.type === 'chips'){
-    const savedArr = saved ? saved.split(', ') : [];
-    return `<div class="briefing-field" data-field="${f.id}">
-      <label>${f.label}${optionalTag}</label>
-      <div class="chip-group" id="bf_${f.id}">
-        ${f.options.map(opt=>`<button type="button" class="chip-option ${savedArr.includes(opt)?'active':''}" data-value="${opt}">${opt}</button>`).join('')}
-      </div>
-      <div class="field-error">Escolha ao menos uma opção pra continuar.</div>
-    </div>`;
-  }
-  if(f.type === 'choice'){
-    return `<div class="briefing-field" data-field="${f.id}">
-      <label>${f.label}${optionalTag}</label>
-      <div class="choice-group" id="bf_${f.id}">
-        ${f.options.map(opt=>`<button type="button" class="choice-btn ${saved===opt?'active':''}" data-value="${opt}">${opt}</button>`).join('')}
-      </div>
-      <div class="field-error">Escolha uma opção pra continuar.</div>
-    </div>`;
-  }
-  return '';
-}
-
-function wireFieldEvents(f){
-  if(f.type === 'yesno'){
-    document.querySelectorAll(`#bf_${f.id} .yesno-btn`).forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        document.querySelectorAll(`#bf_${f.id} .yesno-btn`).forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        briefingAnswers[f.id] = btn.dataset.value;
-        clearFieldError(f.id);
-      });
-    });
-  } else if(f.type === 'chips'){
-    document.querySelectorAll(`#bf_${f.id} .chip-option`).forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        btn.classList.toggle('active');
-        const active = Array.from(document.querySelectorAll(`#bf_${f.id} .chip-option.active`)).map(b=>b.dataset.value);
-        briefingAnswers[f.id] = active.join(', ');
-        clearFieldError(f.id);
-      });
-    });
-  } else if(f.type === 'choice'){
-    document.querySelectorAll(`#bf_${f.id} .choice-btn`).forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        document.querySelectorAll(`#bf_${f.id} .choice-btn`).forEach(b=>b.classList.remove('active'));
-        btn.classList.add('active');
-        briefingAnswers[f.id] = btn.dataset.value;
-        clearFieldError(f.id);
-      });
-    });
-  } else {
-    const el = document.getElementById(`bf_${f.id}`);
-    el.addEventListener('input', ()=>{
-      briefingAnswers[f.id] = el.value.trim();
-      clearFieldError(f.id);
-    });
-  }
-}
-
-function clearFieldError(fieldId){
-  const row = document.querySelector(`.briefing-field[data-field="${fieldId}"]`);
-  if(row) row.classList.remove('has-error');
-}
-
-function renderBriefingStep(){
-  briefingProgressFill.style.width = `${((briefingStepIndex+1)/BRIEFING_TOTAL_STEPS)*100}%`;
-  briefingStepLabel.textContent = `Etapa ${briefingStepIndex+1} de ${BRIEFING_TOTAL_STEPS}`;
-  briefingBack.disabled = briefingStepIndex === 0;
-  briefingBody.scrollTop = 0;
-
-  if(briefingStepIndex < BRIEFING_STEPS.length){
-    const step = BRIEFING_STEPS[briefingStepIndex];
-    briefingStepTitle.textContent = step.title;
-    briefingNext.textContent = 'Próximo';
-    briefingBody.innerHTML = `
-      <div class="briefing-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${step.icon}</svg></div>
-      ${step.fields.map(fieldRowHtml).join('')}
-    `;
-    step.fields.forEach(wireFieldEvents);
-  } else {
-    briefingStepTitle.textContent = 'Revisão final';
-    briefingNext.textContent = 'Enviar pelo WhatsApp';
-    const allFields = BRIEFING_STEPS.flatMap(s=>s.fields);
-    briefingBody.innerHTML = `
-      <div class="briefing-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${BRIEFING_ICONS.revisao}</svg></div>
-      <p style="color:var(--ink-dim); font-size:0.88rem; margin:0 0 14px;">Confira suas respostas antes de enviar. Se quiser mudar algo, é só voltar.</p>
-      ${allFields.map(f=>{
-        const val = briefingAnswers[f.id];
-        if(!val) return '';
-        return `<div class="briefing-review-item"><div class="q">${f.label}</div><div class="a">${val}</div></div>`;
-      }).join('')}
-    `;
-  }
-}
-
-function validateBriefingStep(){
-  const step = BRIEFING_STEPS[briefingStepIndex];
-  let valid = true;
-  step.fields.forEach(f=>{
-    if(f.optional) return;
-    const val = (briefingAnswers[f.id] || '').trim();
-    if(!val){
-      valid = false;
-      const row = document.querySelector(`.briefing-field[data-field="${f.id}"]`);
-      if(row) row.classList.add('has-error');
-    }
-  });
-  return valid;
-}
-
-function sendBriefingToWhatsapp(){
-  const allFields = BRIEFING_STEPS.flatMap(s=>s.fields);
-  let text = 'Olá! Preenchi o briefing completo do meu projeto no site da Nexa Web.%0A%0A';
-  BRIEFING_STEPS.forEach(step=>{
-    const answeredFields = step.fields.filter(f=>briefingAnswers[f.id]);
-    if(answeredFields.length === 0) return;
-    text += `*${step.title}*%0A`;
-    answeredFields.forEach(f=>{
-      text += `${f.label} ${briefingAnswers[f.id]}%0A`;
-    });
-    text += '%0A';
-  });
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${text}`, '_blank');
-  closeBriefing();
-}
-
-briefingBack.addEventListener('click', ()=>{
-  if(briefingStepIndex > 0){
-    briefingStepIndex--;
-    renderBriefingStep();
-  }
-});
-briefingNext.addEventListener('click', ()=>{
-  if(briefingStepIndex < BRIEFING_STEPS.length){
-    if(!validateBriefingStep()) return;
-    briefingStepIndex++;
-    renderBriefingStep();
-  } else {
-    sendBriefingToWhatsapp();
-  }
-});
 
 /* ===================================================================
    AVALIAÇÕES DE CLIENTES — direto no Supabase (sem backend Python)
