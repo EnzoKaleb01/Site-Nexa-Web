@@ -602,35 +602,155 @@ section{position:relative;width:var(--shell);margin:0 auto;padding:120px 0}
 .addon-item small{color:var(--ink-faint);font-size:.7rem}
 .addon-item b{font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 108;font-size:.95rem;white-space:nowrap}
 
-/* ---------- melhorias ---------- */
-.upgrade-list{display:grid;gap:2px}
-.upgrade-item{
-  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:22px;
-  padding:24px 26px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--panel);
-  transition:background .5s,border-color .5s,transform .5s var(--ease);
+/* ---------- melhorias: painéis lado a lado ---------- */
+.up-acc{display:flex;gap:12px;height:352px;align-items:stretch}
+.up-item{
+  position:relative;flex:1 1 0;min-width:0;cursor:pointer;
+  border-radius:var(--r-lg);overflow:hidden;
+  border:1px solid color-mix(in srgb,var(--uc) 45%,transparent);
+  background:linear-gradient(170deg,color-mix(in srgb,var(--uc) 62%,transparent),color-mix(in srgb,var(--uc) 28%,transparent));
+  transition:flex .85s var(--ease),background .6s var(--ease),border-color .5s,box-shadow .6s var(--ease);
 }
-.upgrade-item:hover{background:var(--panel-2);border-color:var(--line-2);transform:translateX(6px)}
-.upgrade-icon{
-  width:44px;height:44px;border-radius:13px;display:grid;place-items:center;
-  border:1px solid var(--line-2);color:var(--accent-light);background:var(--accent-soft);
+.up-acc.tem-aberto .up-item{flex:0 0 156px}
+.up-acc.tem-aberto .up-item.open{flex:1 1 auto}
+.up-item.open{
+  background:rgba(8,8,14,.72);
+  border-color:color-mix(in srgb,var(--uc) 55%,transparent);
+  box-shadow:0 26px 64px color-mix(in srgb,var(--uc) 24%,transparent);
+  cursor:default;
 }
-.upgrade-icon svg{width:20px;height:20px}
-.upgrade-info h3{
-  margin:0 0 5px;font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 112;
-  font-weight:700;text-transform:uppercase;font-size:1rem;letter-spacing:-.01em;
+body.light-mode .up-item.open{background:rgba(255,255,255,.8)}
+.up-item:not(.open):hover{background:linear-gradient(170deg,color-mix(in srgb,var(--uc) 78%,transparent),color-mix(in srgb,var(--uc) 36%,transparent))}
+
+/* aba fechada */
+.up-head{
+  position:absolute;inset:0;width:100%;border:0;background:none;cursor:pointer;color:#fff;
+  display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;
+  padding:22px 20px;text-align:left;
+  transition:opacity .45s var(--ease);
 }
-.upgrade-info p{margin:0;font-size:.84rem;color:var(--ink-dim)}
-.upgrade-price{
+.up-item.open .up-head{opacity:0;pointer-events:none}
+.up-head .kicker{
+  font-family:'JetBrains Mono',monospace;font-size:.52rem;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(255,255,255,.7);display:block;margin-bottom:8px;
+}
+.up-head h3{
+  margin:0;font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 106;
+  font-weight:800;text-transform:uppercase;font-size:1.02rem;letter-spacing:-.015em;line-height:1.08;
+  color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.35);
+  overflow-wrap:break-word;hyphens:auto;
+}
+.up-acc.tem-aberto .up-head h3{font-size:.84rem}
+.up-acc.tem-aberto .up-head .kicker{font-size:.48rem;letter-spacing:.14em}
+.up-go{
+  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(255,255,255,.92);color:#12121c;
+  transition:transform .5s var(--ease);
+}
+.up-go svg{width:16px;height:16px}
+.up-item:hover .up-go{transform:translate(3px,-3px) scale(1.06)}
+.up-head .up-arco{
+  position:absolute;right:-34px;bottom:-30px;width:168px;height:168px;
+  opacity:.72;pointer-events:none;
+  transition:transform .8s var(--ease),opacity .5s var(--ease);
+}
+.up-head .up-arco .anel{transition:stroke-dashoffset 1s var(--ease)}
+.up-item:hover .up-head .up-arco{transform:rotate(-14deg) scale(1.05);opacity:.9}
+
+/* painel aberto */
+.up-panel{
+  position:absolute;inset:0;padding:28px 32px;overflow-y:auto;scrollbar-width:none;
+  display:grid;grid-template-columns:1.05fr .95fr;gap:10px 40px;align-content:start;
+  opacity:0;pointer-events:none;transition:opacity .5s var(--ease) .15s;
+}
+.up-panel::-webkit-scrollbar{display:none}
+.up-item.open .up-panel{opacity:1;pointer-events:auto}
+.up-panel>*{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.up-item.open .up-panel>*{opacity:1;transform:none}
+.up-item.open .up-panel>*:nth-child(2){transition-delay:.3s}
+.up-item.open .up-panel>*:nth-child(3){transition-delay:.36s}
+.up-item.open .up-panel>*:nth-child(4){transition-delay:.42s}
+.up-item.open .up-panel>*:nth-child(5){transition-delay:.48s}
+.up-item.open .up-panel>*:nth-child(6){transition-delay:.54s}
+.up-item.open .up-panel>*{transition-delay:.24s}
+.up-panel .kicker{
+  font-family:'JetBrains Mono',monospace;font-size:.56rem;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--ucl);display:block;margin-bottom:10px;
+}
+.up-col-b{display:flex;flex-direction:column;justify-content:center;padding-top:6px}
+.up-panel h3{
+  margin:0 0 14px;font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 116;
+  font-weight:800;text-transform:uppercase;font-size:clamp(1.3rem,2.4vw,1.8rem);
+  letter-spacing:-.02em;line-height:1;
+}
+.up-panel p{margin:0 0 12px;font-size:.88rem;color:var(--ink-dim);line-height:1.65;max-width:48ch}
+.up-panel p b{color:var(--ink);font-weight:600}
+.up-list{list-style:none;margin:2px 0 18px;padding:0;display:grid;gap:7px}
+.up-list li{display:flex;align-items:flex-start;gap:10px;font-size:.85rem}
+.up-list svg{width:16px;height:16px;flex-shrink:0;margin-top:3px;color:var(--ucl)}
+.up-footer{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.up-price{
   font-family:'Archivo',sans-serif;font-variation-settings:'wdth' 108;font-weight:700;
-  font-size:1.14rem;white-space:nowrap;text-align:right;
+  font-size:1.16rem;white-space:nowrap;line-height:1.1;
 }
-.upgrade-from{display:block;font-family:'JetBrains Mono',monospace;font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);font-weight:400}
-.upgrade-benefits{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
-.upgrade-benefits span{
-  display:inline-flex;align-items:center;gap:9px;padding:10px 17px;border-radius:var(--r-pill);
-  border:1px solid var(--line);background:var(--panel);font-size:.8rem;color:var(--ink-dim);
+.up-price small{
+  display:block;font-family:'JetBrains Mono',monospace;font-weight:400;
+  font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);
 }
-.upgrade-benefits svg{width:13px;height:13px;color:var(--accent-light)}
+.up-cta{
+  display:inline-flex;align-items:center;gap:11px;padding:14px 24px;border-radius:var(--r-pill);
+  background:var(--uc);color:#fff;font-family:'JetBrains Mono',monospace;font-size:.68rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  transition:transform .5s var(--ease),box-shadow .5s var(--ease);
+}
+.up-cta svg{width:14px;height:14px}
+.up-cta:hover{transform:translateY(-3px);box-shadow:0 14px 34px color-mix(in srgb,var(--uc) 40%,transparent)}
+.up-close{
+  position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:50%;
+  border:1px solid var(--line-2);background:rgba(8,8,14,.6);color:var(--ink);
+  display:grid;place-items:center;cursor:pointer;opacity:0;pointer-events:none;
+  transition:opacity .4s var(--ease) .3s,transform .4s var(--ease);
+}
+.up-close svg{width:14px;height:14px}
+.up-item.open .up-close{opacity:1;pointer-events:auto}
+.up-close:hover{transform:rotate(90deg)}
+
+/* abre sozinho quando o mouse passa por cima (desktop) */
+@media (hover:hover) and (pointer:fine) and (min-width:901px){
+  .up-acc:hover .up-item{flex:0 0 156px}
+  .up-acc:hover .up-item:hover{flex:1 1 auto}
+  .up-acc .up-item:not(.open):hover,
+  .up-acc .up-item:hover{
+    background:rgba(8,8,14,.72);
+    border-color:color-mix(in srgb,var(--uc) 55%,transparent);
+    box-shadow:0 26px 64px color-mix(in srgb,var(--uc) 24%,transparent);
+  }
+  body.light-mode .up-acc .up-item:not(.open):hover,
+  body.light-mode .up-acc .up-item:hover{background:rgba(255,255,255,.8)}
+  .up-item:hover .up-head{opacity:0;pointer-events:none}
+  .up-item:hover .up-panel{opacity:1;pointer-events:auto}
+  .up-item:hover .up-panel>*{opacity:1;transform:none;transition-delay:.24s}
+  .up-acc:hover .up-item:not(:hover) .up-head h3{font-size:.84rem}
+  .up-acc:hover .up-item:not(:hover) .up-head .kicker{font-size:.48rem;letter-spacing:.14em}
+  .up-close{display:none}
+}
+
+/* empilhado em telas menores */
+@media(max-width:900px){
+  .up-acc{flex-direction:column;height:auto;gap:10px}
+  .up-item,.up-acc.tem-aberto .up-item{flex:0 0 auto;height:88px;transition:height .8s var(--ease),background .6s,border-color .5s}
+  .up-acc.tem-aberto .up-item.open{flex:0 0 auto;height:auto;min-height:0}
+  .up-head{flex-direction:row;align-items:center;justify-content:space-between;padding:20px 22px}
+  .up-head .up-arco{right:-70px;bottom:-90px;width:200px;height:200px}
+  .up-panel{position:relative;inset:auto;padding:26px 22px 28px;grid-template-columns:1fr;gap:0}
+  .up-col-b{padding-top:0}
+  .up-panel p{max-width:none}
+}
+@media(max-width:520px){
+  .up-panel{padding:22px 18px 24px}
+  .up-footer{gap:14px}
+}
+
 /* ---------- avaliações ---------- */
 .feedback-form{
   border:1px solid var(--line);border-radius:var(--r-lg);padding:30px;
@@ -908,13 +1028,13 @@ body.modal-open .navbar{transform:translateX(-50%) translateY(24px)}
 
 /* ---------- painéis sobre o cromo ---------- */
 .feedback-form,.schedule-box,.briefing-trigger-wrap,
-.plan-card,.upgrade-item,.review-card,.addon-item,.portfolio-card,.free-banner,.detail-inner{
+.plan-card,.review-card,.addon-item,.portfolio-card,.free-banner,.detail-inner{
   background-color:rgba(8,8,14,.62);
   backdrop-filter:blur(14px) saturate(130%);
   -webkit-backdrop-filter:blur(14px) saturate(130%);
 }
 body.light-mode .feedback-form,body.light-mode .schedule-box,
-body.light-mode .briefing-trigger-wrap,body.light-mode .plan-card,body.light-mode .upgrade-item,
+body.light-mode .briefing-trigger-wrap,body.light-mode .plan-card,
 body.light-mode .review-card,body.light-mode .addon-item,body.light-mode .portfolio-card,
 body.light-mode .free-banner,body.light-mode .detail-inner{background-color:rgba(255,255,255,.72)}
 
@@ -950,8 +1070,6 @@ body.light-mode .free-banner,body.light-mode .detail-inner{background-color:rgba
   .plan-overlay{padding:12px}
   .schedule-single .schedule-box{padding:24px}
   .feedback-form,.schedule-box{padding:22px}
-  .upgrade-item{grid-template-columns:auto 1fr;gap:16px;padding:20px}
-  .upgrade-price{grid-column:2;text-align:left}
   .fab-wrap{bottom:90px;right:16px}
   footer{padding-bottom:130px}
   .carousel-arrow{display:none}
@@ -1179,35 +1297,8 @@ body.light-mode .free-banner,body.light-mode .detail-inner{background-color:rgba
     <p>Modernizo o visual, acelero o carregamento e conecto o que faltava.</p>
   </div>
 
-  <div class="upgrade-list stagger reveal">
-    <div class="upgrade-item">
-      <div class="upgrade-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg></div>
-      <div class="upgrade-info"><h3>Pacote Essencial</h3><p>Melhorias visuais, ajustes de layout e responsividade.</p></div>
-      <div class="upgrade-price">R$ 249,90</div>
-    </div>
-    <div class="upgrade-item">
-      <div class="upgrade-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 20l1-5.6A8.5 8.5 0 1 1 21 11.5Z"></path></svg></div>
-      <div class="upgrade-info"><h3>Pacote Profissional</h3><p>Inclui o Essencial, mais novas seções e integração com WhatsApp.</p></div>
-      <div class="upgrade-price">R$ 449,90</div>
-    </div>
-    <div class="upgrade-item">
-      <div class="upgrade-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 4 14 12 14 11 22 20 10 12 10 13 2"></polygon></svg></div>
-      <div class="upgrade-info"><h3>Pacote Avançado</h3><p>Inclui o Profissional, mais otimização de velocidade e SEO básico.</p></div>
-      <div class="upgrade-price">R$ 699,90</div>
-    </div>
-    <div class="upgrade-item">
-      <div class="upgrade-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.2-9.3-9.6C1 8 2.5 4.5 6 3.6c2-.5 3.8.3 5 2 1.2-1.7 3-2.5 5-2 3.5.9 5 4.4 3.3 7.8C19 15.8 12 21 12 21Z"></path></svg></div>
-      <div class="upgrade-info"><h3>Personalizado</h3><p>Soluções completas e funcionalidades sob medida para o seu negócio.</p></div>
-      <div class="upgrade-price"><span class="upgrade-from">a partir de</span>R$ 999,90</div>
-    </div>
-  </div>
+  <div class="up-acc reveal" id="upAccordion"></div>
 
-  <div class="upgrade-benefits stagger reveal">
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"></polyline></svg>Design moderno</span>
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"></polyline></svg>Site mais rápido</span>
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"></polyline></svg>Mais conversões</span>
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"></polyline></svg>Melhor experiência</span>
-  </div>
 </section>
 
 <section id="avaliacoes">
@@ -1280,7 +1371,7 @@ body.light-mode .free-banner,body.light-mode .detail-inner{background-color:rgba
   <div class="schedule-single reveal">
     <div class="schedule-box" id="scheduleBox">
       <div class="selected-plan-pill" id="selectedPlanPill">Nenhum plano selecionado ainda, escolha um acima</div>
-      <a class="btn-primary schedule-go" id="scheduleGo" href="https://enzokaleb01.github.io/Agendamento-Nexa/" target="_blank" rel="noopener">
+      <a class="btn-primary schedule-go" id="scheduleGo" href="https://enzokaleb01.github.io/agendamento-nexa/" target="_blank" rel="noopener">
         Agendar meu site
         <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></span>
       </a>
@@ -1962,6 +2053,111 @@ function hexToRgba(hex, a){
   const r = parseInt(v.substring(0,2),16), g = parseInt(v.substring(2,4),16), b = parseInt(v.substring(4,6),16);
   return `rgba(${r},${g},${b},${a})`;
 }
+
+/* ===================== MELHORIAS — painéis lado a lado ===================== */
+const UPGRADES = [
+  {
+    id:'essencial', nome:'Pacote Essencial', kicker:'Reforma visual',
+    preco:'R$ 249,90', cor:'#1fae5f', corClara:'#5fe39a',
+    texto:'Seu site continua o mesmo por dentro, mas ganha <b>cara de 2026</b>: tipografia, espaçamentos, cores e botões refeitos do jeito que o seu público espera.',
+    texto2:'Ajusto também o <b>comportamento no celular</b>, onde a maioria dos seus clientes vai abrir o site.',
+    itens:['Layout e paleta modernizados','Tipografia e espaçamentos refeitos','Correção de quebras no celular','Botões e links padronizados']
+  },
+  {
+    id:'profissional', nome:'Pacote Profissional', kicker:'Visual + conversão',
+    preco:'R$ 449,90', cor:'#2f6fed', corClara:'#7db4ff',
+    texto:'Tudo do Essencial, mais as <b>seções que faltavam</b> pro cliente entender o que você faz: serviços, provas de resultado e perguntas frequentes.',
+    texto2:'E o principal: <b>WhatsApp integrado</b> em cada ponto de decisão, com a mensagem já escrita pra pessoa só apertar enviar.',
+    itens:['Tudo do Pacote Essencial','Novas seções de conteúdo','WhatsApp integrado com mensagem pronta','Formulário de contato funcionando']
+  },
+  {
+    id:'avancado', nome:'Pacote Avançado', kicker:'Velocidade e Google',
+    preco:'R$ 699,90', cor:'#8b3ff0', corClara:'#c49bff',
+    texto:'Tudo do Profissional, com o site <b>carregando rápido de verdade</b>: imagens otimizadas, código enxuto e nada travando a primeira tela.',
+    texto2:'Somo a isso o <b>SEO básico</b> — títulos, descrições e estrutura — pra você aparecer quando procurarem pelo seu serviço na sua cidade.',
+    itens:['Tudo do Pacote Profissional','Imagens e código otimizados','SEO básico configurado','Prévia certa ao compartilhar o link']
+  },
+  {
+    id:'personalizado', nome:'Personalizado', kicker:'Sob medida',
+    preco:'R$ 999,90', precoNota:'a partir de', cor:'#f2861a', corClara:'#ffb662',
+    texto:'Quando o seu negócio precisa de algo que <b>nenhum pacote cobre</b>: agendamento próprio, área de cliente, catálogo com filtros, integração com sistema que você já usa.',
+    texto2:'A gente conversa, eu monto o escopo e você recebe <b>um orçamento fechado</b> antes de começar.',
+    itens:['Funcionalidades sob medida','Integrações com o que você já usa','Escopo e prazo definidos antes','Acompanhamento durante o projeto']
+  }
+];
+
+const UP_ARCO = `<svg class="up-arco" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="110" cy="110" r="94" stroke="rgba(255,255,255,.22)" stroke-width="1.5"/>
+  <circle class="anel" cx="110" cy="110" r="82" stroke="rgba(255,255,255,.75)" stroke-width="7" stroke-linecap="round"
+          stroke-dasharray="386 515" transform="rotate(-96 110 110)"/>
+  <path d="M96 80l34 30-34 30" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="110" cy="110" r="52" stroke="rgba(255,255,255,.14)" stroke-width="1.5"/>
+</svg>`;
+
+(function montarUpgrades(){
+  const caixa = document.getElementById('upAccordion');
+  if(!caixa) return;
+
+  UPGRADES.forEach(u=>{
+    const item = document.createElement('div');
+    item.className = 'up-item';
+    item.style.setProperty('--uc', u.cor);
+    item.style.setProperty('--ucl', u.corClara);
+    item.innerHTML = `
+      <button class="up-head" type="button" aria-expanded="false" aria-controls="painel-${u.id}">
+        <span>
+          <span class="kicker">${u.kicker}</span>
+          <h3>${u.nome}</h3>
+        </span>
+        <span class="up-go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>
+        ${UP_ARCO}
+      </button>
+      <div class="up-panel" id="painel-${u.id}">
+        <div class="up-col-a">
+          <span class="kicker">${u.kicker}</span>
+          <h3>${u.nome}</h3>
+          <p>${u.texto}</p>
+          <p>${u.texto2}</p>
+        </div>
+        <div class="up-col-b">
+        <ul class="up-list">
+          ${u.itens.map(i=>`<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"></polyline></svg>${i}</li>`).join('')}
+        </ul>
+        <div class="up-footer">
+          <span class="up-price">${u.precoNota ? `<small>${u.precoNota}</small>` : ''}${u.preco}</span>
+          <a class="up-cta" href="https://wa.me/5585997119151?text=${encodeURIComponent('Olá! Já tenho um site e quero saber mais sobre o ' + u.nome + ' da Nexa Web.')}" target="_blank" rel="noopener">
+            Falar sobre este pacote
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+        </div>
+      </div>
+      <button class="up-close" type="button" aria-label="Fechar ${u.nome}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    `;
+    caixa.appendChild(item);
+
+    function fecharTodos(){
+      caixa.querySelectorAll('.up-item').forEach(o=>{
+        o.classList.remove('open');
+        o.querySelector('.up-head').setAttribute('aria-expanded','false');
+      });
+      caixa.classList.remove('tem-aberto');
+    }
+
+    const temMouse = window.matchMedia('(hover:hover) and (pointer:fine)').matches && window.innerWidth > 900;
+
+    item.querySelector('.up-head').addEventListener('click', ()=>{
+      if(temMouse) return;   // no computador abre passando o mouse
+      fecharTodos();
+      item.classList.add('open');
+      item.querySelector('.up-head').setAttribute('aria-expanded','true');
+      caixa.classList.add('tem-aberto');
+    });
+    item.querySelector('.up-close').addEventListener('click', fecharTodos);
+  });
+})();
 
 /* ===================================================================
    AVALIAÇÕES DE CLIENTES — direto no Supabase (sem backend Python)
